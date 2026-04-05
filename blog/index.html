@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog — Lochbot | Chatbot Testing Tips & Guides</title>
-<meta name="description" content="Articles on chatbot testing, system prompt design, and conversational AI best practices.">
-<link rel="canonical" href="https://lochbot.com/blog/">
-<meta property="og:title" content="Lochbot Blog">
-<meta property="og:description" content="Chatbot testing tips, system prompt patterns, and conversational AI guides.">
-<meta property="og:url" content="https://lochbot.com/blog/">
-<meta property="og:type" content="website">
-<link rel="stylesheet" href="/assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — LochBot</title>
+  <meta name="description" content="Articles on prompt injection security, system prompt hardening, and chatbot vulnerability testing.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/blog/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-<nav class="nav">
-  <a href="/" class="nav-logo">lochbot</a>
-  <ul class="nav-links">
-    <li><a href="/">Tool</a></li>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/about.html">About</a></li>
-  </ul>
-</nav>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1>Blog</h1>
-  <p>Guides and insights on chatbot testing, system prompts, and conversational design.</p>
-</section>
+  <div class="article" style="max-width:720px;margin:0 auto;padding:40px 20px;">
+    <h1 style="font-size:1.8rem;margin-bottom:32px;">Blog</h1>
 
-<div class="blog-list">
-  <div class="blog-card">
-    <div class="meta">January 15, 2025 &middot; 10 min read</div>
-    <h2><a href="/blog/test-chatbot-before-launch.html">How to Test Your Chatbot Before Launch (Free Tools & Techniques)</a></h2>
-    <p>A practical guide to validating chatbot behavior before going live. Covers conversation flow testing, edge cases, tone consistency, and the tools that make it easier.</p>
+    <ul class="blog-list">
+      <li class="blog-item">
+        <h3><a href="/blog/testing-system-prompts-injection-vulnerabilities.html">I Tested 20 Common System Prompts for Injection Vulnerabilities</a></h3>
+        <div class="blog-meta">April 2025 &middot; 9 min read</div>
+        <p class="blog-excerpt">We ran 20 real-world system prompt patterns through LochBot's analysis engine. The results: most chatbots are wide open to basic injection attacks. Here are the findings with data.</p>
+      </li>
+      <li class="blog-item">
+        <h3><a href="/blog/how-to-write-injection-resistant-system-prompt.html">How to Write a System Prompt That Resists Injection Attacks</a></h3>
+        <div class="blog-meta">April 2025 &middot; 10 min read</div>
+        <p class="blog-excerpt">10 defensive techniques with before/after examples. From basic instruction anchoring to few-shot refusal patterns, with references to OWASP LLM Top 10.</p>
+      </li>
+    </ul>
   </div>
-  <div class="blog-card">
-    <div class="meta">February 8, 2025 &middot; 12 min read</div>
-    <h2><a href="/blog/system-prompts-that-work.html">System Prompts That Actually Work: Patterns from Production Bots</a></h2>
-    <p>Real system prompt patterns extracted from production chatbots. Learn the structures that consistently produce better responses across customer support, sales, and technical help.</p>
-  </div>
-</div>
 
-<footer class="footer">
-  <p>&copy; 2025 Lochbot. Built by <a href="https://zovo.one">zovo.one</a> &middot; More tools: <a href="https://invokebot.com">InvokeBot</a>, <a href="https://kappafy.com">Kappafy</a></p>
-</footer>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 LochBot. Built by <a href="https://zovo.one">zovo.one</a></p>
+      <p style="margin-top:8px;">More tools: <a href="https://claudhq.com">ClaudHQ</a> &middot; <a href="https://invokebot.com">InvokeBot</a></p>
+    </div>
+  </footer>
 </body>
 </html>

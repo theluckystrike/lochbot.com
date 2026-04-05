@@ -1,59 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Lochbot | Chatbot Response Tester</title>
-<meta name="description" content="Learn about Lochbot, a free browser-based chatbot response tester. Part of the zovo.one developer tools ecosystem.">
-<link rel="canonical" href="https://lochbot.com/about.html">
-<meta property="og:title" content="About Lochbot">
-<meta property="og:description" content="Free chatbot response testing tool built by zovo.one.">
-<meta property="og:url" content="https://lochbot.com/about.html">
-<meta property="og:type" content="website">
-<link rel="stylesheet" href="/assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — LochBot</title>
+  <meta name="description" content="LochBot is a free, client-side prompt injection vulnerability checker. Analyze your chatbot's system prompt against 31 attack patterns without sending data anywhere.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/about.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-<nav class="nav">
-  <a href="/" class="nav-logo">lochbot</a>
-  <ul class="nav-links">
-    <li><a href="/">Tool</a></li>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/about.html">About</a></li>
-  </ul>
-</nav>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html" class="active">About</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="about-content">
-  <h1>About Lochbot</h1>
+  <div class="about-content">
+    <h1>About LochBot</h1>
 
-  <p>Lochbot is a free, browser-based chatbot response tester designed for developers, product managers, and anyone building conversational interfaces. It lets you experiment with system prompts and see how different configurations affect chatbot behavior.</p>
+    <p>LochBot is a free prompt injection vulnerability checker. It analyzes your chatbot's system prompt against 31 known attack patterns across seven categories: direct injection, context manipulation, delimiter attacks, data extraction, role play jailbreaks, encoding attacks, and prompt leaking.</p>
 
-  <h2>How It Works</h2>
-  <p>The tool uses rule-based heuristics rather than actual AI. It analyzes your system prompt for tone indicators, keywords, and structural patterns, then generates responses that follow common chatbot behavior models: greetings, clarifying questions, problem-solving flows, and conversation closings. Each turn is scored on three dimensions: relevance, tone match, and response length appropriateness.</p>
+    <h2>How It Works</h2>
+    <p>LochBot does not test your system prompt against an actual AI model. Instead, it performs client-side pattern matching to check whether your prompt contains defensive language against known attack vectors. For each attack pattern, it looks for specific defensive phrases, structural elements (like XML delimiters), and refusal examples that research has shown to reduce injection success rates.</p>
 
-  <p>This approach is intentional. By using predictable heuristics, you can clearly see how different prompt phrasings lead to different response patterns without the variability of a live language model.</p>
+    <p>The tool scores your prompt from 0 to 100 and assigns a letter grade (A through F). Each failed test includes a specific fix suggestion you can add to your system prompt. Severity levels (critical, high, medium, low) determine how much each attack contributes to the overall score.</p>
 
-  <h2>Who This Is For</h2>
-  <ul>
-    <li>Developers prototyping chatbot system prompts before deploying to production</li>
-    <li>Product managers evaluating chatbot tone and response quality</li>
-    <li>Students learning about conversational AI design patterns</li>
-    <li>QA teams building test cases for chatbot interactions</li>
-  </ul>
+    <h2>Privacy</h2>
+    <p>All analysis runs entirely in your browser. Your system prompt never leaves your machine. There are no API calls, no server-side processing, no analytics tracking your prompt content, and no data storage. You can verify this by checking the network tab in your browser's developer tools while running an analysis.</p>
 
-  <h2>Part of the zovo.one Ecosystem</h2>
-  <p>Lochbot is built by <a href="https://zovo.one">zovo.one</a>, a collection of focused developer tools. Check out our other utilities:</p>
-  <ul>
-    <li><a href="https://invokebot.com">InvokeBot</a> — Visual webhook and HTTP request builder</li>
-    <li><a href="https://kappafy.com">Kappafy</a> — JSON explorer and mock API generator</li>
-    <li><a href="https://claudkit.com">Claudkit</a> — AI development toolkit</li>
-  </ul>
+    <h2>Limitations</h2>
+    <p>Pattern matching cannot predict how a specific LLM will respond to injection attempts. A prompt that scores well on LochBot may still be vulnerable to novel attacks, and a prompt that scores poorly may work fine with a well-aligned model. LochBot is a structural analysis tool, not a substitute for red-team testing against your actual model.</p>
 
-  <h2>Privacy</h2>
-  <p>Everything runs in your browser. No data is sent to any server. Your system prompts and conversations never leave your device.</p>
-</div>
+    <h2>Who Built This</h2>
+    <p>LochBot is part of the <a href="https://zovo.one">zovo.one</a> developer tools collection. Related tools include <a href="https://claudhq.com">ClaudHQ</a> for Claude API management and <a href="https://invokebot.com">InvokeBot</a> for chatbot deployment workflows.</p>
+  </div>
 
-<footer class="footer">
-  <p>&copy; 2025 Lochbot. Built by <a href="https://zovo.one">zovo.one</a> &middot; More tools: <a href="https://invokebot.com">InvokeBot</a>, <a href="https://kappafy.com">Kappafy</a></p>
-</footer>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 LochBot. Built by <a href="https://zovo.one">zovo.one</a></p>
+      <p style="margin-top:8px;">More tools: <a href="https://claudhq.com">ClaudHQ</a> &middot; <a href="https://invokebot.com">InvokeBot</a></p>
+    </div>
+  </footer>
 </body>
 </html>
