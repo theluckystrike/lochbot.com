@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth guides for chatbot development: conversation design, LLM-powered bots, multi-platform deployment, memory management, and safety guardrails.">
+    <meta name="keywords" content="chatbot development guide, conversation design tutorial, LLM chatbot guide, bot deployment guide, chatbot memory management, bot safety">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="LochBot — Guides">
+    <meta property="og:description" content="In-depth guides for chatbot development, conversation design, and multi-platform bot deployment.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/guides.html">
+    <title>LochBot — Guides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "LochBot — Guides",
+        "url": "https://lochbot.com/guides.html",
+        "description": "In-depth guides for chatbot development, conversation design, and bot deployment.",
+        "isPartOf": { "@type": "WebSite", "name": "LochBot", "url": "https://lochbot.com" }
+    }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-gradient-to-r from-cyan-700 to-teal-400 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold text-white">Loch<span class="text-cyan-200">Bot</span></a>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-cyan-100 hover:text-white transition">Home</a>
+                <a href="/guides.html" class="text-white font-semibold transition">Guides</a>
+                <a href="/tools.html" class="text-cyan-100 hover:text-white transition">Tools</a>
+                <a href="/blog/getting-started.html" class="text-cyan-100 hover:text-white transition">Blog</a>
+                <a href="/about.html" class="text-cyan-100 hover:text-white transition">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-br from-cyan-700 via-cyan-500 to-teal-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Bot Building Guides</h1>
+            <p class="text-xl text-cyan-100 max-w-2xl mx-auto">Comprehensive guides covering every stage of chatbot development, from initial conversation design to production deployment and optimization.</p>
+        </div>
+    </header>
+
+    <!-- Guide 1 -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article>
+            <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Conversation Design</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-6">Conversation Design Fundamentals for LLM-Powered Bots</h2>
+            <p class="text-lg text-gray-600 mb-4">The single most common mistake in chatbot development is starting with the technology and hoping the conversation design will work itself out. This approach consistently produces bots that are technically impressive but frustrating to use. Effective chatbots start with conversation design: understanding what users need, mapping the paths they will take through conversations, and defining how the bot should handle the inevitable edge cases, misunderstandings, and out-of-scope requests that real users will throw at it.</p>
+            <p class="text-lg text-gray-600 mb-4">LLM-powered bots change the conversation design landscape significantly compared to traditional intent-based bots. With traditional bots, you had to anticipate every possible user utterance and map it to a predefined intent. With LLMs, the model handles natural language understanding natively, which means you can focus on higher-level conversation flow rather than low-level utterance matching. However, this flexibility introduces new challenges: the bot can respond to anything, including topics it should not discuss, and it can generate responses that sound helpful but are factually wrong or off-brand.</p>
+            <p class="text-lg text-gray-600 mb-4">The foundation of good conversation design for LLM bots is a clear system prompt that defines the bot's persona, knowledge boundaries, and behavioral constraints. This system prompt should specify what the bot knows about, what it should redirect users to human support for, what tone and language style to use, and what types of responses are never acceptable. Think of the system prompt as the bot's operating manual: the more specific and comprehensive it is, the more consistently the bot will behave across different user interactions. For teams building AI-enhanced user experiences, <a href="https://zovo.one" class="text-cyan-600 font-semibold hover:text-cyan-800 underline">zovo.one</a> provides a comprehensive view of the tools and platforms available for powering different aspects of conversational AI.</p>
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-6 rounded-r-lg my-8">
+                <h4 class="font-semibold text-cyan-900 mb-2">Key Takeaway</h4>
+                <p class="text-cyan-800">Start with conversation design, not code. Define your bot's persona, knowledge boundaries, and behavioral constraints in a detailed system prompt. Map the common conversation paths and design explicit handling for edge cases, out-of-scope requests, and potential failure modes.</p>
+            </div>
+        </article>
+    </section>
+
+    <hr class="max-w-4xl mx-auto border-gray-200">
+
+    <!-- Guide 2 -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article>
+            <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Architecture</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-6">Choosing the Right Architecture for Your Chatbot</h2>
+            <p class="text-lg text-gray-600 mb-4">Not every chatbot needs the same technical architecture. A simple FAQ bot has fundamentally different requirements than a customer support agent that needs to look up order information, process refunds, and escalate to human agents. Choosing the right architecture upfront saves enormous rework later. The key architectural decision is how much autonomy to give the LLM and how tightly to constrain its behavior with structured logic.</p>
+            <p class="text-lg text-gray-600 mb-4">At one end of the spectrum is the pure LLM approach: send the user's message directly to an LLM with a system prompt and return the response. This works well for open-ended conversational bots where the primary value is the quality and naturalness of the conversation. At the other end is the structured approach: use an LLM for natural language understanding to classify user intent and extract entities, but route the conversation through a predefined state machine that determines what happens next. This works best for task-oriented bots where reliability and predictability matter more than conversational flexibility.</p>
+            <p class="text-lg text-gray-600 mb-4">Most production bots land somewhere in the middle, using a hybrid architecture. The LLM handles natural language understanding, response generation, and conversational flow for routine interactions, while structured logic handles sensitive operations like payment processing, data modification, and escalation decisions. The <a href="https://kappakit.com" class="text-cyan-600 hover:text-cyan-800 underline">KappaKit developer community</a> has published valuable case studies comparing different chatbot architecture patterns across various industry use cases, and resources at <a href="https://ml3x.com" class="text-cyan-600 hover:text-cyan-800 underline">ML3x</a> provide additional depth on the machine learning components that power modern conversational systems. The key principle is to use the LLM where its flexibility adds value and structured logic where predictability is essential.</p>
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-6 rounded-r-lg my-8">
+                <h4 class="font-semibold text-cyan-900 mb-2">Key Takeaway</h4>
+                <p class="text-cyan-800">Match your architecture to your requirements. Use pure LLM approaches for open-ended conversation, structured logic for sensitive operations, and hybrid approaches for most production use cases. The decision should be driven by the reliability requirements of each conversation path.</p>
+            </div>
+        </article>
+    </section>
+
+    <hr class="max-w-4xl mx-auto border-gray-200">
+
+    <!-- Guide 3 -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article>
+            <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Deployment</span>
+            <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-6">Deploying Chatbots Across Multiple Platforms Simultaneously</h2>
+            <p class="text-lg text-gray-600 mb-4">Modern chatbot deployments rarely target a single platform. Users expect to interact with your bot wherever they already spend their time: on your website, in Slack, through WhatsApp, on Discord, or via custom mobile apps. Each platform has its own API, message format, rate limits, and feature support, which means deploying the same bot across multiple platforms requires a careful abstraction layer that separates your core bot logic from platform-specific concerns.</p>
+            <p class="text-lg text-gray-600 mb-4">The recommended architecture for multi-platform deployment is a platform adapter pattern. Your core bot logic, including the conversation management, LLM interaction, and business logic, lives in a platform-agnostic layer. Each target platform gets a thin adapter that translates between the platform's API format and your core bot's internal message format. This separation means you can add new platforms by writing only the adapter layer, without touching the core bot logic. It also means improvements to the core logic automatically benefit all platforms.</p>
+            <p class="text-lg text-gray-600 mb-4">Platform-specific considerations that your adapters need to handle include: message length limits that vary from 2,000 characters on Slack to 4,096 on WhatsApp, rich message format support where some platforms support buttons, cards, and carousels while others are text-only, file and image sharing capabilities that differ across platforms, typing indicators and read receipts that set user expectations differently on each platform, and threading models that affect how conversation context is maintained. A well-designed adapter layer handles these differences transparently so your core bot logic can focus on the conversation rather than platform mechanics.</p>
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-6 rounded-r-lg my-8">
+                <h4 class="font-semibold text-cyan-900 mb-2">Key Takeaway</h4>
+                <p class="text-cyan-800">Use a platform adapter pattern to separate core bot logic from platform-specific concerns. Design your core message format to be rich enough to support the most capable platform, then gracefully degrade features for platforms with fewer capabilities.</p>
+            </div>
+        </article>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="text-xl font-bold text-white mb-4">Loch<span class="text-cyan-400">Bot</span></div>
+            <p class="mb-6">Build Smarter Bots — guides for chatbot development, conversational AI, and bot deployment.</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="/" class="hover:text-white transition">Home</a>
+                <a href="/guides.html" class="hover:text-white transition">Guides</a>
+                <a href="/tools.html" class="hover:text-white transition">Tools</a>
+                <a href="/blog/getting-started.html" class="hover:text-white transition">Blog</a>
+                <a href="/about.html" class="hover:text-white transition">About</a>
+            </div>
+            <p class="text-sm">&copy; 2025 LochBot. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
