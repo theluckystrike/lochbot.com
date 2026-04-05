@@ -20,9 +20,7 @@ Paste your system prompt (or any prompt template) into the analyzer. The checker
 
 - Vanilla JavaScript (no frameworks, no dependencies)
 - Client-side only — your data never leaves your browser
-- Part of the [Zovo Tools](https://zovo.one) open network
 
-## Related Tools
 
 - [Claude Prompt Library](https://claudhq.com) — start with battle-tested prompts that resist injection
 - [AI Workflow Builder](https://claudflow.com) — design workflows with built-in prompt safety layers
