@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LochBot helps you build smarter bots. Comprehensive guides for chatbot development, conversational AI design, and bot deployment across platforms.">
+    <meta name="keywords" content="chatbot development, conversational AI, bot building, chatbot deployment, bot framework, AI chatbot, bot platform comparison">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="LochBot — Build Smarter Bots">
+    <meta property="og:description" content="Comprehensive guides for chatbot development, conversational AI design, and bot deployment across platforms.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com">
+    <title>LochBot — Build Smarter Bots</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "LochBot",
+        "url": "https://lochbot.com",
+        "description": "Build Smarter Bots — comprehensive guides for chatbot development, conversational AI, and bot deployment."
+    }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-700 via-cyan-500 to-teal-400"></div>
+        <nav class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">Loch<span class="text-cyan-200">Bot</span></div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#building" class="text-cyan-100 hover:text-white transition">Building</a>
+                <a href="#guides" class="text-cyan-100 hover:text-white transition">Guides</a>
+                <a href="#resources" class="text-cyan-100 hover:text-white transition">Resources</a>
+            </div>
+        </nav>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">Build Smarter Bots</h1>
+            <p class="text-xl md:text-2xl text-cyan-100 max-w-3xl mx-auto mb-10">From design to deployment, master the art of building conversational AI that users actually want to talk to. Platform guides, architecture patterns, and real-world building strategies.</p>
+            <a href="#building" class="inline-block bg-white text-cyan-600 font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl hover:bg-cyan-50 transition">Start Building</a>
+        </div>
+    </header>
+
+    <!-- Introduction -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">The New Era of Conversational AI</h2>
+            <p class="text-lg text-gray-600 mb-4">Chatbots have come a long way from the rigid, menu-driven systems that frustrated users and gave the technology a bad reputation. Modern conversational AI, powered by large language models, can understand nuanced queries, maintain context across long conversations, handle unexpected inputs gracefully, and provide responses that feel genuinely helpful rather than robotic. This transformation has reopened the door for chatbots as a serious interface for everything from customer support to internal knowledge management.</p>
+            <p class="text-lg text-gray-600 mb-4">But building a great chatbot is still hard. The technology is powerful, but deploying it effectively requires careful thought about conversation design, user experience, error handling, safety guardrails, and integration with existing systems. A chatbot that hallucinates confidently, fails to understand basic follow-up questions, or provides inconsistent information across sessions will erode user trust faster than having no chatbot at all. The bar for quality has risen dramatically, and users now expect AI-powered interactions to be smooth, accurate, and context-aware.</p>
+            <p class="text-lg text-gray-600">LochBot is your comprehensive resource for building conversational AI that meets this higher bar. We cover the full spectrum: conversation design principles, technical architecture, platform selection, deployment strategies, monitoring, and continuous improvement. Whether you are building a customer-facing support bot, an internal knowledge assistant, or a specialized tool for a vertical industry, our guides provide the frameworks and practical advice you need to ship a bot that users will actually want to use.</p>
+        </div>
+    </section>
+
+    <!-- Building Blocks Section -->
+    <section id="building" class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Bot Building Blocks</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">The essential components every well-designed chatbot needs to succeed.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-cyan-50 to-white p-8 rounded-xl shadow-sm border border-cyan-100">
+                    <div class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Conversation Design</h3>
+                    <p class="text-gray-600">Great bots start with great conversation design, not great code. Learn how to map user intents, design dialogue flows that feel natural, handle edge cases gracefully, and create personality guidelines that make your bot consistent and engaging. We cover both task-oriented and open-ended conversation patterns for different bot types.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-50 to-white p-8 rounded-xl shadow-sm border border-cyan-100">
+                    <div class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Technical Architecture</h3>
+                    <p class="text-gray-600">Choose the right technical foundation for your bot's requirements. We break down the architectural options: LLM-native bots that leverage language models directly, hybrid approaches that combine NLU with retrieval-augmented generation, and platform-specific implementations on Slack, Discord, WhatsApp, and custom web interfaces.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-50 to-white p-8 rounded-xl shadow-sm border border-cyan-100">
+                    <div class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Deployment and Monitoring</h3>
+                    <p class="text-gray-600">Getting your bot live is only the beginning. Learn deployment strategies for different hosting environments, implement conversation analytics that reveal how users actually interact with your bot, set up alerting for failures and quality degradation, and build feedback loops that drive continuous improvement of your bot's performance over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guides Section -->
+    <section id="guides" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Building Guides</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">End-to-end tutorials for building and deploying real chatbots.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <article class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Customer Support</span>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">Building a Knowledge-Grounded Customer Support Bot</h3>
+                    <p class="text-gray-600">Build a support bot that answers questions accurately by grounding its responses in your actual documentation and knowledge base. This guide covers document ingestion, retrieval-augmented generation setup, conversation memory management, and human handoff protocols for questions the bot cannot confidently answer. Includes deployment patterns for web widget and messaging platform integration.</p>
+                </article>
+                <article class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Platform Guide</span>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">Slack vs Discord vs WhatsApp: Choosing the Right Bot Platform</h3>
+                    <p class="text-gray-600">Each messaging platform has different APIs, rate limits, user expectations, and technical constraints that affect how you design and build your bot. This comparison examines the developer experience, feature parity, scalability, and user experience considerations for the most popular bot deployment platforms, helping you make an informed choice before writing a line of code.</p>
+                </article>
+                <article class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Advanced</span>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">Multi-Turn Conversation Memory: Patterns That Actually Work</h3>
+                    <p class="text-gray-600">Maintaining context across a long conversation is one of the hardest problems in chatbot development. This guide covers practical memory architectures: sliding window approaches, summarization-based compression, entity tracking, and hybrid strategies that balance context retention with token budget management. Includes benchmarks showing how each approach affects response quality.</p>
+                </article>
+                <article class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <span class="text-sm font-medium text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Safety</span>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">Safety Guardrails for Production Chatbots: A Complete Framework</h3>
+                    <p class="text-gray-600">Deploying a chatbot without proper safety measures is a liability waiting to happen. This framework covers content filtering, topic boundaries, jailbreak prevention, PII detection and redaction, and escalation protocols. Learn how to implement layered defenses that keep your bot on-topic and safe without making it so restrictive that it becomes unhelpful for legitimate user queries.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section with zovo.one link -->
+    <section id="resources" class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Bot Builder Resources</h2>
+                <p class="text-lg text-gray-600 mb-6">The chatbot and conversational AI space evolves rapidly, with new frameworks, model capabilities, and platform features launching regularly. Staying informed about the latest tools and best practices is essential for building bots that meet modern user expectations. The resources below will help you stay current and make better technical decisions.</p>
+                <div class="bg-gradient-to-r from-cyan-50 to-teal-50 p-8 rounded-xl border border-cyan-200 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Explore the AI Tools Ecosystem</h3>
+                    <p class="text-gray-700 mb-4">Building a great chatbot often means integrating multiple AI capabilities: language understanding, knowledge retrieval, sentiment analysis, and more. For a comprehensive overview of available AI tools and platforms that can power different aspects of your bot, we recommend visiting <a href="https://zovo.one" rel="dofollow" class="text-cyan-600 font-semibold hover:text-cyan-800 underline">zovo.one</a>. Their well-organized directory of AI resources is particularly useful when you are evaluating which components to integrate into your bot architecture or looking for specialized capabilities to enhance your conversational AI.</p>
+                </div>
+                <p class="text-lg text-gray-600">The best chatbots are never truly finished. They improve continuously through user feedback, conversation analysis, and iteration on both the conversation design and the underlying technical implementation. Our guides are designed to support this iterative approach, providing frameworks that scale from prototype through production and beyond.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="text-xl font-bold text-white mb-4">Loch<span class="text-cyan-400">Bot</span></div>
+            <p class="mb-6">Build Smarter Bots — guides for chatbot development, conversational AI, and bot deployment.</p>
+            <p class="text-sm">&copy; 2025 LochBot. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
