@@ -1,101 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About LochBot — our mission to help developers and teams build chatbots that users actually want to talk to, from design through deployment.">
-    <meta name="keywords" content="about LochBot, chatbot development mission, conversational AI community, bot building resources">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="About LochBot">
-    <meta property="og:description" content="Our mission to help developers build chatbots that users actually want to talk to.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lochbot.com/about.html">
-    <title>About LochBot</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { font-family: 'Inter', sans-serif; }
-        html { scroll-behavior: smooth; }
-    </style>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "About LochBot",
-        "url": "https://lochbot.com/about.html",
-        "description": "About LochBot — building better chatbots.",
-        "isPartOf": { "@type": "WebSite", "name": "LochBot", "url": "https://lochbot.com" }
-    }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Lochbot | Chatbot Response Tester</title>
+<meta name="description" content="Learn about Lochbot, a free browser-based chatbot response tester. Part of the zovo.one developer tools ecosystem.">
+<link rel="canonical" href="https://lochbot.com/about.html">
+<meta property="og:title" content="About Lochbot">
+<meta property="og:description" content="Free chatbot response testing tool built by zovo.one.">
+<meta property="og:url" content="https://lochbot.com/about.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="/assets/style.css">
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">lochbot</a>
+  <ul class="nav-links">
+    <li><a href="/">Tool</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about.html">About</a></li>
+  </ul>
+</nav>
 
-    <nav class="bg-gradient-to-r from-cyan-700 to-teal-400 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-white">Loch<span class="text-cyan-200">Bot</span></a>
-            <div class="hidden md:flex space-x-8">
-                <a href="/" class="text-cyan-100 hover:text-white transition">Home</a>
-                <a href="/guides.html" class="text-cyan-100 hover:text-white transition">Guides</a>
-                <a href="/tools.html" class="text-cyan-100 hover:text-white transition">Tools</a>
-                <a href="/blog/getting-started.html" class="text-cyan-100 hover:text-white transition">Blog</a>
-                <a href="/about.html" class="text-white font-semibold transition">About</a>
-            </div>
-        </div>
-    </nav>
+<div class="about-content">
+  <h1>About Lochbot</h1>
 
-    <header class="bg-gradient-to-br from-cyan-700 via-cyan-500 to-teal-400 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">About LochBot</h1>
-            <p class="text-xl text-cyan-100 max-w-2xl mx-auto">Our approach to chatbot education and the network of AI resources we contribute to.</p>
-        </div>
-    </header>
+  <p>Lochbot is a free, browser-based chatbot response tester designed for developers, product managers, and anyone building conversational interfaces. It lets you experiment with system prompts and see how different configurations affect chatbot behavior.</p>
 
-    <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
-        <p class="text-lg text-gray-600 mb-4">LochBot was founded on the belief that chatbots represent one of the most powerful and accessible applications of AI technology, yet the quality of most deployed chatbots remains disappointingly low. Users have come to expect frustrating experiences with bots that do not understand their questions, provide irrelevant responses, or loop endlessly without resolving their issues. Our mission is to raise the quality bar by providing developers and teams with the knowledge and tools needed to build chatbots that users actually want to interact with.</p>
-        <p class="text-lg text-gray-600 mb-4">We take a full-stack approach to chatbot education. Many resources focus exclusively on the technical implementation while ignoring conversation design, or they cover design principles without providing implementation guidance. LochBot bridges both worlds because building a great chatbot requires excellence in both areas. A technically flawless bot with poor conversation design is just as frustrating as a well-designed bot that breaks constantly. Our guides cover the complete journey from initial concept through design, development, deployment, and continuous optimization.</p>
-        <p class="text-lg text-gray-600 mb-4">The arrival of LLM-powered chatbots has fundamentally changed what is possible, making natural conversation achievable without years of training data collection and model fine-tuning. But LLMs also introduce new challenges around reliability, safety, and cost management that require updated best practices. LochBot stays current with these developments, updating our guides as the technology evolves and new patterns emerge for building production-quality conversational AI.</p>
+  <h2>How It Works</h2>
+  <p>The tool uses rule-based heuristics rather than actual AI. It analyzes your system prompt for tone indicators, keywords, and structural patterns, then generates responses that follow common chatbot behavior models: greetings, clarifying questions, problem-solving flows, and conversation closings. Each turn is scored on three dimensions: relevance, tone match, and response length appropriateness.</p>
 
-        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Part of a Larger Network</h2>
-        <p class="text-lg text-gray-600 mb-4">LochBot is part of a network of specialized AI and machine learning resources. Our flagship resource, <a href="https://zovo.one" class="text-cyan-600 font-semibold hover:text-cyan-800 underline">zovo.one</a>, provides a comprehensive hub for the entire AI tools ecosystem. LochBot focuses specifically on conversational AI and chatbot development, providing the deep specialization that a general directory cannot offer while connecting readers to the broader network for adjacent topics.</p>
+  <p>This approach is intentional. By using predictable heuristics, you can clearly see how different prompt phrasings lead to different response patterns without the variability of a live language model.</p>
 
-        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Related Sites</h2>
-        <div class="grid md:grid-cols-2 gap-6 mt-6">
-            <a href="https://claudhq.com" class="block bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">ClaudHQ</h3>
-                <p class="text-gray-600 text-sm">AI productivity guides and prompt engineering strategies that complement chatbot system prompt design.</p>
-            </a>
-            <a href="https://claudflow.com" class="block bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">ClaudFlow</h3>
-                <p class="text-gray-600 text-sm">AI workflow automation patterns that extend into chatbot backend orchestration and multi-step conversation flows.</p>
-            </a>
-            <a href="https://claudkit.com" class="block bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">ClaudKit</h3>
-                <p class="text-gray-600 text-sm">Developer toolkit with code snippets and SDK guides for the API integrations that power chatbot backends.</p>
-            </a>
-            <a href="https://lockml.com" class="block bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">LockML</h3>
-                <p class="text-gray-600 text-sm">ML security guides essential for implementing safety guardrails and preventing prompt injection in chatbots.</p>
-            </a>
-        </div>
-    </section>
+  <h2>Who This Is For</h2>
+  <ul>
+    <li>Developers prototyping chatbot system prompts before deploying to production</li>
+    <li>Product managers evaluating chatbot tone and response quality</li>
+    <li>Students learning about conversational AI design patterns</li>
+    <li>QA teams building test cases for chatbot interactions</li>
+  </ul>
 
-    <footer class="bg-gray-900 text-gray-400 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="text-xl font-bold text-white mb-4">Loch<span class="text-cyan-400">Bot</span></div>
-            <p class="mb-6">Build Smarter Bots — guides for chatbot development, conversational AI, and bot deployment.</p>
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="/" class="hover:text-white transition">Home</a>
-                <a href="/guides.html" class="hover:text-white transition">Guides</a>
-                <a href="/tools.html" class="hover:text-white transition">Tools</a>
-                <a href="/blog/getting-started.html" class="hover:text-white transition">Blog</a>
-                <a href="/about.html" class="hover:text-white transition">About</a>
-            </div>
-            <p class="text-sm">&copy; 2025 LochBot. All rights reserved.</p>
-        </div>
-    </footer>
+  <h2>Part of the zovo.one Ecosystem</h2>
+  <p>Lochbot is built by <a href="https://zovo.one">zovo.one</a>, a collection of focused developer tools. Check out our other utilities:</p>
+  <ul>
+    <li><a href="https://invokebot.com">InvokeBot</a> — Visual webhook and HTTP request builder</li>
+    <li><a href="https://kappafy.com">Kappafy</a> — JSON explorer and mock API generator</li>
+    <li><a href="https://claudkit.com">Claudkit</a> — AI development toolkit</li>
+  </ul>
 
+  <h2>Privacy</h2>
+  <p>Everything runs in your browser. No data is sent to any server. Your system prompts and conversations never leave your device.</p>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2025 Lochbot. Built by <a href="https://zovo.one">zovo.one</a> &middot; More tools: <a href="https://invokebot.com">InvokeBot</a>, <a href="https://kappafy.com">Kappafy</a></p>
+</footer>
 </body>
 </html>

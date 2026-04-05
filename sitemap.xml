@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lochbot.com/</loc><lastmod>2025-04-05</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://lochbot.com/guides.html</loc><lastmod>2025-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lochbot.com/tools.html</loc><lastmod>2025-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://lochbot.com/blog/getting-started.html</loc><lastmod>2025-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lochbot.com/about.html</loc><lastmod>2025-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://lochbot.com/</loc><lastmod>2025-04-05</lastmod><priority>1.0</priority></url>
+  <url><loc>https://lochbot.com/about.html</loc><lastmod>2025-04-05</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lochbot.com/blog/</loc><lastmod>2025-04-05</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lochbot.com/blog/test-chatbot-before-launch.html</loc><lastmod>2025-01-15</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lochbot.com/blog/system-prompts-that-work.html</loc><lastmod>2025-02-08</lastmod><priority>0.8</priority></url>
 </urlset>
