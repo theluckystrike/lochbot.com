@@ -175,6 +175,8 @@
 
     <p><strong>Few-shot refusal examples are the single biggest improvement.</strong> Adding 2-3 examples of the model refusing injection attempts (prompt 19 vs 18) jumped the score from 75 to 85. This is consistent with research showing that in-context learning is the most effective defense mechanism.</p>
 
+    <p>Need quick developer utilities for testing? Check out <a href="https://kappakit.com/tools/">KappaKit's developer toolkit</a> for JSON formatters and encoders.</p>
+
     <p><strong>Delimiter markers provide structural defense.</strong> Using XML tags to wrap system instructions (prompt 13) immediately improved scores even when the rest of the prompt was basic. Delimiters help models distinguish system context from user input.</p>
 
     <p><strong>You need all 7 categories covered for an A grade.</strong> It is not enough to block data extraction if you are vulnerable to role play jailbreaks. Attackers will find the weakest category.</p>
