@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>LochBot — Prompt Injection Vulnerability Checker for Chatbots Blog</title>
+  <link href="https://lochbot.com/blog/" rel="alternate"/>
+  <link href="https://lochbot.com/blog/feed.xml" rel="self"/>
+  <id>https://lochbot.com/blog/</id>
+  <updated>2026-04-06T00:00:00Z</updated>
+  <author><name>LochBot — Prompt Injection Vulnerability Checker for Chatbots</name></author>
+  <entry>
+    <title>I Tested 20 Common System Prompts for Injection Vulnerabilities — LochBot</title>
+    <link href="https://lochbot.com/blog/testing-system-prompts-injection-vulnerabilities.html" rel="alternate"/>
+    <id>https://lochbot.com/blog/testing-system-prompts-injection-vulnerabilities.html</id>
+    <updated>2026-04-06T00:00:00Z</updated>
+    <summary>We ran 20 real-world system prompt patterns through LochBot</summary>
+  </entry>
+  <entry>
+    <title>How to Write a System Prompt That Resists Injection Attacks — LochBot</title>
+    <link href="https://lochbot.com/blog/how-to-write-injection-resistant-system-prompt.html" rel="alternate"/>
+    <id>https://lochbot.com/blog/how-to-write-injection-resistant-system-prompt.html</id>
+    <updated>2026-04-06T00:00:00Z</updated>
+    <summary>10 defensive techniques for hardening your chatbot</summary>
+  </entry>
+</feed>
