@@ -1,34 +1,36 @@
-# Prompt Injection Checker — Test AI Prompts Against 30+ Injection Attacks
+# LochBot -- Prompt Injection Vulnerability Checker for Chatbots
 
-**[Test Your Prompts →](https://lochbot.com)** | [About](https://lochbot.com/about.html) | [Blog](https://lochbot.com/blog/)
+**[-> Use LochBot (live tool)](https://lochbot.com/)**
 
-Prompt Injection Checker scans your AI system prompts against 30+ known injection attack patterns. Get a vulnerability score, see which attacks your prompt is susceptible to, and receive actionable fix suggestions. Built for developers shipping LLM-powered features who need to harden their prompts before production. Catches jailbreaks, data exfiltration, role hijacking, and more.
+LochBot is a free prompt injection vulnerability checker that analyzes your chatbot's system prompt against 31 known attack patterns across 7 categories. Get a 0-100 security score, letter grade assessment, and specific fix suggestions for every vulnerability detected. All analysis runs 100% client-side -- your system prompt never leaves your browser.
 
 ## Features
 
-- **30+ injection attack patterns** — jailbreaks, role hijacking, data exfiltration, encoding tricks
-- **Vulnerability scoring** — overall risk score with per-category breakdown
-- **Fix suggestions** — actionable recommendations to harden each weakness
-- **Custom attack testing** — paste your own adversarial inputs to test edge cases
-- **Detailed attack explanations** — understand why each pattern is dangerous
+- Tests against 31 prompt injection attack patterns
+- 7 vulnerability categories: direct injection, context manipulation, delimiter attacks, data extraction, role play jailbreaks, encoding attacks, prompt leaking
+- 0-100 security score with letter grade (A through F)
+- Specific fix suggestions for each detected vulnerability
+- JSON export for compliance reporting and documentation
+- Severity ratings: critical, high, medium, low per vulnerability
+- 100% client-side -- your data never leaves your browser
+- Open source -- inspect the code yourself
 
-## How It Works
+## Tech Stack
 
-Paste your system prompt (or any prompt template) into the analyzer. The checker runs it against a library of 30+ known injection attack patterns, including direct jailbreaks, indirect injection via user input, encoding-based bypasses, and multi-turn manipulation. Each matched vulnerability is scored by severity. You get a composite risk score and a prioritized list of fixes. Everything runs client-side — your prompts are never sent to any server.
+- Vanilla JavaScript (no frameworks, no build step)
+- Static HTML hosted on GitHub Pages
+- Cloudflare DNS + SSL
+- Zero dependencies, zero tracking, zero cookies
 
-## Built With
+## Part of Zovo Tools
 
-- Vanilla JavaScript (no frameworks, no dependencies)
-- Client-side only — your data never leaves your browser
+LochBot is part of [Zovo Tools](https://zovo.one/tools) -- a collection of free developer tools.
 
-
-- [Claude Prompt Library](https://claudhq.com) — start with battle-tested prompts that resist injection
-- [AI Workflow Builder](https://claudflow.com) — design workflows with built-in prompt safety layers
-- [Webhook Request Builder](https://invokebot.com) — test API endpoints that serve your hardened prompts
-
-## Contributing
-
-Found a bug or have a feature request? [Open an issue](https://github.com/theluckystrike/lochbot.com/issues).
+**Other tools in the network:**
+- [EpochPilot](https://epochpilot.com) -- 30+ timestamp and timezone tools
+- [HeyTensor](https://heytensor.com) -- PyTorch tensor shape calculator
+- [KappaKit](https://kappakit.com) -- Developer toolkit (Base64, JWT, hash, UUID)
+- [ABWex](https://abwex.com) -- A/B test significance calculator
 
 ## License
 
