@@ -27,10 +27,23 @@ LochBot is a free prompt injection vulnerability checker that analyzes your chat
 LochBot is part of [Zovo Tools](https://zovo.one/tools) -- a collection of free developer tools.
 
 **Other tools in the network:**
-- [EpochPilot](https://epochpilot.com) -- 30+ timestamp and timezone tools
-- [HeyTensor](https://heytensor.com) -- PyTorch tensor shape calculator
-- [KappaKit](https://kappakit.com) -- Developer toolkit (Base64, JWT, hash, UUID)
-- [ABWex](https://abwex.com) -- A/B test significance calculator
+- [EpochPilot](https://epochpilot.com) -- Epoch & timestamp converter, timezone tools & cron parser
+- [HeyTensor](https://heytensor.com) -- PyTorch tensor shape calculator & error debugger
+- [KappaKit](https://kappakit.com) -- Developer toolkit (Base64, JWT, hash, UUID, regex & more)
+- [ABWex](https://abwex.com) -- A/B test statistical significance calculator
+- [Gen8X](https://gen8x.com) -- Color palette generator with CSS, Tailwind & SCSS export
+- [KickLLM](https://kickllm.com) -- LLM API cost calculator & provider comparison
+- [LockML](https://lockml.com) -- Open source ML model comparison table
+- [ClaudKit](https://claudkit.com) -- Claude API playground & request builder
+- [ClaudFlow](https://claudflow.com) -- AI workflow builder & visual prompt chain editor
+- [ClaudHQ](https://claudhq.com) -- Claude prompt library with 30+ ready-to-use templates
+- [ML3X](https://ml3x.com) -- Matrix calculator with step-by-step solutions
+- [ML0X](https://ml0x.com) -- Machine learning cheat sheet generator
+- [Krzen](https://krzen.com) -- Image compressor, resizer & format converter
+- [Kappafy](https://kappafy.com) -- JSON explorer & mock API generator
+- [InvokeBot](https://invokebot.com) -- Webhook request builder & HTTP client
+- [GPT0X](https://gpt0x.com) -- AI model database & comparison tool
+- [Enhio](https://enhio.com) -- Text enhancement tool & readability analyzer
 
 ## License
 
