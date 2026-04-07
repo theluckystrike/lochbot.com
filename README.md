@@ -1,50 +1,66 @@
-# LochBot -- Prompt Injection Vulnerability Checker for Chatbots
+# LochBot
 
-**[-> Use LochBot (live tool)](https://lochbot.com/)**
+> Free prompt injection vulnerability checker — test chatbot system prompts against 31 known attack patterns.
 
-LochBot is a free prompt injection vulnerability checker that analyzes your chatbot's system prompt against 31 known attack patterns across 7 categories. Get a 0-100 security score, letter grade assessment, and specific fix suggestions for every vulnerability detected. All analysis runs 100% client-side -- your system prompt never leaves your browser.
+**[Use LochBot live](https://lochbot.com/)**
+
+LochBot is a free prompt injection vulnerability checker that analyzes your chatbot's system prompt against 31 real-world attack patterns across 7 categories. Get a 0-100 security score, letter grade, and specific fix suggestions for every vulnerability detected. All analysis runs 100% client-side — your system prompt never leaves your browser.
 
 ## Features
 
-- Tests against 31 prompt injection attack patterns
-- 7 vulnerability categories: direct injection, context manipulation, delimiter attacks, data extraction, role play jailbreaks, encoding attacks, prompt leaking
+- Tests against 31 prompt injection attack patterns including role play jailbreaks, delimiter attacks, and data extraction
+- 7 vulnerability categories covering direct injection, context manipulation, encoding attacks, and prompt leaking
 - 0-100 security score with letter grade (A through F)
-- Specific fix suggestions for each detected vulnerability
-- JSON export for compliance reporting and documentation
-- Severity ratings: critical, high, medium, low per vulnerability
-- 100% client-side -- your data never leaves your browser
-- Open source -- inspect the code yourself
+- Severity ratings (critical, high, medium, low) for every detected issue
+- Specific, actionable fix suggestions tailored to each vulnerability
+- JSON export for compliance reporting and audit documentation
+- Catalog of known jailbreak techniques from academic LLM security research
+- OWASP LLM Top 10 aligned threat modeling
+- 100% client-side — no data leaves your browser
+- MIT licensed
+- No signup, no tracking
+
+## Research
+
+- [Minimum Viable Secure Prompt](https://lochbot.com/research/minimum-viable-secure-prompt.html) — The shortest system prompt that passes all LochBot checks
+- [Prompt Defense Techniques](https://lochbot.com/research/prompt-defense-techniques.html) — Which prompt defense techniques actually work
+- [Prompt Security Patterns](https://lochbot.com/research/prompt-security-patterns.html) — System prompt patterns ranked by security score
 
 ## Tech Stack
 
-- Vanilla JavaScript (no frameworks, no build step)
-- Static HTML hosted on GitHub Pages
-- Cloudflare DNS + SSL
-- Zero dependencies, zero tracking, zero cookies
+- Pure HTML, CSS, and vanilla JavaScript
+- No build step
+- No external dependencies (except Google Fonts on some pages)
+- Hosted on GitHub Pages with Cloudflare CDN
 
 ## Part of Zovo Tools
 
-LochBot is part of [Zovo Tools](https://zovo.one/tools) -- a collection of free developer tools.
+LochBot is part of [Zovo Tools](https://zovo.one/tools) — free developer tools by a solo developer. No tracking, no signup, no nonsense.
 
 **Other tools in the network:**
-- [EpochPilot](https://epochpilot.com) -- Epoch & timestamp converter, timezone tools & cron parser
-- [HeyTensor](https://heytensor.com) -- PyTorch tensor shape calculator & error debugger
-- [KappaKit](https://kappakit.com) -- Developer toolkit (Base64, JWT, hash, UUID, regex & more)
-- [ABWex](https://abwex.com) -- A/B test statistical significance calculator
-- [Gen8X](https://gen8x.com) -- Color palette generator with CSS, Tailwind & SCSS export
-- [KickLLM](https://kickllm.com) -- LLM API cost calculator & provider comparison
-- [LockML](https://lockml.com) -- Open source ML model comparison table
-- [ClaudKit](https://claudkit.com) -- Claude API playground & request builder
-- [ClaudFlow](https://claudflow.com) -- AI workflow builder & visual prompt chain editor
-- [ClaudHQ](https://claudhq.com) -- Claude prompt library with 30+ ready-to-use templates
-- [ML3X](https://ml3x.com) -- Matrix calculator with step-by-step solutions
-- [ML0X](https://ml0x.com) -- Machine learning cheat sheet generator
-- [Krzen](https://krzen.com) -- Image compressor, resizer & format converter
-- [Kappafy](https://kappafy.com) -- JSON explorer & mock API generator
-- [InvokeBot](https://invokebot.com) -- Webhook request builder & HTTP client
-- [GPT0X](https://gpt0x.com) -- AI model database & comparison tool
-- [Enhio](https://enhio.com) -- Text enhancement tool & readability analyzer
+
+- [HeyTensor](https://heytensor.com) — PyTorch tensor shape calculator
+- [EpochPilot](https://epochpilot.com) — Timestamp, timezone, and cron tools
+- [KappaKit](https://kappakit.com) — Developer toolkit (Base64, JWT, hash, regex)
+- [ABWex](https://abwex.com) — A/B test significance calculator
+- [KickLLM](https://kickllm.com) — LLM cost calculator
+- [Gen8X](https://gen8x.com) — Color palette generator with WCAG checks
+- [GPT0X](https://gpt0x.com) — AI model database
+- [ML3X](https://ml3x.com) — Matrix calculator
+- [ML0X](https://ml0x.com) — Machine learning cheat sheet generator
+- [Enhio](https://enhio.com) — Text enhancement utilities
+- [Krzen](https://krzen.com) — Image compression
+- [Kappafy](https://kappafy.com) — JSON formatter and explorer
+- [LockML](https://lockml.com) — Open source ML model comparison
+- [InvokeBot](https://invokebot.com) — Webhook testing
+- [ClaudHQ](https://claudhq.com) — Claude prompt library
+- [ClaudKit](https://claudkit.com) — Claude API utilities
+- [ClaudFlow](https://claudflow.com) — AI workflow builder
 
 ## License
 
-MIT
+MIT licensed.
+
+## Contact
+
+Built and maintained by [Michael Lip](https://zovo.one). For questions or feedback: support@zovo.one
