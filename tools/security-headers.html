@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>HTTP Security Headers Guide — Complete Reference | LochBot</title>
+  <meta name="description" content="Complete guide to HTTP security headers. Configure X-Frame-Options, HSTS, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/security-headers.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="HTTP Security Headers Guide — Complete Reference">
+  <meta property="og:description" content="Complete guide to HTTP security headers. Configure X-Frame-Options, HSTS, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy.">
+  <meta property="og:url" content="https://lochbot.com/tools/security-headers.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTTP Security Headers Guide — Complete Reference">
+  <meta name="twitter:description" content="Complete guide to HTTP security headers. Configure HSTS, CSP, X-Frame-Options, and more.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/tools/security-headers.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/tools/security-headers.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HTTP Security Headers Reference",
+    "url": "https://lochbot.com/tools/security-headers.html",
+    "description": "Complete guide to HTTP security headers. Configure X-Frame-Options, HSTS, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "browserRequirements": "Requires JavaScript",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the most important HTTP security headers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The five essential security headers are: 1) Content-Security-Policy to prevent XSS and injection attacks, 2) Strict-Transport-Security (HSTS) to enforce HTTPS, 3) X-Content-Type-Options to prevent MIME sniffing, 4) X-Frame-Options or frame-ancestors to prevent clickjacking, and 5) Referrer-Policy to control information leakage in the Referer header. These five headers address the most common browser-side attack vectors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is HSTS preloading and should I use it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HSTS preloading is a mechanism where your domain is hardcoded into the browser's HSTS list, so the browser uses HTTPS for your domain from the very first connection — without ever making an initial HTTP request. To qualify, set max-age to at least 31536000 (1 year), include includeSubDomains and preload directives, then submit your domain to hstspreload.org. Warning: preloading is difficult to undo, so only enable it after confirming all subdomains support HTTPS."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is X-Frame-Options still needed if I have CSP frame-ancestors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The CSP frame-ancestors directive supersedes X-Frame-Options and is more flexible (it supports multiple origins and wildcard patterns). However, X-Frame-Options is still recommended as a fallback for older browsers that do not support CSP Level 2. Set both headers: X-Frame-Options: DENY and Content-Security-Policy: frame-ancestors 'none' for maximum compatibility."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does X-Content-Type-Options: nosniff actually prevent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "X-Content-Type-Options: nosniff prevents the browser from MIME-type sniffing, which is when the browser ignores the declared Content-Type and guesses the file type based on content. Without this header, an attacker can upload a file with a .jpg extension containing JavaScript, and the browser may execute it as a script. The nosniff header forces the browser to respect the declared Content-Type, blocking this attack vector."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Referrer-Policy value should I use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use 'strict-origin-when-cross-origin' as the default. This sends the full URL as the referer for same-origin requests (useful for analytics), sends only the origin (domain) for cross-origin requests over HTTPS, and sends nothing when navigating from HTTPS to HTTP. This provides a good balance between functionality and privacy. Use 'no-referrer' if you need maximum privacy and do not rely on referrer information."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+          <div class="nav-right">
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+      <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+    </div>
+  </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/tools/">Security Guides</a> &rsaquo; <span>Security Headers</span>
+      </nav>
+      <h1>HTTP Security Headers Reference</h1>
+      <p>Every security header explained with recommended values, server configuration examples, and common misconfigurations to avoid.</p>
+    </div>
+
+    <section class="explainer-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Why Security Headers Matter</h2>
+      <p>HTTP security headers are response headers that instruct the browser to enable or enforce security mechanisms. They are a zero-cost defense layer — adding a few lines to your server configuration can prevent entire classes of attacks including XSS, clickjacking, MIME confusion, protocol downgrade, and information leakage. Despite being easy to implement, the majority of websites still fail to set critical security headers.</p>
+
+      <h3>Strict-Transport-Security (HSTS)</h3>
+      <p>HSTS forces the browser to use HTTPS for all future requests to your domain, preventing protocol downgrade attacks and cookie hijacking over HTTP.</p>
+      <p><strong>Recommended value:</strong></p>
+      <pre><code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code></pre>
+      <p><strong>max-age=31536000</strong> tells the browser to remember the HTTPS-only policy for one year. <strong>includeSubDomains</strong> applies the policy to all subdomains. <strong>preload</strong> signals eligibility for browser HSTS preload lists. Start with a short max-age (e.g., 300) during testing, then increase to one year after confirming everything works.</p>
+      <p><strong>Nginx:</strong> <code>add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;</code></p>
+      <p><strong>Apache:</strong> <code>Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</code></p>
+
+      <h3>X-Content-Type-Options</h3>
+      <p>Prevents MIME-type sniffing, which can lead to XSS when browsers interpret non-script files as executable JavaScript.</p>
+      <p><strong>Recommended value:</strong></p>
+      <pre><code>X-Content-Type-Options: nosniff</code></pre>
+      <p>There is only one valid value. This header is simple and has no compatibility concerns. Set it on every response.</p>
+      <p><strong>Nginx:</strong> <code>add_header X-Content-Type-Options "nosniff" always;</code></p>
+      <p><strong>Apache:</strong> <code>Header always set X-Content-Type-Options "nosniff"</code></p>
+
+      <h3>X-Frame-Options</h3>
+      <p>Controls whether your page can be embedded in an iframe, preventing clickjacking attacks where an attacker overlays your page with a transparent frame to steal clicks.</p>
+      <p><strong>Recommended value:</strong></p>
+      <pre><code>X-Frame-Options: DENY</code></pre>
+      <p><strong>DENY</strong> prevents all framing. <strong>SAMEORIGIN</strong> allows framing by pages on the same origin. Avoid <strong>ALLOW-FROM</strong> as it has inconsistent browser support. For more flexible control, use the CSP <code>frame-ancestors</code> directive alongside this header.</p>
+      <p><strong>Nginx:</strong> <code>add_header X-Frame-Options "DENY" always;</code></p>
+      <p><strong>Apache:</strong> <code>Header always set X-Frame-Options "DENY"</code></p>
+
+      <h3>Referrer-Policy</h3>
+      <p>Controls how much referrer information is included in the <code>Referer</code> header when navigating away from your site. Prevents leaking sensitive URL paths, query parameters, and session tokens to third-party sites.</p>
+      <p><strong>Recommended value:</strong></p>
+      <pre><code>Referrer-Policy: strict-origin-when-cross-origin</code></pre>
+      <p>This sends the full URL for same-origin requests, the origin only for cross-origin HTTPS requests, and nothing for HTTPS-to-HTTP transitions. Other useful values: <code>no-referrer</code> (maximum privacy), <code>same-origin</code> (referrer only for same-origin navigation).</p>
+      <p><strong>Nginx:</strong> <code>add_header Referrer-Policy "strict-origin-when-cross-origin" always;</code></p>
+      <p><strong>Apache:</strong> <code>Header always set Referrer-Policy "strict-origin-when-cross-origin"</code></p>
+
+      <h3>Permissions-Policy (formerly Feature-Policy)</h3>
+      <p>Controls which browser features and APIs can be used on your page. Disabling unused features reduces your attack surface and prevents malicious scripts from accessing sensitive APIs.</p>
+      <p><strong>Recommended value:</strong></p>
+      <pre><code>Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()</code></pre>
+      <p>The empty parentheses <code>()</code> disable the feature entirely. Use <code>(self)</code> to allow the feature for your origin only. Available features include: accelerometer, autoplay, camera, clipboard-read, clipboard-write, fullscreen, geolocation, gyroscope, magnetometer, microphone, payment, usb, and more.</p>
+      <p><strong>Nginx:</strong> <code>add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()" always;</code></p>
+      <p><strong>Apache:</strong> <code>Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"</code></p>
+
+      <h3>Cross-Origin Headers</h3>
+      <p><strong>Cross-Origin-Embedder-Policy (COEP):</strong> <code>require-corp</code> ensures all cross-origin resources explicitly grant permission to be loaded. Required for enabling SharedArrayBuffer and high-resolution timers.</p>
+      <p><strong>Cross-Origin-Opener-Policy (COOP):</strong> <code>same-origin</code> isolates your browsing context from cross-origin popups, preventing Spectre-class side-channel attacks.</p>
+      <p><strong>Cross-Origin-Resource-Policy (CORP):</strong> <code>same-origin</code> prevents other sites from loading your resources, protecting against cross-origin data leaks.</p>
+
+      <h3>Common Misconfigurations</h3>
+      <p><strong>Setting HSTS with a short max-age in production:</strong> A max-age of 300 seconds provides almost no protection. Use 31536000 (one year) after testing.</p>
+      <p><strong>Using CSP with unsafe-inline and unsafe-eval:</strong> This effectively disables CSP's XSS protection. Migrate to nonce-based CSP.</p>
+      <p><strong>Setting X-Frame-Options: ALLOW-FROM:</strong> This value has been removed from browser implementations. Use CSP frame-ancestors instead.</p>
+      <p><strong>Forgetting the 'always' directive in Nginx:</strong> Without <code>always</code>, Nginx only adds headers on successful (2xx/3xx) responses. Error pages (4xx/5xx) will lack security headers, which is exactly when you need them most.</p>
+      <p><strong>Not setting headers on all response types:</strong> Security headers must be set on HTML responses, API responses, and error pages. A missing header on a single endpoint can be exploited.</p>
+
+      <h3>Complete Server Configuration</h3>
+      <p><strong>Nginx:</strong></p>
+      <pre><code>add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'none';" always;</code></pre>
+      <p><strong>Apache (.htaccess):</strong></p>
+      <pre><code>Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'none';"</code></pre>
+
+      <h3>Testing Your Headers</h3>
+      <p>Use <code>curl -I https://yourdomain.com</code> to inspect response headers from the command line. Online tools like securityheaders.com grade your configuration from A+ to F. Check headers on multiple paths including your homepage, API endpoints, and error pages. Verify headers after every deployment — configuration changes and reverse proxy updates can silently remove headers.</p>
+
+      <div class="last-updated"><time datetime="2026-04-10">Last updated: April 10, 2026</time></div>
+    </section>
+
+    <div class="cross-links">
+      <h3>Related Resources</h3>
+      <a href="/">LochBot Scanner</a>
+      <a href="/tools/csp-generator.html">CSP Generator</a>
+      <a href="/tools/xss-prevention.html">XSS Prevention</a>
+      <a href="/tools/sql-injection-prevention.html">SQL Injection Prevention</a>
+      <a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a>
+    </div>
+
+    <section class="faq-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What are the most important HTTP security headers?</summary>
+        <div class="faq-answer">The five essential security headers are Content-Security-Policy to prevent XSS, Strict-Transport-Security to enforce HTTPS, X-Content-Type-Options to prevent MIME sniffing, X-Frame-Options or frame-ancestors to prevent clickjacking, and Referrer-Policy to control information leakage. These five headers address the most common browser-side attack vectors.</div>
+      </details>
+      <details>
+        <summary>What is HSTS preloading and should I use it?</summary>
+        <div class="faq-answer">HSTS preloading hardcodes your domain into the browser's HSTS list, so the browser uses HTTPS from the very first connection without ever making an initial HTTP request. To qualify, set max-age to at least one year, include includeSubDomains and preload directives, then submit to hstspreload.org. Warning: preloading is difficult to undo, so only enable it after confirming all subdomains support HTTPS.</div>
+      </details>
+      <details>
+        <summary>Is X-Frame-Options still needed if I have CSP frame-ancestors?</summary>
+        <div class="faq-answer">CSP frame-ancestors supersedes X-Frame-Options and is more flexible. However, X-Frame-Options is still recommended as a fallback for older browsers that do not support CSP Level 2. Set both headers for maximum compatibility: X-Frame-Options: DENY and Content-Security-Policy: frame-ancestors 'none'.</div>
+      </details>
+      <details>
+        <summary>What does X-Content-Type-Options: nosniff actually prevent?</summary>
+        <div class="faq-answer">It prevents the browser from MIME-type sniffing, which is when the browser ignores the declared Content-Type and guesses the file type based on content. Without this header, an attacker can upload a file with a .jpg extension containing JavaScript, and the browser may execute it as a script. The nosniff header forces the browser to respect the declared Content-Type.</div>
+      </details>
+      <details>
+        <summary>What Referrer-Policy value should I use?</summary>
+        <div class="faq-answer">Use 'strict-origin-when-cross-origin' as the default. This sends the full URL for same-origin requests, the origin only for cross-origin HTTPS requests, and nothing when navigating from HTTPS to HTTP. Use 'no-referrer' if you need maximum privacy and do not rely on referrer information for analytics or attribution.</div>
+      </details>
+    </section>
+
+    <div class="author-section" style="max-width:800px;margin:2rem auto;padding:1.5rem;background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.15);border-radius:12px;">
+      <p style="font-size:0.9rem;color:#8b949e;margin:0;">Written by <a href="https://zovo.one" style="color:#58a6ff;text-decoration:none;">Michael Lip</a> &mdash; security tools at <a href="https://lochbot.com" style="color:#58a6ff;text-decoration:none;">LochBot</a></p>
+    </div>
+  </main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+            <a href="https://claudkit.com">ClaudKit — API</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Compare</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+  <script src="/assets/js/share.js"></script>
+</body>
+</html>

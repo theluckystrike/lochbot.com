@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Content Security Policy Generator — CSP Header Builder | LochBot</title>
+  <meta name="description" content="Generate Content Security Policy headers for your website. Prevent XSS, clickjacking, and data injection attacks. CSP directive reference.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/csp-generator.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="Content Security Policy Generator — CSP Header Builder">
+  <meta property="og:description" content="Generate Content Security Policy headers for your website. Prevent XSS, clickjacking, and data injection attacks with proper CSP configuration.">
+  <meta property="og:url" content="https://lochbot.com/tools/csp-generator.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Content Security Policy Generator — CSP Header Builder">
+  <meta name="twitter:description" content="Generate Content Security Policy headers for your website. CSP directive reference and common configurations.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/tools/csp-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/tools/csp-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Content Security Policy Generator",
+    "url": "https://lochbot.com/tools/csp-generator.html",
+    "description": "Generate Content Security Policy headers for your website. Prevent XSS, clickjacking, and data injection attacks. CSP directive reference.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "browserRequirements": "Requires JavaScript",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Content Security Policy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Content Security Policy (CSP) is an HTTP response header that tells the browser which sources of content are allowed to load on a page. CSP prevents Cross-Site Scripting (XSS), clickjacking, and other code injection attacks by restricting where scripts, styles, images, fonts, and other resources can be loaded from. When a resource violates the policy, the browser blocks it and optionally reports the violation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between CSP Level 2 and Level 3?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CSP Level 2 introduced nonce-based and hash-based script allowlisting, the base-uri directive, and the form-action directive. CSP Level 3 added the 'strict-dynamic' keyword (which allows scripts loaded by trusted scripts), the 'report-sample' keyword, and the worker-src directive. Level 3 also introduced navigate-to for controlling navigation targets. Most modern browsers support Level 3."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I use 'unsafe-inline' in my CSP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Avoid 'unsafe-inline' for script-src because it defeats CSP's primary XSS protection — if inline scripts are allowed, any injected script will also execute. Instead, use nonce-based CSP ('nonce-{random}') or hash-based CSP ('sha256-{hash}'). For style-src, 'unsafe-inline' is more acceptable because inline styles are a lower-risk vector, though nonce-based styles are still preferred."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I deploy CSP without breaking my site?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Start with Content-Security-Policy-Report-Only instead of Content-Security-Policy. This header logs violations without blocking resources, letting you identify what would break. Monitor the violation reports, adjust your policy to allow legitimate resources, and repeat until violations are only from actual threats. Then switch from Report-Only to the enforcing header."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is strict-dynamic and when should I use it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "'strict-dynamic' tells the browser to trust scripts loaded by already-trusted scripts. When combined with a nonce, you only need to add the nonce to your top-level scripts — any scripts they dynamically load are automatically trusted. This simplifies CSP for applications that use script loaders, tag managers, or dynamically created script elements. It is the recommended approach for complex applications."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+          <div class="nav-right">
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+      <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+    </div>
+  </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/tools/">Security Guides</a> &rsaquo; <span>CSP Generator</span>
+      </nav>
+      <h1>Content Security Policy (CSP) Generator</h1>
+      <p>Understand every CSP directive, build secure policies, and deploy Content Security Policy headers that prevent XSS and data injection attacks.</p>
+    </div>
+
+    <section class="explainer-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>What Is Content Security Policy?</h2>
+      <p>Content Security Policy is an HTTP response header that provides a declarative allowlist of content sources for your web page. When a browser loads a page with a CSP header, it enforces the policy by blocking any resource that does not match the declared sources. CSP is the strongest browser-side defense against Cross-Site Scripting because it prevents injected scripts from executing even if an attacker successfully injects HTML into the page.</p>
+      <p>CSP was designed as a defense-in-depth layer. It does not replace input validation or output encoding — it catches the attacks that slip through those defenses. A well-configured CSP can neutralize stored XSS, reflected XSS, clickjacking, form hijacking, and malicious resource injection. Google's deployment of strict CSP across their properties eliminated entire classes of XSS bugs that had persisted for years.</p>
+
+      <h3>CSP Directive Reference</h3>
+      <p><strong>default-src:</strong> The fallback directive for all resource types not explicitly configured. Setting <code>default-src 'self'</code> restricts all resources to the same origin by default. Every other directive overrides default-src for its specific resource type.</p>
+      <p><strong>script-src:</strong> Controls which scripts can execute. This is the most critical directive for XSS prevention. Recommended: <code>script-src 'nonce-{random}' 'strict-dynamic'</code>. Avoid <code>'unsafe-inline'</code> and <code>'unsafe-eval'</code>.</p>
+      <p><strong>style-src:</strong> Controls which stylesheets can be applied. <code>style-src 'self' 'unsafe-inline'</code> is common because inline styles are lower risk, but nonce-based style policies are more secure.</p>
+      <p><strong>img-src:</strong> Controls which image sources are allowed. <code>img-src 'self' data: https:</code> allows same-origin images, data URIs, and any HTTPS image source.</p>
+      <p><strong>font-src:</strong> Controls web font sources. <code>font-src 'self' https://fonts.gstatic.com</code> is typical for sites using Google Fonts.</p>
+      <p><strong>connect-src:</strong> Controls which URLs the page can connect to via fetch, XMLHttpRequest, WebSocket, and EventSource. Critical for APIs: <code>connect-src 'self' https://api.example.com</code>.</p>
+      <p><strong>frame-src:</strong> Controls which URLs can be loaded in iframes. <code>frame-src 'none'</code> prevents all framing. Use this to block clickjacking and rogue iframe injection.</p>
+      <p><strong>object-src:</strong> Controls plugin content (Flash, Java applets). Always set <code>object-src 'none'</code> — plugins are a legacy attack vector.</p>
+      <p><strong>base-uri:</strong> Restricts URLs for the <code>&lt;base&gt;</code> element. Set <code>base-uri 'self'</code> or <code>base-uri 'none'</code> to prevent base tag injection, which can redirect all relative URLs.</p>
+      <p><strong>form-action:</strong> Controls where forms can submit. <code>form-action 'self'</code> prevents form hijacking where an attacker changes the form's action URL.</p>
+      <p><strong>frame-ancestors:</strong> Controls which pages can embed this page in an iframe. Replaces the X-Frame-Options header. <code>frame-ancestors 'none'</code> prevents all framing (equivalent to <code>X-Frame-Options: DENY</code>).</p>
+      <p><strong>worker-src:</strong> Controls sources for Worker, SharedWorker, and ServiceWorker scripts. Falls back to script-src if not set.</p>
+      <p><strong>manifest-src:</strong> Controls which manifest files can be loaded. <code>manifest-src 'self'</code> restricts to same-origin manifests.</p>
+      <p><strong>report-uri / report-to:</strong> Specifies where CSP violation reports are sent. Use <code>report-uri /csp-report</code> or the newer <code>report-to</code> directive with a Reporting API endpoint. Violation reports tell you when legitimate resources are blocked or when actual attacks are mitigated.</p>
+
+      <h3>Common CSP Configurations</h3>
+      <p><strong>Strict policy (recommended):</strong></p>
+      <pre><code>Content-Security-Policy: default-src 'none'; script-src 'nonce-{random}' 'strict-dynamic'; style-src 'self' 'nonce-{random}'; img-src 'self' https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';</code></pre>
+      <p><strong>Starter policy for existing sites:</strong></p>
+      <pre><code>Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; object-src 'none'; frame-ancestors 'self';</code></pre>
+      <p><strong>Report-only for testing:</strong></p>
+      <pre><code>Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; report-uri /csp-report;</code></pre>
+
+      <h3>Nonce-Based CSP</h3>
+      <p>Nonce-based CSP is the recommended approach for modern applications. Generate a cryptographically random nonce (at least 128 bits of entropy) for each HTTP response. Add this nonce to the CSP header and to every legitimate script tag. The browser will only execute scripts that carry the matching nonce, blocking all injected scripts.</p>
+      <pre><code>&lt;!-- Server generates: nonce="a1b2c3d4e5f6" --&gt;
+&lt;script nonce="a1b2c3d4e5f6" src="/app.js"&gt;&lt;/script&gt;
+
+&lt;!-- CSP header includes the same nonce --&gt;
+Content-Security-Policy: script-src 'nonce-a1b2c3d4e5f6' 'strict-dynamic';</code></pre>
+      <p>With <code>'strict-dynamic'</code>, scripts loaded dynamically by nonced scripts are also trusted. This means you only need to add the nonce to your initial script tags — everything they import or create inherits trust.</p>
+
+      <h3>CSP Violation Reporting</h3>
+      <p>Set up a reporting endpoint to monitor CSP violations in production. Each violation report includes the blocked URI, the violated directive, the document URI, and a sample of the blocked content. Services like report-uri.com, Sentry, and custom logging endpoints can aggregate these reports. Monitor for patterns: a spike in violations from a specific directive may indicate an active XSS attack being mitigated by your policy.</p>
+
+      <div class="last-updated"><time datetime="2026-04-10">Last updated: April 10, 2026</time></div>
+    </section>
+
+    <div class="cross-links">
+      <h3>Related Resources</h3>
+      <a href="/">LochBot Scanner</a>
+      <a href="/tools/xss-prevention.html">XSS Prevention</a>
+      <a href="/tools/security-headers.html">Security Headers Reference</a>
+      <a href="/tools/sql-injection-prevention.html">SQL Injection Prevention</a>
+      <a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a>
+    </div>
+
+    <section class="faq-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What is a Content Security Policy?</summary>
+        <div class="faq-answer">A Content Security Policy (CSP) is an HTTP response header that tells the browser which sources of content are allowed to load on a page. CSP prevents Cross-Site Scripting, clickjacking, and other code injection attacks by restricting where scripts, styles, images, fonts, and other resources can be loaded from. When a resource violates the policy, the browser blocks it and optionally reports the violation.</div>
+      </details>
+      <details>
+        <summary>What is the difference between CSP Level 2 and Level 3?</summary>
+        <div class="faq-answer">CSP Level 2 introduced nonce-based and hash-based script allowlisting, the base-uri directive, and the form-action directive. CSP Level 3 added the 'strict-dynamic' keyword, the 'report-sample' keyword, and the worker-src directive. Level 3 also introduced navigate-to for controlling navigation targets. Most modern browsers support Level 3.</div>
+      </details>
+      <details>
+        <summary>Should I use 'unsafe-inline' in my CSP?</summary>
+        <div class="faq-answer">Avoid 'unsafe-inline' for script-src because it defeats CSP's primary XSS protection. If inline scripts are allowed, any injected script will also execute. Instead, use nonce-based CSP or hash-based CSP. For style-src, 'unsafe-inline' is more acceptable because inline styles are a lower-risk vector, though nonce-based styles are still preferred.</div>
+      </details>
+      <details>
+        <summary>How do I deploy CSP without breaking my site?</summary>
+        <div class="faq-answer">Start with Content-Security-Policy-Report-Only instead of Content-Security-Policy. This header logs violations without blocking resources, letting you identify what would break. Monitor the violation reports, adjust your policy to allow legitimate resources, and repeat until violations are only from actual threats. Then switch to the enforcing header.</div>
+      </details>
+      <details>
+        <summary>What is strict-dynamic and when should I use it?</summary>
+        <div class="faq-answer">'strict-dynamic' tells the browser to trust scripts loaded by already-trusted scripts. When combined with a nonce, you only need to add the nonce to your top-level scripts — any scripts they dynamically load are automatically trusted. This simplifies CSP for applications using script loaders, tag managers, or dynamically created script elements.</div>
+      </details>
+    </section>
+
+    <div class="author-section" style="max-width:800px;margin:2rem auto;padding:1.5rem;background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.15);border-radius:12px;">
+      <p style="font-size:0.9rem;color:#8b949e;margin:0;">Written by <a href="https://zovo.one" style="color:#58a6ff;text-decoration:none;">Michael Lip</a> &mdash; security tools at <a href="https://lochbot.com" style="color:#58a6ff;text-decoration:none;">LochBot</a></p>
+    </div>
+  </main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+            <a href="https://claudkit.com">ClaudKit — API</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Compare</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+  <script src="/assets/js/share.js"></script>
+</body>
+</html>

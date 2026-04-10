@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>XSS Prevention Cheat Sheet — Cross-Site Scripting Guide | LochBot</title>
+  <meta name="description" content="Complete guide to preventing Cross-Site Scripting (XSS) attacks. Input validation, output encoding, CSP headers, and framework-specific protections.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/xss-prevention.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="XSS Prevention Cheat Sheet — Cross-Site Scripting Guide">
+  <meta property="og:description" content="Complete guide to preventing Cross-Site Scripting (XSS) attacks. Input validation, output encoding, CSP headers, and framework-specific protections.">
+  <meta property="og:url" content="https://lochbot.com/tools/xss-prevention.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XSS Prevention Cheat Sheet — Cross-Site Scripting Guide">
+  <meta name="twitter:description" content="Complete guide to preventing Cross-Site Scripting (XSS) attacks. Input validation, output encoding, CSP headers, and framework-specific protections.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/tools/xss-prevention.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/tools/xss-prevention.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "XSS Prevention Cheat Sheet",
+    "url": "https://lochbot.com/tools/xss-prevention.html",
+    "description": "Complete guide to preventing Cross-Site Scripting (XSS) attacks with input validation, output encoding, CSP headers, and framework-specific protections.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "browserRequirements": "Requires JavaScript",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between stored and reflected XSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Stored XSS persists on the server — the malicious script is saved in a database or file and served to every user who views the affected page. Reflected XSS is transient — the malicious script is part of a URL or form submission and only executes when a victim clicks a crafted link. Stored XSS is more dangerous because it does not require social engineering to trigger and affects all visitors to the compromised page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does React automatically prevent XSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "React escapes values embedded in JSX by default, which prevents most XSS attacks in rendered content. However, React does NOT protect against XSS when you use dangerouslySetInnerHTML, pass user input to href or src attributes (javascript: URLs), use eval() or Function() with user data, or render user-controlled content in style attributes. These are the common React XSS bypass vectors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is input validation enough to prevent XSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Input validation alone is insufficient because there are hundreds of encoding and obfuscation techniques that can bypass input filters. The primary defense is output encoding — escaping data at the point where it is inserted into the page. Input validation is a useful secondary layer (defense in depth), but it should never be your only XSS defense."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Content Security Policy directives prevent XSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most important CSP directive for XSS prevention is script-src, which controls where JavaScript can be loaded from. Setting script-src to 'self' with specific allowed domains blocks inline scripts and scripts from unauthorized origins. Adding 'strict-dynamic' with nonce-based CSP provides the strongest protection. The object-src 'none' directive also prevents XSS via plugin-based vectors like Flash."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I test my application for XSS vulnerabilities?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use a combination of automated scanning and manual testing. Tools like Burp Suite, OWASP ZAP, and Semgrep can detect common XSS patterns. For manual testing, inject test payloads in every user input field, URL parameter, HTTP header, and cookie value. Test with payloads that use different encoding schemes (HTML entities, URL encoding, Unicode, hex). Check both the immediate response and stored data that renders later."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+          <div class="nav-right">
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+      <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+    </div>
+  </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/tools/">Security Guides</a> &rsaquo; <span>XSS Prevention</span>
+      </nav>
+      <h1>XSS Prevention Cheat Sheet</h1>
+      <p>A complete reference for defending against Cross-Site Scripting attacks across every output context, framework, and deployment pattern.</p>
+    </div>
+
+    <section class="explainer-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Understanding Cross-Site Scripting (XSS)</h2>
+      <p>Cross-Site Scripting is a client-side injection vulnerability that occurs when an application includes untrusted data in its web output without proper validation or encoding. An attacker exploits XSS to execute arbitrary JavaScript in a victim's browser, enabling session hijacking, credential theft, keylogging, defacement, and redirection to malicious sites. XSS consistently ranks in the OWASP Top 10 and remains one of the most prevalent vulnerabilities on the web.</p>
+
+      <h3>Types of XSS Attacks</h3>
+      <p><strong>Stored XSS (Persistent):</strong> The malicious script is permanently stored on the target server, typically in a database, forum post, comment field, or user profile. Every user who views the affected content executes the payload. This is the most dangerous variant because it requires no victim interaction beyond visiting the page.</p>
+      <p><strong>Reflected XSS (Non-Persistent):</strong> The injected script is reflected off the web server in an error message, search result, or URL parameter. The attack requires the victim to click a crafted link. While less severe than stored XSS, reflected XSS is the most common type and is frequently used in phishing campaigns.</p>
+      <p><strong>DOM-Based XSS:</strong> The vulnerability exists in client-side JavaScript rather than server-side code. The malicious payload is processed by the DOM environment in the victim's browser. Common DOM XSS sinks include <code>document.write()</code>, <code>innerHTML</code>, <code>eval()</code>, and <code>location.href</code>. DOM XSS is particularly difficult to detect with server-side scanners because the payload never reaches the server.</p>
+
+      <h3>OWASP Prevention Rules</h3>
+      <p>The OWASP XSS Prevention Cheat Sheet defines seven rules that form the foundation of XSS defense:</p>
+      <p><strong>Rule 0 — Never insert untrusted data except in allowed locations.</strong> Do not place user input directly into script blocks, HTML comments, attribute names, tag names, or CSS. These contexts have no safe encoding scheme.</p>
+      <p><strong>Rule 1 — HTML-encode before inserting into element content.</strong> Convert <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code>, <code>&#x27;</code>, and <code>/</code> to their HTML entity equivalents when inserting data between HTML tags.</p>
+      <p><strong>Rule 2 — Attribute-encode before inserting into attributes.</strong> Encode all characters with ASCII values less than 256 that are not alphanumeric. Always quote attribute values to prevent attribute injection.</p>
+      <p><strong>Rule 3 — JavaScript-encode before inserting into JavaScript data values.</strong> Encode all non-alphanumeric characters with the <code>\xHH</code> format. Never place user data inside <code>eval()</code> or event handlers without encoding.</p>
+      <p><strong>Rule 4 — CSS-encode before inserting into CSS property values.</strong> Use the <code>\HH</code> format for any character that is not alphanumeric. Never allow user data in CSS expressions or <code>url()</code> values.</p>
+      <p><strong>Rule 5 — URL-encode before inserting into URL parameter values.</strong> Use percent-encoding for all untrusted data in URL parameters. Validate that URLs begin with <code>http://</code> or <code>https://</code> to block <code>javascript:</code> and <code>data:</code> URLs.</p>
+      <p><strong>Rule 6 — Use an HTML sanitization library for rich content.</strong> When you must accept HTML input (rich text editors, markdown), use a well-maintained sanitizer like DOMPurify, Bleach, or the OWASP Java HTML Sanitizer. Never write your own HTML sanitizer.</p>
+
+      <h3>Output Encoding by Context</h3>
+      <p>The critical insight in XSS prevention is that encoding must match the output context. Data that is safe in an HTML body is not safe in a JavaScript string, URL parameter, or CSS value. Each context has its own encoding rules:</p>
+      <p><strong>HTML body context:</strong> Use HTML entity encoding. Libraries: <code>he</code> (Node.js), <code>html.escape()</code> (Python), <code>htmlspecialchars()</code> (PHP), <code>StringEscapeUtils.escapeHtml4()</code> (Java).</p>
+      <p><strong>HTML attribute context:</strong> Use attribute encoding with quoted attributes. Never use unquoted attributes with user data.</p>
+      <p><strong>JavaScript context:</strong> Use JavaScript string encoding (<code>\xHH</code>). Prefer JSON.stringify() for embedding data in JavaScript. Never concatenate user data into script blocks.</p>
+      <p><strong>URL context:</strong> Use <code>encodeURIComponent()</code> for parameter values. Validate the URL scheme to block <code>javascript:</code> and <code>data:</code> URIs.</p>
+      <p><strong>CSS context:</strong> Use CSS hex encoding. Better yet, avoid placing user data in CSS entirely.</p>
+
+      <h3>Content Security Policy as a Defense Layer</h3>
+      <p>CSP is not a replacement for output encoding, but it is a powerful defense-in-depth layer that mitigates XSS impact even when encoding failures occur. A strict CSP configuration blocks inline script execution and restricts script sources to trusted origins. The recommended approach is nonce-based CSP:</p>
+      <pre><code>Content-Security-Policy: script-src 'nonce-{random}' 'strict-dynamic'; object-src 'none'; base-uri 'self';</code></pre>
+      <p>Generate a cryptographically random nonce per response and include it on every legitimate <code>&lt;script&gt;</code> tag. This allows your scripts to execute while blocking injected scripts that lack the nonce.</p>
+
+      <h3>Framework-Specific Protections</h3>
+      <p><strong>React:</strong> JSX escapes embedded values by default. Avoid <code>dangerouslySetInnerHTML</code>. Validate <code>href</code> attributes to block <code>javascript:</code> URLs. Use <code>DOMPurify</code> when you must render HTML.</p>
+      <p><strong>Vue:</strong> Double-brace interpolation (<code>{{ }}</code>) auto-escapes. The <code>v-html</code> directive does NOT escape and is a common XSS vector. Never bind user data to <code>v-html</code> without sanitization.</p>
+      <p><strong>Angular:</strong> Angular sanitizes values by default in templates. The <code>bypassSecurityTrustHtml()</code> method disables sanitization and should only be used with trusted content. Angular's built-in sanitizer is robust but can be bypassed with prototype pollution.</p>
+      <p><strong>Server-side templates (EJS, Jinja2, Blade):</strong> Use the auto-escaping syntax by default (<code>&lt;%= %&gt;</code> in EJS, <code>{{ }}</code> in Jinja2 with autoescape, <code>{{ }}</code> in Blade). Avoid raw output syntax (<code>&lt;%- %&gt;</code>, <code>|safe</code>, <code>{!! !!}</code>) unless the content has been sanitized.</p>
+
+      <div class="last-updated"><time datetime="2026-04-10">Last updated: April 10, 2026</time></div>
+    </section>
+
+    <div class="cross-links">
+      <h3>Related Resources</h3>
+      <a href="/">LochBot Scanner</a>
+      <a href="/tools/sql-injection-prevention.html">SQL Injection Prevention</a>
+      <a href="/tools/csp-generator.html">CSP Generator</a>
+      <a href="/tools/security-headers.html">Security Headers Reference</a>
+      <a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a>
+    </div>
+
+    <section class="faq-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What is the difference between stored and reflected XSS?</summary>
+        <div class="faq-answer">Stored XSS persists on the server — the malicious script is saved in a database or file and served to every user who views the affected page. Reflected XSS is transient — the malicious script is part of a URL or form submission and only executes when a victim clicks a crafted link. Stored XSS is more dangerous because it does not require social engineering to trigger and affects all visitors to the compromised page.</div>
+      </details>
+      <details>
+        <summary>Does React automatically prevent XSS?</summary>
+        <div class="faq-answer">React escapes values embedded in JSX by default, which prevents most XSS attacks in rendered content. However, React does NOT protect against XSS when you use dangerouslySetInnerHTML, pass user input to href or src attributes (javascript: URLs), use eval() or Function() with user data, or render user-controlled content in style attributes. These are the common React XSS bypass vectors.</div>
+      </details>
+      <details>
+        <summary>Is input validation enough to prevent XSS?</summary>
+        <div class="faq-answer">No. Input validation alone is insufficient because there are hundreds of encoding and obfuscation techniques that can bypass input filters. The primary defense is output encoding — escaping data at the point where it is inserted into the page. Input validation is a useful secondary layer (defense in depth), but it should never be your only XSS defense.</div>
+      </details>
+      <details>
+        <summary>What Content Security Policy directives prevent XSS?</summary>
+        <div class="faq-answer">The most important CSP directive for XSS prevention is script-src, which controls where JavaScript can be loaded from. Setting script-src to 'self' with specific allowed domains blocks inline scripts and scripts from unauthorized origins. Adding 'strict-dynamic' with nonce-based CSP provides the strongest protection. The object-src 'none' directive also prevents XSS via plugin-based vectors like Flash.</div>
+      </details>
+      <details>
+        <summary>How do I test my application for XSS vulnerabilities?</summary>
+        <div class="faq-answer">Use a combination of automated scanning and manual testing. Tools like Burp Suite, OWASP ZAP, and Semgrep can detect common XSS patterns. For manual testing, inject test payloads in every user input field, URL parameter, HTTP header, and cookie value. Test with payloads that use different encoding schemes (HTML entities, URL encoding, Unicode, hex). Check both the immediate response and stored data that renders later.</div>
+      </details>
+    </section>
+
+    <div class="author-section" style="max-width:800px;margin:2rem auto;padding:1.5rem;background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.15);border-radius:12px;">
+      <p style="font-size:0.9rem;color:#8b949e;margin:0;">Written by <a href="https://zovo.one" style="color:#58a6ff;text-decoration:none;">Michael Lip</a> &mdash; security tools at <a href="https://lochbot.com" style="color:#58a6ff;text-decoration:none;">LochBot</a></p>
+    </div>
+  </main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+            <a href="https://claudkit.com">ClaudKit — API</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Compare</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+  <script src="/assets/js/share.js"></script>
+</body>
+</html>

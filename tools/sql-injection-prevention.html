@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>SQL Injection Prevention Guide — Parameterized Queries | LochBot</title>
+  <meta name="description" content="Prevent SQL injection attacks with parameterized queries, ORM best practices, and input validation. Code examples for Node.js, Python, PHP, and Java.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/sql-injection-prevention.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="SQL Injection Prevention Guide — Parameterized Queries">
+  <meta property="og:description" content="Prevent SQL injection attacks with parameterized queries, ORM best practices, and input validation. Code examples for Node.js, Python, PHP, and Java.">
+  <meta property="og:url" content="https://lochbot.com/tools/sql-injection-prevention.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SQL Injection Prevention Guide — Parameterized Queries">
+  <meta name="twitter:description" content="Prevent SQL injection attacks with parameterized queries, ORM best practices, and input validation.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/tools/sql-injection-prevention.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/tools/sql-injection-prevention.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SQL Injection Prevention Guide",
+    "url": "https://lochbot.com/tools/sql-injection-prevention.html",
+    "description": "Prevent SQL injection attacks with parameterized queries, ORM best practices, and input validation. Code examples for Node.js, Python, PHP, and Java.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "browserRequirements": "Requires JavaScript",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-04-10"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the single most effective defense against SQL injection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Parameterized queries (also called prepared statements) are the single most effective defense. They separate SQL code from data by sending the query structure and user-supplied values as distinct parameters. The database engine compiles the query structure first, then binds the data values — making it structurally impossible for user input to alter the SQL logic. Every major database driver supports parameterized queries."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can an ORM prevent SQL injection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ORMs like Sequelize, SQLAlchemy, Eloquent, and Hibernate use parameterized queries internally, which prevents SQL injection for standard CRUD operations. However, ORMs are NOT safe when you use raw query methods (e.g., sequelize.query(), session.execute()), string interpolation in query builders, or user-controlled column/table names. Always use the ORM's parameterized raw query interface when you need custom SQL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is escaping user input a valid SQL injection defense?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Escaping is a weak defense that should never be your primary protection. Functions like mysql_real_escape_string() have known bypass techniques involving character set mismatches, numeric contexts (WHERE id = input without quotes), and second-order injection. Parameterized queries are strictly superior because they eliminate the need for escaping entirely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is second-order SQL injection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Second-order SQL injection occurs when user input is stored safely in the database but later retrieved and used in a new SQL query without parameterization. For example, a username containing a SQL payload is safely inserted during registration but later concatenated into an admin query. The initial input was not malicious in its insertion context — it becomes dangerous when reused in a different query context."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I prevent SQL injection in dynamic ORDER BY or table name clauses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Parameterized queries cannot be used for identifiers like column names, table names, or ORDER BY directions — only for data values. For dynamic identifiers, use a whitelist approach: map user input to a predefined set of allowed values using a lookup table or switch statement. Never concatenate user input directly into identifier positions. Example: validate that the sort column is one of ['name', 'date', 'price'] before using it."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+          <div class="nav-right">
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+      <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+    </div>
+  </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/tools/">Security Guides</a> &rsaquo; <span>SQL Injection Prevention</span>
+      </nav>
+      <h1>SQL Injection Prevention Guide</h1>
+      <p>Parameterized queries, ORM safety patterns, and language-specific code examples to eliminate SQL injection vulnerabilities from your application.</p>
+    </div>
+
+    <section class="explainer-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>How SQL Injection Works</h2>
+      <p>SQL injection occurs when an application constructs SQL queries by concatenating user-supplied input directly into the query string. The attacker crafts input that changes the query's logical structure, allowing them to read unauthorized data, modify records, delete tables, or execute system commands. SQL injection has been the number one web application vulnerability for over two decades and remains in the OWASP Top 10.</p>
+      <p>Consider this vulnerable query: <code>SELECT * FROM users WHERE username = '" + input + "'</code>. If the attacker provides <code>' OR '1'='1</code> as input, the query becomes <code>SELECT * FROM users WHERE username = '' OR '1'='1'</code>, which returns every row in the table. More destructive payloads can use <code>UNION SELECT</code> to extract data from other tables, <code>; DROP TABLE</code> to delete data, or database-specific functions to read files and execute OS commands.</p>
+
+      <h3>Parameterized Queries by Language</h3>
+      <p>Parameterized queries are the primary defense against SQL injection. They work by sending the query structure and data values separately, so user input can never alter the SQL logic.</p>
+      <p><strong>Node.js (mysql2):</strong></p>
+      <pre><code>const [rows] = await connection.execute(
+  'SELECT * FROM users WHERE email = ? AND status = ?',
+  [userEmail, 'active']
+);</code></pre>
+      <p><strong>Python (psycopg2):</strong></p>
+      <pre><code>cursor.execute(
+    "SELECT * FROM users WHERE email = %s AND status = %s",
+    (user_email, "active")
+)</code></pre>
+      <p><strong>PHP (PDO):</strong></p>
+      <pre><code>$stmt = $pdo-&gt;prepare('SELECT * FROM users WHERE email = :email AND status = :status');
+$stmt-&gt;execute(['email' =&gt; $userEmail, 'status' =&gt; 'active']);</code></pre>
+      <p><strong>Java (JDBC):</strong></p>
+      <pre><code>PreparedStatement stmt = conn.prepareStatement(
+    "SELECT * FROM users WHERE email = ? AND status = ?");
+stmt.setString(1, userEmail);
+stmt.setString(2, "active");
+ResultSet rs = stmt.executeQuery();</code></pre>
+
+      <h3>ORM Safety and Pitfalls</h3>
+      <p>Object-Relational Mappers use parameterized queries internally for standard operations, making them safe by default. However, every ORM provides escape hatches for raw SQL that reintroduce injection risk:</p>
+      <p><strong>Sequelize (Node.js):</strong> Safe: <code>User.findAll({ where: { email: input } })</code>. Unsafe: <code>sequelize.query("SELECT * FROM users WHERE email = '" + input + "'")</code>. Fix: use <code>sequelize.query("SELECT * FROM users WHERE email = ?", { replacements: [input] })</code>.</p>
+      <p><strong>SQLAlchemy (Python):</strong> Safe: <code>session.query(User).filter_by(email=input)</code>. Unsafe: <code>session.execute("SELECT * FROM users WHERE email = '" + input + "'")</code>. Fix: use <code>session.execute(text("SELECT * FROM users WHERE email = :email"), {"email": input})</code>.</p>
+      <p><strong>Eloquent (PHP):</strong> Safe: <code>User::where('email', $input)->get()</code>. Unsafe: <code>DB::select("SELECT * FROM users WHERE email = '$input'")</code>. Fix: use <code>DB::select("SELECT * FROM users WHERE email = ?", [$input])</code>.</p>
+
+      <h3>Common Injection Patterns</h3>
+      <p><strong>Authentication bypass:</strong> <code>' OR '1'='1' --</code> in login forms to bypass password checks. Defense: parameterize both username and password fields, and hash passwords before comparison.</p>
+      <p><strong>UNION-based extraction:</strong> <code>' UNION SELECT username, password FROM admins --</code> to read data from other tables. Defense: parameterized queries prevent this entirely.</p>
+      <p><strong>Blind injection:</strong> The attacker uses conditional queries like <code>' AND SUBSTRING(password,1,1)='a' --</code> to extract data one character at a time based on true/false responses. Defense: parameterized queries and generic error messages.</p>
+      <p><strong>Time-based blind injection:</strong> <code>' AND IF(1=1, SLEEP(5), 0) --</code> to infer information from response timing. This works even when error messages are suppressed.</p>
+      <p><strong>Second-order injection:</strong> Malicious data is stored safely but later used in an unparameterized query. Defense: parameterize every query, including internal queries that use previously stored data.</p>
+
+      <h3>Web Application Firewall (WAF) Rules</h3>
+      <p>WAFs provide a defense-in-depth layer but should never be the sole protection. ModSecurity with the OWASP Core Rule Set (CRS) detects common injection patterns including UNION, SELECT, DROP, and comment sequences. Configure your WAF in blocking mode after testing with your application's traffic. Be aware that WAFs can be bypassed with encoding tricks, case variations, and database-specific syntax — parameterized queries remain the authoritative defense.</p>
+
+      <h3>Least Privilege Principle</h3>
+      <p>Even with parameterized queries, configure database accounts with minimal permissions. The application's database user should never have DROP, CREATE, ALTER, or GRANT privileges. Use separate accounts for read operations and write operations. Never connect to the database as root or sa. This limits the damage if an injection vulnerability is discovered in a code path you missed.</p>
+
+      <div class="last-updated"><time datetime="2026-04-10">Last updated: April 10, 2026</time></div>
+    </section>
+
+    <div class="cross-links">
+      <h3>Related Resources</h3>
+      <a href="/">LochBot Scanner</a>
+      <a href="/tools/xss-prevention.html">XSS Prevention</a>
+      <a href="/tools/csp-generator.html">CSP Generator</a>
+      <a href="/tools/security-headers.html">Security Headers Reference</a>
+      <a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a>
+    </div>
+
+    <section class="faq-section" style="max-width:800px;margin:2rem auto;padding:0 1.5rem;">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What is the single most effective defense against SQL injection?</summary>
+        <div class="faq-answer">Parameterized queries (prepared statements) are the single most effective defense. They separate SQL code from data by sending the query structure and user-supplied values as distinct parameters. The database engine compiles the query structure first, then binds the data values, making it structurally impossible for user input to alter the SQL logic.</div>
+      </details>
+      <details>
+        <summary>Can an ORM prevent SQL injection?</summary>
+        <div class="faq-answer">ORMs like Sequelize, SQLAlchemy, Eloquent, and Hibernate use parameterized queries internally, which prevents SQL injection for standard CRUD operations. However, ORMs are not safe when you use raw query methods, string interpolation in query builders, or user-controlled column and table names. Always use the ORM's parameterized raw query interface when you need custom SQL.</div>
+      </details>
+      <details>
+        <summary>Is escaping user input a valid SQL injection defense?</summary>
+        <div class="faq-answer">Escaping is a weak defense that should never be your primary protection. Functions like mysql_real_escape_string() have known bypass techniques involving character set mismatches, numeric contexts without quotes, and second-order injection. Parameterized queries are strictly superior because they eliminate the need for escaping entirely.</div>
+      </details>
+      <details>
+        <summary>What is second-order SQL injection?</summary>
+        <div class="faq-answer">Second-order SQL injection occurs when user input is stored safely in the database but later retrieved and used in a new SQL query without parameterization. For example, a username containing a SQL payload is safely inserted during registration but later concatenated into an admin query. The initial input was not malicious in its insertion context — it becomes dangerous when reused in a different query.</div>
+      </details>
+      <details>
+        <summary>How do I prevent SQL injection in dynamic ORDER BY clauses?</summary>
+        <div class="faq-answer">Parameterized queries cannot be used for identifiers like column names, table names, or ORDER BY directions. For dynamic identifiers, use a whitelist approach: map user input to a predefined set of allowed values using a lookup table or switch statement. Never concatenate user input directly into identifier positions.</div>
+      </details>
+    </section>
+
+    <div class="author-section" style="max-width:800px;margin:2rem auto;padding:1.5rem;background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.15);border-radius:12px;">
+      <p style="font-size:0.9rem;color:#8b949e;margin:0;">Written by <a href="https://zovo.one" style="color:#58a6ff;text-decoration:none;">Michael Lip</a> &mdash; security tools at <a href="https://lochbot.com" style="color:#58a6ff;text-decoration:none;">LochBot</a></p>
+    </div>
+  </main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+            <a href="https://claudkit.com">ClaudKit — API</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Compare</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+  <script src="/assets/js/share.js"></script>
+</body>
+</html>
