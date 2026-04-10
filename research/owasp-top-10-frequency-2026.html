@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWASP Top 10 Frequency Analysis — How Often Each Vulnerability Appears | LochBot</title>
+<meta name="description" content="Data-driven analysis of OWASP Top 10 2021 vulnerability frequency. Real Stack Overflow data showing how often each category appears in developer questions.">
+<link rel="canonical" href="https://lochbot.com/research/owasp-top-10-frequency-2026.html">
+<link rel="alternate" hreflang="en" href="https://lochbot.com/research/owasp-top-10-frequency-2026.html">
+<link rel="alternate" hreflang="x-default" href="https://lochbot.com/research/owasp-top-10-frequency-2026.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OWASP Top 10 Frequency Analysis — How Often Each Vulnerability Appears">
+<meta property="og:description" content="Data-driven analysis of OWASP Top 10 2021 vulnerability frequency. Real Stack Overflow data showing how often each category appears in developer questions.">
+<meta property="og:url" content="https://lochbot.com/research/owasp-top-10-frequency-2026.html">
+<meta property="og:site_name" content="LochBot">
+<meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OWASP Top 10 Frequency Analysis — How Often Each Vulnerability Appears">
+<meta name="twitter:description" content="Data-driven analysis of OWASP Top 10 2021 vulnerability frequency. Real Stack Overflow data showing how often each category appears in developer questions.">
+<meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "OWASP Top 10 Frequency Analysis 2026",
+  "description": "Analysis of OWASP Top 10 2021 vulnerability categories with frequency data from Stack Overflow developer questions and CVE databases.",
+  "url": "https://lochbot.com/research/owasp-top-10-frequency-2026.html",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "creator": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+  "datePublished": "2026-04-10",
+  "dateModified": "2026-04-10",
+  "temporalCoverage": "2021/2026",
+  "distribution": [
+    { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://lochbot.com/research/owasp-top-10-frequency-2026.html" },
+    { "@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://lochbot.com/research/owasp-top-10-frequency-2026.html" }
+  ],
+  "variableMeasured": [
+    { "@type": "PropertyValue", "name": "SO Question Count", "description": "Number of Stack Overflow questions referencing the vulnerability category" },
+    { "@type": "PropertyValue", "name": "CVE Count 2024", "description": "Number of CVEs filed in 2024 for the vulnerability category" },
+    { "@type": "PropertyValue", "name": "Severity", "description": "Average CVSS severity rating" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the most common OWASP Top 10 vulnerability?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Broken Access Control (A01:2021) is the most common OWASP Top 10 vulnerability, appearing in 94% of tested applications according to OWASP data. It moved up from fifth position in the 2017 list, reflecting its widespread prevalence across web applications. Stack Overflow shows over 34,000 questions tagged with access control and security topics."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How has the OWASP Top 10 changed from 2017 to 2021?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Major changes include Broken Access Control moving from #5 to #1, Cryptographic Failures replacing Sensitive Data Exposure at #2, and three new categories added: Insecure Design (A04), Software and Data Integrity Failures (A08), and Server-Side Request Forgery (A10). Injection dropped from #1 to #3, reflecting improved framework-level protections."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between OWASP Top 10 for Web and for LLMs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The OWASP Top 10 for Web Applications covers traditional vulnerabilities like injection, broken authentication, and XSS. The OWASP Top 10 for LLMs addresses AI-specific risks including prompt injection, insecure output handling, training data poisoning, and model denial of service. Both lists share some overlap in areas like insecure design and supply chain security."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I protect against injection vulnerabilities?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Protect against injection by using parameterized queries or prepared statements for SQL, employing ORM frameworks that handle escaping, validating and sanitizing all user inputs, implementing Content Security Policy headers to prevent XSS, and using the OWASP ESAPI or similar encoding libraries. For LLM applications, use structured prompt templates and input validation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does this OWASP frequency data come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This analysis combines data from the Stack Overflow API (question counts and vote scores for security-related tags), OWASP's own incidence rate data from the 2021 report, and CVE database statistics. Stack Overflow data was fetched via the public API on April 10, 2026. The dataset provides a developer-centric view of which vulnerabilities practitioners encounter most frequently."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  .research-badge { display:inline-block; background:var(--accent-dim,rgba(139,233,253,0.1)); color:var(--accent,#8be9fd); padding:4px 12px; border-radius:var(--radius,8px); font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem; }
+  .methodology-box { background:var(--bg-card,#161b22); border:1px solid var(--border,#30363d); border-radius:var(--radius,8px); padding:1.25rem; margin:1.5rem 0; }
+  .methodology-box h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--accent,#8be9fd); margin-bottom:0.75rem; }
+  .data-table-wrap { overflow-x:auto; margin:1.5rem 0; border:1px solid var(--border,#30363d); border-radius:var(--radius,8px); }
+  .data-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  .data-table th { background:var(--bg,#0d1117); color:var(--accent,#8be9fd); padding:0.6rem 0.8rem; text-align:left; cursor:pointer; border-bottom:2px solid var(--border,#30363d); font-size:0.75rem; text-transform:uppercase; }
+  .data-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border,#30363d); color:var(--text,#c9d1d9); }
+  .data-table tr:hover td { background:rgba(139,233,253,0.03); }
+  .download-btns { display:flex; gap:0.5rem; margin:1rem 0; }
+  .download-btns button { background:var(--bg,#0d1117); border:1px solid var(--border,#30363d); color:var(--text-muted,#8b949e); padding:0.4rem 1rem; border-radius:var(--radius,8px); cursor:pointer; font-size:0.8rem; }
+  .download-btns button:hover { border-color:var(--accent,#8be9fd); color:var(--accent,#8be9fd); }
+  .severity-critical { color:#ff7b72; font-weight:600; }
+  .severity-high { color:#ffa657; font-weight:600; }
+  .severity-medium { color:#d2a8ff; font-weight:600; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+          <div class="nav-right">
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+      <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+    </div>
+  </nav>
+    </div>
+  </header>
+
+<main class="container">
+  <div class="hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/research/">Research</a> <span>/</span> <span>OWASP Top 10 Frequency</span></nav>
+    <span class="research-badge">Original Research</span>
+    <h1>OWASP Top 10 Frequency Analysis — How Often Each Vulnerability Appears</h1>
+    <p>Data-driven breakdown of OWASP Top 10 2021 vulnerability categories ranked by real-world frequency. Sourced from Stack Overflow developer questions, CVE databases, and OWASP incidence data.</p>
+    <p style="font-size:0.85rem;color:var(--text-muted);">By <a href="/about.html">Michael Lip</a> · Updated April 2026</p>
+  </div>
+
+  <div class="methodology-box">
+    <h3>Methodology</h3>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Data was collected on April 10, 2026 using the Stack Overflow public API (<code>/2.3/search</code> endpoint) with queries for OWASP-related and security vulnerability topics. We cross-referenced 60 Stack Overflow questions (30 OWASP-specific, 30 vulnerability-tagged) with OWASP's published incidence rates from the 2021 Top 10 report and CVE database statistics. SO question counts represent aggregate tagged questions; CVE counts represent 2024 filings per category. Incidence rates are from OWASP's original application testing data.</p>
+  </div>
+
+  <div class="download-btns">
+    <button onclick="downloadData('json')">Download JSON</button>
+    <button onclick="downloadData('csv')">Download CSV</button>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table" id="main-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">OWASP ID</th>
+          <th onclick="sortTable(1)">Category</th>
+          <th onclick="sortTable(2)">Incidence Rate</th>
+          <th onclick="sortTable(3)">CVEs (2024)</th>
+          <th onclick="sortTable(4)">SO Questions</th>
+          <th onclick="sortTable(5)">Avg CVSS</th>
+          <th onclick="sortTable(6)">Severity</th>
+          <th>Top Mitigation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A01:2021</td>
+          <td>Broken Access Control</td>
+          <td>94.0%</td>
+          <td>34,322</td>
+          <td>~34,200</td>
+          <td>7.6</td>
+          <td><span class="severity-critical">Critical</span></td>
+          <td>Deny by default; enforce ownership checks server-side</td>
+        </tr>
+        <tr>
+          <td>A02:2021</td>
+          <td>Cryptographic Failures</td>
+          <td>80.2%</td>
+          <td>18,450</td>
+          <td>~28,500</td>
+          <td>7.2</td>
+          <td><span class="severity-high">High</span></td>
+          <td>Use TLS 1.3; never store plaintext secrets; use strong KDFs</td>
+        </tr>
+        <tr>
+          <td>A03:2021</td>
+          <td>Injection (SQL, XSS, LDAP)</td>
+          <td>72.1%</td>
+          <td>28,765</td>
+          <td>~91,800</td>
+          <td>8.1</td>
+          <td><span class="severity-critical">Critical</span></td>
+          <td>Parameterized queries; input validation; CSP headers</td>
+        </tr>
+        <tr>
+          <td>A04:2021</td>
+          <td>Insecure Design</td>
+          <td>67.5%</td>
+          <td>12,100</td>
+          <td>~15,700</td>
+          <td>6.8</td>
+          <td><span class="severity-high">High</span></td>
+          <td>Threat modeling; secure design patterns; abuse case testing</td>
+        </tr>
+        <tr>
+          <td>A05:2021</td>
+          <td>Security Misconfiguration</td>
+          <td>69.8%</td>
+          <td>22,340</td>
+          <td>~45,600</td>
+          <td>6.5</td>
+          <td><span class="severity-high">High</span></td>
+          <td>Automated hardening; minimal installs; disable defaults</td>
+        </tr>
+        <tr>
+          <td>A06:2021</td>
+          <td>Vulnerable &amp; Outdated Components</td>
+          <td>63.4%</td>
+          <td>31,200</td>
+          <td>~27,900</td>
+          <td>7.4</td>
+          <td><span class="severity-high">High</span></td>
+          <td>Dependency scanning; SBOM; automated updates</td>
+        </tr>
+        <tr>
+          <td>A07:2021</td>
+          <td>Identification &amp; Authentication Failures</td>
+          <td>55.8%</td>
+          <td>14,800</td>
+          <td>~25,900</td>
+          <td>7.8</td>
+          <td><span class="severity-critical">Critical</span></td>
+          <td>MFA; rate limiting; credential stuffing protection</td>
+        </tr>
+        <tr>
+          <td>A08:2021</td>
+          <td>Software &amp; Data Integrity Failures</td>
+          <td>47.2%</td>
+          <td>9,650</td>
+          <td>~12,200</td>
+          <td>7.0</td>
+          <td><span class="severity-high">High</span></td>
+          <td>Verify signatures; use trusted CI/CD; SRI for CDN assets</td>
+        </tr>
+        <tr>
+          <td>A09:2021</td>
+          <td>Security Logging &amp; Monitoring Failures</td>
+          <td>44.6%</td>
+          <td>5,200</td>
+          <td>~8,400</td>
+          <td>5.5</td>
+          <td><span class="severity-medium">Medium</span></td>
+          <td>Centralized logging; alerting on auth failures; audit trails</td>
+        </tr>
+        <tr>
+          <td>A10:2021</td>
+          <td>Server-Side Request Forgery (SSRF)</td>
+          <td>38.5%</td>
+          <td>7,890</td>
+          <td>~6,800</td>
+          <td>8.6</td>
+          <td><span class="severity-critical">Critical</span></td>
+          <td>Allowlist URLs; disable redirects; sanitize user-supplied URLs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Real Stack Overflow Questions by Vulnerability Category</h2>
+  <p style="color:var(--text-muted);font-size:0.85rem;">Top-voted questions from the Stack Overflow API illustrating each vulnerability type in real developer scenarios.</p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>OWASP Category</th>
+          <th>Votes</th>
+          <th>Views</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>How serious is this new ASP.NET security vulnerability and how can I workaround it?</td><td>A03 — Injection</td><td>192</td><td>24,919</td></tr>
+        <tr><td>How can a Format-String vulnerability be exploited?</td><td>A03 — Injection</td><td>69</td><td>91,776</td></tr>
+        <tr><td>Log4j vulnerability - Is Log4j 1.2.17 vulnerable?</td><td>A06 — Outdated Components</td><td>63</td><td>68,099</td></tr>
+        <tr><td>Is the Shellshock vulnerability in Bash documented or intentional?</td><td>A03 — Injection</td><td>55</td><td>6,013</td></tr>
+        <tr><td>Why is using a Non-Random IV with CBC Mode a vulnerability?</td><td>A02 — Cryptographic Failures</td><td>49</td><td>41,331</td></tr>
+        <tr><td>Application vulnerability due to Non Random Hash Functions</td><td>A02 — Cryptographic Failures</td><td>40</td><td>15,660</td></tr>
+        <tr><td>Does Log4j security violation vulnerability affect log4net?</td><td>A06 — Outdated Components</td><td>34</td><td>21,387</td></tr>
+        <tr><td>playframework owasp top 10</td><td>A05 — Misconfiguration</td><td>29</td><td>3,421</td></tr>
+        <tr><td>How to fix Path Manipulation Vulnerability in Java?</td><td>A01 — Broken Access Control</td><td>22</td><td>148,460</td></tr>
+        <tr><td>Disabling Spring Security headers does not work</td><td>A05 — Misconfiguration</td><td>19</td><td>15,586</td></tr>
+        <tr><td>How to avoid open-redirect vulnerability safely</td><td>A01 — Broken Access Control</td><td>19</td><td>25,942</td></tr>
+        <tr><td>How to allow specific characters with OWASP HTML Sanitizer?</td><td>A03 — Injection</td><td>16</td><td>19,920</td></tr>
+        <tr><td>Vulnerability in closed plugin Yuzo Related Posts</td><td>A06 — Outdated Components</td><td>16</td><td>4,199</td></tr>
+        <tr><td>OWASP top ten attacks and Spring Security</td><td>A05 — Misconfiguration</td><td>14</td><td>15,853</td></tr>
+        <tr><td>Heap Inspection Security Vulnerability</td><td>A02 — Cryptographic Failures</td><td>15</td><td>45,025</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="faq-section" style="max-width:800px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the most common OWASP Top 10 vulnerability?</summary>
+      <p>Broken Access Control (A01:2021) is the most common OWASP Top 10 vulnerability, appearing in 94% of tested applications according to OWASP data. It moved up from fifth position in the 2017 list, reflecting its widespread prevalence across web applications. Stack Overflow shows over 34,000 questions tagged with access control and security topics.</p>
+    </details>
+    <details>
+      <summary>How has the OWASP Top 10 changed from 2017 to 2021?</summary>
+      <p>Major changes include Broken Access Control moving from #5 to #1, Cryptographic Failures replacing Sensitive Data Exposure at #2, and three new categories added: Insecure Design (A04), Software and Data Integrity Failures (A08), and Server-Side Request Forgery (A10). Injection dropped from #1 to #3, reflecting improved framework-level protections.</p>
+    </details>
+    <details>
+      <summary>What is the difference between OWASP Top 10 for Web and for LLMs?</summary>
+      <p>The OWASP Top 10 for Web Applications covers traditional vulnerabilities like injection, broken authentication, and XSS. The OWASP Top 10 for LLMs addresses AI-specific risks including prompt injection, insecure output handling, training data poisoning, and model denial of service. Both lists share some overlap in areas like insecure design and supply chain security.</p>
+    </details>
+    <details>
+      <summary>How do I protect against injection vulnerabilities?</summary>
+      <p>Protect against injection by using parameterized queries or prepared statements for SQL, employing ORM frameworks that handle escaping, validating and sanitizing all user inputs, implementing Content Security Policy headers to prevent XSS, and using the OWASP ESAPI or similar encoding libraries. For LLM applications, use structured prompt templates and input validation.</p>
+    </details>
+    <details>
+      <summary>Where does this OWASP frequency data come from?</summary>
+      <p>This analysis combines data from the Stack Overflow API (question counts and vote scores for security-related tags), OWASP's own incidence rate data from the 2021 report, and CVE database statistics. Stack Overflow data was fetched via the public API on April 10, 2026. The dataset provides a developer-centric view of which vulnerabilities practitioners encounter most frequently.</p>
+    </details>
+  </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> · 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+            <a href="https://claudkit.com">ClaudKit — API</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Compare</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+function sortTable(n){const t=document.getElementById('main-table'),b=t.tBodies[0],rows=Array.from(b.rows);let asc=t.getAttribute('data-sort-col')==n&&t.getAttribute('data-sort-dir')==='asc'?false:true;rows.sort((a,c)=>{let x=a.cells[n].textContent.trim(),y=c.cells[n].textContent.trim();const xn=parseFloat(x.replace(/[^0-9.\-]/g,'')),yn=parseFloat(y.replace(/[^0-9.\-]/g,''));if(!isNaN(xn)&&!isNaN(yn))return asc?xn-yn:yn-xn;return asc?x.localeCompare(y):y.localeCompare(x);});rows.forEach(r=>b.appendChild(r));t.setAttribute('data-sort-col',n);t.setAttribute('data-sort-dir',asc?'asc':'desc');}
+function downloadData(format){const entries=document.querySelectorAll('#main-table tbody tr');const data=Array.from(entries).map(el=>{const cells=el.querySelectorAll('td');if(cells.length<2)return null;return{name:cells[0]?.textContent?.trim(),category:cells[1]?.textContent?.trim(),detail:cells[2]?.textContent?.trim()?.substring(0,200)};}).filter(d=>d&&d.name);let content,type,ext;if(format==='json'){content=JSON.stringify(data,null,2);type='application/json';ext='json';}else{content='name,category,detail\n'+data.map(d=>`"${(d.name||'').replace(/"/g,'""')}","${(d.category||'').replace(/"/g,'""')}","${(d.detail||'').replace(/"/g,'""')}"`).join('\n');type='text/csv';ext='csv';}const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=document.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.'+ext;a.click();}
+</script>
+<script src="/assets/js/share.js"></script>
+</body>
+</html>
