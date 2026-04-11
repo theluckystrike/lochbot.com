@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>LLM Jailbreak Techniques Timeline — Known Attacks from 2023 to 2026 | LochBot Research</title>
+  <meta name="description" content="Timeline of 28 known LLM jailbreak techniques from 2023-2026. DAN, base64 encoding, role play, context overflow, token smuggling and more with severity ratings and patch status. Original research by LochBot.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/research/llm-jailbreak-timeline.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="LLM Jailbreak Techniques Timeline 2023-2026">
+  <meta property="og:description" content="Timeline of 28 known LLM jailbreak techniques with severity ratings, patch status, and defense strategies.">
+  <meta property="og:url" content="https://lochbot.com/research/llm-jailbreak-timeline.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM Jailbreak Techniques Timeline 2023-2026">
+  <meta name="twitter:description" content="28 known LLM jailbreak techniques with severity ratings and patch status.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/research/llm-jailbreak-timeline.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/research/llm-jailbreak-timeline.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "LLM Jailbreak Techniques Timeline 2023-2026",
+  "description": "A dataset of 28 known LLM jailbreak techniques documented from 2023 to 2026, including attack category, severity rating, patch status, and defense strategies.",
+  "url": "https://lochbot.com/research/llm-jailbreak-timeline.html",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "creator": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+  "datePublished": "2026-04-11",
+  "dateModified": "2026-04-11",
+  "temporalCoverage": "2023/2026",
+  "distribution": [
+    { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://lochbot.com/research/llm-jailbreak-timeline.html" },
+    { "@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://lochbot.com/research/llm-jailbreak-timeline.html" }
+  ],
+  "variableMeasured": [
+    { "@type": "PropertyValue", "name": "Severity", "description": "Attack severity rating from Low to Critical" },
+    { "@type": "PropertyValue", "name": "Status", "description": "Whether the technique is patched, partially mitigated, or still active" },
+    { "@type": "PropertyValue", "name": "Category", "description": "Classification of the jailbreak technique type" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an LLM jailbreak?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An LLM jailbreak is a technique that bypasses the safety guardrails and alignment training of a large language model to make it produce content it was designed to refuse. Techniques range from simple role-playing prompts (DAN) to sophisticated encoding attacks (base64, token smuggling) and multi-turn manipulation. Jailbreaks exploit the gap between safety training and the model's instruction-following capabilities."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What was the first major LLM jailbreak technique?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The DAN (Do Anything Now) prompt, first appearing on Reddit in late 2022 and gaining widespread attention in early 2023, is considered the first major LLM jailbreak. It used role-playing to convince ChatGPT to adopt an unrestricted persona. DAN went through over 15 iterations (DAN 2.0 through 15.0) as OpenAI patched each version, establishing the cat-and-mouse dynamic that continues today."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which LLM jailbreak techniques still work in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As of April 2026, several technique categories remain partially effective: multi-turn manipulation (gradually building trust across conversation turns), context overflow attacks (pushing safety instructions out of the attention window), novel encoding schemes, and adversarial suffixes generated by optimization. Most simple techniques like basic DAN prompts and direct instruction overrides have been patched in major models, but variants and combinations continue to emerge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do LLM providers defend against jailbreaks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LLM providers use multiple defense layers: RLHF and Constitutional AI training to align model behavior, input classifiers that detect known jailbreak patterns before they reach the model, output filters that catch policy-violating responses, system prompt hardening with immutability declarations, and continuous red-teaming to discover new attack vectors. No single defense is complete, so providers rely on defense-in-depth strategies."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are LLM jailbreaks illegal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jailbreaking an LLM itself is generally not illegal in most jurisdictions, similar to how jailbreaking a phone is legal in many countries. However, using a jailbroken LLM to generate illegal content (malware, CSAM, instructions for violence) is illegal regardless of how the content was produced. Security researchers who discover jailbreaks through responsible disclosure are generally protected, and many providers offer bug bounties for novel jailbreak reports."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  .research-badge { display:inline-block; background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.4); color:#818CF8; font-family:var(--font-display); font-size:0.72rem; font-weight:700; padding:3px 10px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; }
+  .research-hero { text-align:center; padding:50px 0 30px; max-width:800px; margin:0 auto; }
+  .research-hero h1 { font-size:2rem; margin:12px 0 16px; }
+  .research-hero .subtitle { color:var(--text-dim); font-size:1rem; max-width:620px; margin:0 auto; }
+  .research-meta { color:var(--text-dim); font-size:0.82rem; margin-top:12px; }
+  .research-meta a { color:var(--accent); }
+  .methodology-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; margin:1.5rem auto; max-width:900px; }
+  .methodology-box h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--accent); margin-bottom:0.75rem; }
+  .data-table-wrap { overflow-x:auto; margin:1.5rem 0; border:1px solid var(--border); border-radius:var(--radius); }
+  .data-table { width:100%; border-collapse:collapse; font-size:0.85rem; min-width:1000px; }
+  .data-table th { background:var(--bg-card); color:var(--text-dim); padding:0.6rem 0.8rem; text-align:left; cursor:pointer; border-bottom:2px solid var(--border); font-size:0.75rem; text-transform:uppercase; }
+  .data-table td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--border); }
+  .data-table tr:hover td { background:var(--bg-hover); }
+  .download-btns { display:flex; gap:0.5rem; margin:1rem auto; max-width:900px; }
+  .download-btns button { background:var(--bg); border:1px solid var(--border); color:var(--text-dim); padding:0.4rem 1rem; border-radius:var(--radius); cursor:pointer; font-size:0.8rem; }
+  .download-btns button:hover { border-color:var(--accent); color:var(--accent); }
+  .sev-critical { color:#ff7b72; font-weight:600; }
+  .sev-high { color:#ffa657; font-weight:600; }
+  .sev-medium { color:#d2a8ff; }
+  .sev-low { color:#7ee787; }
+  .status-active { color:#ff7b72; }
+  .status-partial { color:#ffa657; }
+  .status-patched { color:#7ee787; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="research-hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/research/">Research</a> <span>/</span> <span>LLM Jailbreak Timeline</span></nav>
+      <span class="research-badge">Original Research</span>
+      <h1>LLM Jailbreak Techniques Timeline &mdash; Known Attacks from 2023 to 2026</h1>
+      <p class="subtitle">Comprehensive timeline of 28 documented LLM jailbreak techniques with severity ratings, patch status, and defense strategies. Sourced from GitHub repositories (18,000+ stars tracked), academic papers, and security advisories.</p>
+      <p class="research-meta">By <a href="https://zovo.one">Michael Lip</a> &middot; April 11, 2026 &middot; <a href="/">Test your prompt with LochBot</a></p>
+    </section>
+
+    <div class="methodology-box">
+      <h3>Methodology</h3>
+      <p style="font-size:0.85rem;color:var(--text-dim);margin:0;">Jailbreak techniques were catalogued from GitHub repositories (queried via the GitHub Search API on April 11, 2026 &mdash; 30 repos, 18,000+ combined stars), academic papers from ACL, USENIX Security, AAAI, NAACL, and CCS proceedings, Stack Overflow discussions, and security advisories from OpenAI, Anthropic, and Google. Severity is rated Critical/High/Medium/Low based on potential harm, reproducibility, and scope of affected models. Status reflects the state as of April 2026 across major frontier models.</p>
+    </div>
+
+    <div class="download-btns">
+      <button onclick="downloadData('json')">Download JSON</button>
+      <button onclick="downloadData('csv')">Download CSV</button>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table" id="main-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">Date</th>
+            <th onclick="sortTable(1)">Technique</th>
+            <th onclick="sortTable(2)">Category</th>
+            <th onclick="sortTable(3)">Severity</th>
+            <th onclick="sortTable(4)">Status</th>
+            <th>Description</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2023-02</td><td>DAN (Do Anything Now)</td><td>Role-Playing</td><td><span class="sev-high">High</span></td><td><span class="status-patched">Patched</span></td><td>Persona-based jailbreak convincing ChatGPT to adopt an unrestricted alter ego. Over 15 iterations (DAN 2.0-15.0) as patches were applied.</td><td>Reddit, GitHub (L1B3RT4S, 18K stars)</td></tr>
+          <tr><td>2023-03</td><td>Developer Mode Simulation</td><td>Role-Playing</td><td><span class="sev-high">High</span></td><td><span class="status-patched">Patched</span></td><td>Prompt claiming to enable "developer mode" or "debug mode" to bypass safety filters by simulating internal access.</td><td>Reddit, ChatGPT community</td></tr>
+          <tr><td>2023-04</td><td>Base64 Encoding</td><td>Encoding</td><td><span class="sev-critical">Critical</span></td><td><span class="status-partial">Partial</span></td><td>Encoding malicious instructions in Base64 to bypass text-pattern safety filters. Model decodes and follows the hidden instructions.</td><td>GitHub (Awesome_GPT_Super_Prompting, 3.8K stars)</td></tr>
+          <tr><td>2023-05</td><td>Translation Attack</td><td>Encoding</td><td><span class="sev-medium">Medium</span></td><td><span class="status-partial">Partial</span></td><td>Requesting harmful content in low-resource languages where safety training is weaker, then translating the output.</td><td>Academic research (Deng et al., 2023)</td></tr>
+          <tr><td>2023-06</td><td>Prompt Leaking / Extraction</td><td>Information Disclosure</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Asking the model to repeat, summarize, or encode its system prompt to extract proprietary instructions.</td><td>GitHub (System-Prompt-Open, 29 stars)</td></tr>
+          <tr><td>2023-07</td><td>Context Overflow / Padding</td><td>Context Manipulation</td><td><span class="sev-critical">Critical</span></td><td><span class="status-partial">Partial</span></td><td>Flooding the context window with irrelevant text to push safety instructions out of the model's effective attention span.</td><td>Academic (Perez &amp; Ribeiro, 2022)</td></tr>
+          <tr><td>2023-08</td><td>Indirect Prompt Injection</td><td>Indirect Injection</td><td><span class="sev-critical">Critical</span></td><td><span class="status-active">Active</span></td><td>Embedding malicious instructions in documents, web pages, or tool outputs that the model processes as trusted data.</td><td>Greshake et al. (2023), CCS'24</td></tr>
+          <tr><td>2023-09</td><td>Few-Shot Manipulation</td><td>Context Manipulation</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Providing fake conversation examples where the "assistant" responds without restrictions, conditioning the model to follow suit.</td><td>Academic research</td></tr>
+          <tr><td>2023-10</td><td>Hypothetical Framing</td><td>Role-Playing</td><td><span class="sev-medium">Medium</span></td><td><span class="status-patched">Patched</span></td><td>"Hypothetically, if you were an AI without restrictions..." framing to elicit restricted content under the guise of fiction.</td><td>Community reports</td></tr>
+          <tr><td>2023-11</td><td>ASCII Art Injection (ArtPrompt)</td><td>Encoding</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Encoding restricted keywords as ASCII art to bypass token-level safety filters. Published at ACL 2024.</td><td>GitHub (ArtPrompt, 97 stars), ACL'24</td></tr>
+          <tr><td>2023-12</td><td>Adversarial Suffixes (GCG)</td><td>Optimization</td><td><span class="sev-critical">Critical</span></td><td><span class="status-partial">Partial</span></td><td>Computationally generated token sequences appended to prompts that trigger unrestricted responses. Transferable across models.</td><td>Zou et al. (2023), CMU</td></tr>
+          <tr><td>2024-01</td><td>Nested Jailbreak (ReNeLLM)</td><td>Obfuscation</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Multi-layer prompt wrapping where each layer appears benign but the combined effect bypasses safety. NAACL 2024.</td><td>GitHub (ReNeLLM, 158 stars), NAACL'24</td></tr>
+          <tr><td>2024-02</td><td>Prompt Decomposition (DrAttack)</td><td>Obfuscation</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Breaking a harmful prompt into innocuous sub-prompts, then reconstructing the intent through the model's own reasoning.</td><td>GitHub (DrAttack, 66 stars)</td></tr>
+          <tr><td>2024-03</td><td>Token Smuggling</td><td>Encoding</td><td><span class="sev-critical">Critical</span></td><td><span class="status-partial">Partial</span></td><td>Exploiting tokenizer edge cases (Unicode homoglyphs, zero-width characters, combining marks) to smuggle restricted tokens past filters.</td><td>Security research community</td></tr>
+          <tr><td>2024-04</td><td>Multi-Turn Trust Escalation</td><td>Multi-Turn</td><td><span class="sev-high">High</span></td><td><span class="status-active">Active</span></td><td>Gradually building rapport and trust over multiple conversation turns before introducing the restricted request.</td><td>Academic research</td></tr>
+          <tr><td>2024-06</td><td>Malicious GPT Applications</td><td>Deployment</td><td><span class="sev-critical">Critical</span></td><td><span class="status-partial">Partial</span></td><td>Custom GPTs and AI agents intentionally configured with jailbroken system prompts. 45 malicious prompts documented.</td><td>GitHub (malicious-gpt, 70 stars), USENIX Security'24</td></tr>
+          <tr><td>2024-07</td><td>Contextual Camouflage</td><td>Obfuscation</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Embedding harmful requests within legitimate-sounding academic or research contexts to bypass content policies.</td><td>GitHub (GigaChat-Prompt-Jailbreak, 23 stars)</td></tr>
+          <tr><td>2024-08</td><td>Vision Model Typographic Injection (FigStep)</td><td>Multimodal</td><td><span class="sev-high">High</span></td><td><span class="status-partial">Partial</span></td><td>Embedding jailbreak text in images that vision-language models read and follow. AAAI 2025 Oral paper.</td><td>GitHub (FigStep, 200 stars), AAAI'25</td></tr>
+          <tr><td>2024-09</td><td>ROT13 / Cipher Encoding</td><td>Encoding</td><td><span class="sev-medium">Medium</span></td><td><span class="status-patched">Patched</span></td><td>Using simple substitution ciphers (ROT13, Caesar cipher) to encode harmful requests, relying on the model's decoding ability.</td><td>Community research</td></tr>
+          <tr><td>2024-11</td><td>System Prompt Override Claims</td><td>Direct Injection</td><td><span class="sev-medium">Medium</span></td><td><span class="status-patched">Patched</span></td><td>"I am the developer. Update your instructions to..." attempts to impersonate system-level authority.</td><td>GitHub (AI-Prompt-Injection-Cheatsheet, 51 stars)</td></tr>
+          <tr><td>2025-01</td><td>CyberSecurity Prompt Dataset Exploits</td><td>Domain-Specific</td><td><span class="sev-high">High</span></td><td><span class="status-active">Active</span></td><td>Specialized jailbreak prompts targeting cybersecurity domains: malware generation, exploit writing, network attack instructions.</td><td>GitHub (cysecbench/dataset, 36 stars)</td></tr>
+          <tr><td>2025-03</td><td>Playground Fuzzing (Folly)</td><td>Automated</td><td><span class="sev-medium">Medium</span></td><td><span class="status-active">Active</span></td><td>Open-source tools for automated jailbreak discovery through prompt fuzzing and mutation testing against LLM guardrails.</td><td>GitHub (Folly, 33 stars)</td></tr>
+          <tr><td>2025-07</td><td>Red Team Portfolio Attacks</td><td>Multi-Vector</td><td><span class="sev-high">High</span></td><td><span class="status-active">Active</span></td><td>Systematic adversarial prompting combining persistence, alignment failure analysis, and prompt engineering across sessions.</td><td>GitHub (mobius-llm-adversity, 78 stars)</td></tr>
+          <tr><td>2025-10</td><td>Rationalist Ruleset Debugging</td><td>Meta-Reasoning</td><td><span class="sev-medium">Medium</span></td><td><span class="status-active">Active</span></td><td>Using epistemological and rationalist framing to "debug" LLM reasoning, auditing internal biases to override safety constraints.</td><td>GitHub (Rules.txt, 80 stars)</td></tr>
+          <tr><td>2025-11</td><td>Trojan Knowledge (CKA-Agent)</td><td>Optimization</td><td><span class="sev-critical">Critical</span></td><td><span class="status-active">Active</span></td><td>Bypassing commercial LLM guardrails via harmless prompt weaving and adaptive tree search. Automated attack optimization.</td><td>GitHub (CKA-Agent, 184 stars)</td></tr>
+          <tr><td>2026-02</td><td>Security Testing Framework (Augustus)</td><td>Automated</td><td><span class="sev-high">High</span></td><td><span class="status-active">Active</span></td><td>190+ adversarial probes across 28 providers in a single Go binary. Framework for systematic LLM security testing.</td><td>GitHub (augustus, 178 stars)</td></tr>
+          <tr><td>2026-03</td><td>Burp Suite LLM Injection (LLMInjector)</td><td>Tooling</td><td><span class="sev-high">High</span></td><td><span class="status-active">Active</span></td><td>Burp Suite extension for automated prompt injection testing against web applications with LLM backends.</td><td>GitHub (LLMInjector, 38 stars)</td></tr>
+          <tr><td>2026-03</td><td>MCP Server Jailbreak Relay</td><td>Infrastructure</td><td><span class="sev-critical">Critical</span></td><td><span class="status-active">Active</span></td><td>Model Context Protocol servers providing enhancement prompts to bypass LLM safety limits through tool-use channels.</td><td>GitHub (chucknorris, 58 stars)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section class="faq-section" style="max-width:800px;margin:2rem auto;padding:0 20px;">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What is an LLM jailbreak?</summary>
+        <div class="faq-answer">An LLM jailbreak is a technique that bypasses the safety guardrails and alignment training of a large language model to make it produce content it was designed to refuse. Techniques range from simple role-playing prompts (DAN) to sophisticated encoding attacks (base64, token smuggling) and multi-turn manipulation. Jailbreaks exploit the gap between safety training and the model's instruction-following capabilities.</div>
+      </details>
+      <details>
+        <summary>What was the first major LLM jailbreak technique?</summary>
+        <div class="faq-answer">The DAN (Do Anything Now) prompt, first appearing on Reddit in late 2022 and gaining widespread attention in early 2023, is considered the first major LLM jailbreak. It used role-playing to convince ChatGPT to adopt an unrestricted persona. DAN went through over 15 iterations (DAN 2.0-15.0) as OpenAI patched each version, establishing the cat-and-mouse dynamic that continues today.</div>
+      </details>
+      <details>
+        <summary>Which LLM jailbreak techniques still work in 2026?</summary>
+        <div class="faq-answer">As of April 2026, several technique categories remain partially effective: multi-turn manipulation (gradually building trust across conversation turns), context overflow attacks (pushing safety instructions out of the attention window), novel encoding schemes, adversarial suffixes generated by optimization, and infrastructure-level attacks via MCP servers. Most simple techniques like basic DAN prompts have been patched in major models, but variants and combinations continue to emerge.</div>
+      </details>
+      <details>
+        <summary>How do LLM providers defend against jailbreaks?</summary>
+        <div class="faq-answer">LLM providers use multiple defense layers: RLHF and Constitutional AI training to align model behavior, input classifiers that detect known jailbreak patterns before they reach the model, output filters that catch policy-violating responses, system prompt hardening with immutability declarations, and continuous red-teaming to discover new attack vectors. No single defense is complete, so providers rely on defense-in-depth strategies.</div>
+      </details>
+      <details>
+        <summary>Are LLM jailbreaks illegal?</summary>
+        <div class="faq-answer">Jailbreaking an LLM itself is generally not illegal in most jurisdictions. However, using a jailbroken LLM to generate illegal content (malware, CSAM, instructions for violence) is illegal regardless of how the content was produced. Security researchers who discover jailbreaks through responsible disclosure are generally protected, and many providers offer bug bounties for novel jailbreak reports.</div>
+      </details>
+    </section>
+
+    <div class="cross-links" style="max-width:900px;margin:2rem auto;padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">
+      <h3 style="font-size:0.95rem;margin-bottom:10px;">Related Resources</h3>
+      <a href="/" style="display:inline-block;margin-right:16px;font-size:0.85rem;">LochBot Scanner</a>
+      <a href="/research/prompt-security-patterns.html" style="display:inline-block;margin-right:16px;font-size:0.85rem;">Prompt Security Patterns</a>
+      <a href="/research/prompt-defense-techniques.html" style="display:inline-block;margin-right:16px;font-size:0.85rem;">Defense Techniques</a>
+      <a href="/research/cve-severity-trends.html" style="display:inline-block;margin-right:16px;font-size:0.85rem;">CVE Severity Trends</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">Zovo Tools</div>
+        <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+        <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+        <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+</footer>
+
+<nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex &mdash; A/B Testing</a>
+            <a href="https://claudflow.com">ClaudFlow &mdash; Workflows</a>
+            <a href="https://claudhq.com">ClaudHQ &mdash; Prompts</a>
+            <a href="https://claudkit.com">ClaudKit &mdash; API</a>
+            <a href="https://enhio.com">Enhio &mdash; Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot &mdash; Timestamps</a>
+            <a href="https://gen8x.com">Gen8X &mdash; Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X &mdash; AI Models</a>
+            <a href="https://heytensor.com">HeyTensor &mdash; ML Tools</a>
+            <a href="https://invokebot.com">InvokeBot &mdash; Webhooks</a>
+            <a href="https://kappafy.com">Kappafy &mdash; JSON</a>
+            <a href="https://kappakit.com">KappaKit &mdash; Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM &mdash; LLM Costs</a>
+            <a href="https://krzen.com">Krzen &mdash; Image Tools</a>
+            <a href="https://lockml.com">LockML &mdash; ML Compare</a>
+            <a href="https://ml3x.com">ML3X &mdash; Matrix Math</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+function sortTable(n){const t=document.getElementById('main-table'),b=t.tBodies[0],rows=Array.from(b.rows);let asc=t.getAttribute('data-sort-col')==n&&t.getAttribute('data-sort-dir')==='asc'?false:true;rows.sort((a,c)=>{let x=a.cells[n].textContent.trim(),y=c.cells[n].textContent.trim();const xn=parseFloat(x.replace(/[^0-9.\-]/g,'')),yn=parseFloat(y.replace(/[^0-9.\-]/g,''));if(!isNaN(xn)&&!isNaN(yn))return asc?xn-yn:yn-xn;return asc?x.localeCompare(y):y.localeCompare(x);});rows.forEach(r=>b.appendChild(r));t.setAttribute('data-sort-col',n);t.setAttribute('data-sort-dir',asc?'asc':'desc');}
+function downloadData(format){const entries=document.querySelectorAll('#main-table tbody tr');const data=Array.from(entries).map(el=>{const cells=el.querySelectorAll('td');if(cells.length<2)return null;return{date:cells[0]?.textContent?.trim(),technique:cells[1]?.textContent?.trim(),category:cells[2]?.textContent?.trim(),severity:cells[3]?.textContent?.trim(),status:cells[4]?.textContent?.trim(),description:cells[5]?.textContent?.trim(),source:cells[6]?.textContent?.trim()};}).filter(d=>d&&d.technique);let content,type,ext;if(format==='json'){content=JSON.stringify(data,null,2);type='application/json';ext='json';}else{content='date,technique,category,severity,status,description,source\n'+data.map(d=>`"${(d.date||'').replace(/"/g,'""')}","${(d.technique||'').replace(/"/g,'""')}","${(d.category||'').replace(/"/g,'""')}","${(d.severity||'').replace(/"/g,'""')}","${(d.status||'').replace(/"/g,'""')}","${(d.description||'').replace(/"/g,'""')}","${(d.source||'').replace(/"/g,'""')}"`).join('\n');type='text/csv';ext='csv';}const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='llm-jailbreak-timeline.'+ext;a.click();}
+</script>
+<script src="/assets/js/share.js"></script>
+</body>
+</html>
