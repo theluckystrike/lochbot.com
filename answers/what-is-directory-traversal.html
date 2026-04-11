@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is Directory Traversal (Path Traversal)? — LochBot</title>
+  <meta name="description" content="Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By u">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-directory-traversal.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is Directory Traversal (Path Traversal)? — LochBot">
+  <meta property="og:description" content="Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By u">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-directory-traversal.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is Directory Traversal (Path Traversal)? — LochBot">
+  <meta name="twitter:description" content="Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By u">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is directory traversal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Directory traversal is when an attacker manipulates file path inputs (using ../ sequences) to access files outside the intended directory. This can expose sensitive system files, application source code, and configuration files containing secrets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent directory traversal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use basename() to strip directory components, resolve the full path and verify it stays within the allowed directory, reject inputs containing ../ or encoded variants, and run applications in containers with minimal file access."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What files do attackers target with directory traversal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common targets: /etc/passwd (user accounts), .env files (secrets), config files (database credentials), application source code, SSH keys (~/.ssh/id_rsa), and cloud credential files (~/.aws/credentials)."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is Directory Traversal (Path Traversal)?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is Directory Traversal (Path Traversal)?</h1>
+
+    <p><strong>Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By using ../ sequences, the attacker can read sensitive files like /etc/passwd, application configuration files, source code, and environment variables containing database credentials and API keys.</strong></p>
+
+
+    <h2>Types of Directory Traversal (Path Traversal)?</h2>
+    <h3>Basic traversal</h3>
+    <p>Using ../ to navigate up directories.</p>
+    <pre><code>GET /api/file?name=../../../etc/passwd</code></pre>
+
+    <h3>Encoded traversal</h3>
+    <p>URL-encoding or double-encoding ../ to bypass filters.</p>
+    <pre><code>GET /api/file?name=%2e%2e%2f%2e%2e%2fetc%2fpasswd</code></pre>
+
+    <h3>Null byte injection</h3>
+    <p>Appending %00 to truncate file extensions (legacy, mostly fixed).</p>
+    <pre><code>GET /api/file?name=../../../etc/passwd%00.png</code></pre>
+
+    <h2>How to Prevent It</h2>
+    <pre><code># 1. Use basename() — strip all path components
+import os
+filename = os.path.basename(user_input)  # &quot;../../etc/passwd&quot; → &quot;passwd&quot;
+
+# 2. Resolve and validate the full path
+base_dir = os.path.realpath('/app/uploads')
+requested = os.path.realpath(os.path.join(base_dir, user_input))
+if not requested.startswith(base_dir):
+    raise ValueError(&quot;Path traversal detected&quot;)
+
+# 3. Node.js equivalent
+const path = require('path');
+const base = path.resolve('/app/uploads');
+const requested = path.resolve(base, userInput);
+if (!requested.startsWith(base)) {
+  throw new Error('Path traversal detected');
+}
+
+# 4. Chroot or containerization — OS-level isolation
+# Run the application in a container with only necessary files mounted</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>Reading source code reveals business logic and other vulnerabilities. Reading .env or config files exposes database credentials, API keys, and secrets. In severe cases, writing to the filesystem enables remote code execution.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-sql-injection.html">What Is Sql Injection</a></li>
+      <li><a href="/answers/what-is-ssrf.html">What Is Ssrf</a></li>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-open-redirect.html">What Is Open Redirect</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is directory traversal?</summary>
+      <p>Directory traversal is when an attacker manipulates file path inputs (using ../ sequences) to access files outside the intended directory. This can expose sensitive system files, application source code, and configuration files containing secrets.</p>
+    </details>
+    <details>
+      <summary>How do I prevent directory traversal?</summary>
+      <p>Use basename() to strip directory components, resolve the full path and verify it stays within the allowed directory, reject inputs containing ../ or encoded variants, and run applications in containers with minimal file access.</p>
+    </details>
+    <details>
+      <summary>What files do attackers target with directory traversal?</summary>
+      <p>Common targets: /etc/passwd (user accounts), .env files (secrets), config files (database credentials), application source code, SSH keys (~/.ssh/id_rsa), and cloud credential files (~/.aws/credentials).</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

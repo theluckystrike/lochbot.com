@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>LLM Model Extraction — Stealing AI Models via API — LochBot</title>
+  <meta name="description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/llm-model-extraction.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="LLM Model Extraction — Stealing AI Models via API — LochBot">
+  <meta property="og:description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
+  <meta property="og:url" content="https://lochbot.com/answers/llm-model-extraction.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM Model Extraction — Stealing AI Models via API — LochBot">
+  <meta name="twitter:description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is LLM model extraction?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Model extraction is when an attacker queries your LLM API many times to collect input-output pairs, then uses that data to train their own copy of your model. This steals your intellectual property and training investment without needing access to the original model weights."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many queries does it take to extract a model?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the model complexity and desired fidelity. Research has shown that practical extraction of distilled models can require as few as 10,000-100,000 queries for classification tasks. For large generative models, the cost is higher but decreasing with better active learning techniques."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I detect model extraction attempts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Monitor for API keys making unusually high volumes of requests, queries with systematic input variation, requests for unusual edge cases, and access patterns that resemble active learning. Set rate limits and anomaly detection on API usage."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Model Extraction — Stealing AI Models via API</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>LLM Model Extraction — Stealing AI Models via API</h1>
+
+    <p><strong>Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collecting enough input-output pairs, the attacker can train a surrogate model that mimics the target's behavior without paying for training costs, violating intellectual property, or bypassing usage restrictions.</strong></p>
+
+    <h2>How Model Extraction Works</h2>
+    <p>The attacker sends a large number of carefully crafted queries to the target API and records the responses. These input-output pairs become training data for a surrogate model. Advanced attacks use active learning to minimize the number of queries needed — focusing on inputs where the surrogate model is most uncertain, thereby maximizing information gained per query.</p>
+
+    <h2>Types of Model Extraction</h2>
+    <p><strong>Fidelity extraction:</strong> Creates a model that matches the target's outputs as closely as possible. <strong>Functionally-equivalent extraction:</strong> Creates a model that performs the same task at similar quality without matching exact outputs. <strong>Side-channel extraction:</strong> Uses response timing, token probabilities, or other metadata to infer model architecture and parameters.</p>
+
+    <h2>Defense Strategies</h2>
+    <p>Implement rate limiting and query budgets per API key. Monitor for unusual query patterns (high volume, systematic input variation, repeated edge-case probing). Add watermarking to model outputs. Limit output detail — return only top-1 predictions instead of full probability distributions. Use differential privacy during training to limit what can be learned from outputs.</p>
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/llm-training-data-leakage.html">Llm Training Data Leakage</a></li>
+      <li><a href="/answers/llm-supply-chain-risks.html">Llm Supply Chain Risks</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is LLM model extraction?</summary>
+      <p>Model extraction is when an attacker queries your LLM API many times to collect input-output pairs, then uses that data to train their own copy of your model. This steals your intellectual property and training investment without needing access to the original model weights.</p>
+    </details>
+    <details>
+      <summary>How many queries does it take to extract a model?</summary>
+      <p>It depends on the model complexity and desired fidelity. Research has shown that practical extraction of distilled models can require as few as 10,000-100,000 queries for classification tasks. For large generative models, the cost is higher but decreasing with better active learning techniques.</p>
+    </details>
+    <details>
+      <summary>How do I detect model extraction attempts?</summary>
+      <p>Monitor for API keys making unusually high volumes of requests, queries with systematic input variation, requests for unusual edge cases, and access patterns that resemble active learning. Set rate limits and anomaly detection on API usage.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

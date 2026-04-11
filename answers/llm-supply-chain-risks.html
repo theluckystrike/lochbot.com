@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>LLM Supply Chain Risks — Model and Dependency Attacks — LochBot</title>
+  <meta name="description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/llm-supply-chain-risks.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="LLM Supply Chain Risks — Model and Dependency Attacks — LochBot">
+  <meta property="og:description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
+  <meta property="og:url" content="https://lochbot.com/answers/llm-supply-chain-risks.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM Supply Chain Risks — Model and Dependency Attacks — LochBot">
+  <meta name="twitter:description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are LLM supply chain risks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LLM supply chain risks come from the many components involved in AI applications: pretrained models, datasets, packages, and APIs. A compromise at any point — a malicious model on Hugging Face, a poisoned dataset, or a compromised Python package — can give attackers control over your AI system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Hugging Face models safe to download?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not automatically. Model files in pickle format can execute arbitrary code when loaded. Use safetensors format when available, verify model checksums, check the model author's reputation, and scan files before loading. Never load untrusted pickle files."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I secure my AI dependency chain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pin exact versions in requirements.txt/package.json, verify checksums, use pip-audit/npm audit, prefer safetensors over pickle, maintain a private model registry, and run inference in isolated containers. Treat every external dependency as a potential attack vector."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Supply Chain Risks — Model and Dependency Attacks</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>LLM Supply Chain Risks — Model and Dependency Attacks</h1>
+
+    <p><strong>LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedding models, vector databases, Python/JS packages, and API providers. A compromise at any point in this chain can introduce backdoors, leak data, or give attackers control over your AI system's behavior.</strong></p>
+
+    <h2>Attack Surfaces</h2>
+    <p><strong>Model weights:</strong> Downloading pretrained models from Hugging Face or other hubs — malicious models can contain backdoors or execute arbitrary code via pickle deserialization. <strong>Dependencies:</strong> Python packages (transformers, langchain, etc.) can be compromised via typosquatting, dependency confusion, or maintainer account takeover. <strong>Fine-tuning data:</strong> Third-party datasets used for fine-tuning may be poisoned. <strong>API providers:</strong> Third-party LLM APIs can change model behavior, logging policies, or data retention without notice.</p>
+
+    <h2>Real-World Examples</h2>
+    <p>Pickle deserialization attacks via malicious model files on Hugging Face. Dependency confusion attacks targeting AI-related package names. Compromised npm packages in LangChain.js ecosystem. Malicious fine-tuning datasets on public data repositories. Supply chain attacks via compromised Docker images for AI inference servers.</p>
+
+    <h2>Defense Strategies</h2>
+    <p>Pin and hash all dependencies. Use safetensors format instead of pickle for model weights. Audit model files before loading. Verify checksums of downloaded models. Use private model registries with access control. Scan dependencies with tools like pip-audit, npm audit, and Snyk. Implement model signing and provenance tracking. Use isolated environments (containers, VMs) for model inference.</p>
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/llm-model-extraction.html">Llm Model Extraction</a></li>
+      <li><a href="/answers/llm-hallucination-security.html">Llm Hallucination Security</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What are LLM supply chain risks?</summary>
+      <p>LLM supply chain risks come from the many components involved in AI applications: pretrained models, datasets, packages, and APIs. A compromise at any point — a malicious model on Hugging Face, a poisoned dataset, or a compromised Python package — can give attackers control over your AI system.</p>
+    </details>
+    <details>
+      <summary>Are Hugging Face models safe to download?</summary>
+      <p>Not automatically. Model files in pickle format can execute arbitrary code when loaded. Use safetensors format when available, verify model checksums, check the model author's reputation, and scan files before loading. Never load untrusted pickle files.</p>
+    </details>
+    <details>
+      <summary>How do I secure my AI dependency chain?</summary>
+      <p>Pin exact versions in requirements.txt/package.json, verify checksums, use pip-audit/npm audit, prefer safetensors over pickle, maintain a private model registry, and run inference in isolated containers. Treat every external dependency as a potential attack vector.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

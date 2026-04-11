@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is CSRF (Cross-Site Request Forgery)? — LochBot</title>
+  <meta name="description" content="Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are ">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-csrf.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is CSRF (Cross-Site Request Forgery)? — LochBot">
+  <meta property="og:description" content="Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are ">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-csrf.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is CSRF (Cross-Site Request Forgery)? — LochBot">
+  <meta name="twitter:description" content="Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are ">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is CSRF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CSRF tricks a logged-in user's browser into making unwanted requests to a site where they are authenticated. The browser automatically sends cookies, so the server processes the request as if the user initiated it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does SameSite cookie attribute prevent CSRF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SameSite=Strict prevents the browser from sending cookies on any cross-origin request. SameSite=Lax allows cookies on top-level GET navigations but blocks them on POST requests and embedded resources from other sites."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I still need CSRF tokens with SameSite cookies?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SameSite=Lax is the default in modern browsers and prevents most CSRF. However, CSRF tokens provide defense in depth for older browsers and edge cases. Use both for critical applications."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is CSRF (Cross-Site Request Forgery)?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is CSRF (Cross-Site Request Forgery)?</h1>
+
+    <p><strong>Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are authenticated. Because the browser automatically includes session cookies with every request, the server cannot distinguish between a legitimate request and a forged one.</strong></p>
+
+
+    <h2>Types of CSRF (Cross-Site Request Forgery)?</h2>
+    <h3>GET-based CSRF</h3>
+    <p>Exploits state-changing GET requests via img tags or links.</p>
+    <pre><code>&lt;img src=&quot;https://bank.com/transfer?to=attacker&amp;amount=10000&quot;&gt;</code></pre>
+
+    <h3>POST-based CSRF</h3>
+    <p>Uses a hidden auto-submitting form to send POST requests.</p>
+    <pre><code>&lt;form action=&quot;https://bank.com/transfer&quot; method=&quot;POST&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;to&quot; value=&quot;attacker&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;amount&quot; value=&quot;10000&quot;&gt;&lt;/form&gt;&lt;script&gt;document.forms[0].submit()&lt;/script&gt;</code></pre>
+
+    <h2>How to Prevent It</h2>
+    <pre><code>// 1. CSRF tokens — unique per session, validated on server
+&lt;form method=&quot;POST&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;random-token-here&quot;&gt;
+&lt;/form&gt;
+
+// 2. SameSite cookies — prevent cross-origin cookie sending
+Set-Cookie: session=abc123; SameSite=Strict; Secure; HttpOnly
+
+// 3. Check Origin/Referer headers
+if (req.headers.origin !== 'https://yoursite.com') {
+  return res.status(403).json({ error: 'CSRF detected' });
+}
+
+// 4. Double-submit cookie pattern
+// Set a random value in both a cookie and a form field
+// Server verifies they match</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>Unauthorized fund transfers, email/password changes, privilege escalation, data deletion. In 2008, a CSRF vulnerability in a major router allowed attackers to change DNS settings, redirecting all traffic through malicious servers.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-clickjacking.html">What Is Clickjacking</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/referrer-policy.html">Referrer Policy</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is CSRF?</summary>
+      <p>CSRF tricks a logged-in user's browser into making unwanted requests to a site where they are authenticated. The browser automatically sends cookies, so the server processes the request as if the user initiated it.</p>
+    </details>
+    <details>
+      <summary>How does SameSite cookie attribute prevent CSRF?</summary>
+      <p>SameSite=Strict prevents the browser from sending cookies on any cross-origin request. SameSite=Lax allows cookies on top-level GET navigations but blocks them on POST requests and embedded resources from other sites.</p>
+    </details>
+    <details>
+      <summary>Do I still need CSRF tokens with SameSite cookies?</summary>
+      <p>SameSite=Lax is the default in modern browsers and prevents most CSRF. However, CSRF tokens provide defense in depth for older browsers and edge cases. Use both for critical applications.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

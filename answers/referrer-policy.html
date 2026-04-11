@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Referrer-Policy Header Explained — LochBot</title>
+  <meta name="description" content="Referrer-Policy is an HTTP response header that controls how much referrer information is sent when a user navigates away from your site. Setting it to str">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/referrer-policy.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Referrer-Policy Header Explained — LochBot">
+  <meta property="og:description" content="Referrer-Policy is an HTTP response header that controls how much referrer information is sent when a user navigates away from your site. Setting it to str">
+  <meta property="og:url" content="https://lochbot.com/answers/referrer-policy.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Referrer-Policy Header Explained — LochBot">
+  <meta name="twitter:description" content="Referrer-Policy is an HTTP response header that controls how much referrer information is sent when a user navigates away from your site. Setting it to str">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Referrer-Policy control?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It controls how much URL information the browser sends in the Referer header when navigating away from your page. This affects outbound link clicks, embedded resources, and API requests."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the recommended Referrer-Policy value?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "strict-origin-when-cross-origin is recommended for most sites. It provides full referrer data for same-origin navigation (useful for analytics) while limiting cross-origin referrers to just the origin domain."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Referrer-Policy affect SEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Using no-referrer prevents destination sites from seeing your URL in their analytics, but this does not affect search engine ranking. Google and Bing receive referrer data through Search Console, not via the HTTP Referer header."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Referrer-Policy</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>Referrer-Policy Header Explained</h1>
+
+    <p><strong>Referrer-Policy is an HTTP response header that controls how much referrer information is sent when a user navigates away from your site. Setting it to strict-origin-when-cross-origin or no-referrer prevents sensitive URL paths, query parameters, and internal page structures from leaking to third-party sites.</strong></p>
+
+
+    <h2>Recommended Value</h2>
+    <pre><code>Referrer-Policy: strict-origin-when-cross-origin</code></pre>
+
+    <h2>What Each Directive Does</h2>
+    <table>
+      <thead><tr><th>Directive</th><th>Purpose</th></tr></thead>
+      <tbody>
+      <tr><td><code>no-referrer</code></td><td>Never send any referrer information</td></tr>
+      <tr><td><code>strict-origin-when-cross-origin</code></td><td>Send full URL for same-origin, only origin for cross-origin HTTPS, nothing for HTTPS→HTTP</td></tr>
+      <tr><td><code>same-origin</code></td><td>Only send referrer for same-origin requests, nothing for cross-origin</td></tr>
+      <tr><td><code>origin</code></td><td>Only send the origin (scheme+host+port), never the path or query string</td></tr>
+      </tbody>
+    </table>
+
+    <h2>What Happens Without This Header</h2>
+    <p>Without Referrer-Policy, the full URL (including path, query parameters, and fragments) is sent as the Referer header when users click outbound links. This can leak sensitive data like session tokens in URLs, internal admin paths, search queries, or user-specific page URLs to third-party analytics, ads, or linked sites.</p>
+
+    <h2>How to Implement</h2>
+    <pre><code># Nginx
+add_header Referrer-Policy &quot;strict-origin-when-cross-origin&quot; always;
+
+# Apache
+Header always set Referrer-Policy &quot;strict-origin-when-cross-origin&quot;
+
+# Express.js
+app.use((req, res, next) =&gt; {
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});</code></pre>
+
+    <h2>Testing and Report-Only</h2>
+    <p>Referrer-Policy has no report-only mode. To test, check your outbound link behavior using browser DevTools Network tab — inspect the Referer header on cross-origin requests.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/permissions-policy.html">Permissions Policy</a></li>
+      <li><a href="/answers/strict-transport-security.html">Strict Transport Security</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What does Referrer-Policy control?</summary>
+      <p>It controls how much URL information the browser sends in the Referer header when navigating away from your page. This affects outbound link clicks, embedded resources, and API requests.</p>
+    </details>
+    <details>
+      <summary>What is the recommended Referrer-Policy value?</summary>
+      <p>strict-origin-when-cross-origin is recommended for most sites. It provides full referrer data for same-origin navigation (useful for analytics) while limiting cross-origin referrers to just the origin domain.</p>
+    </details>
+    <details>
+      <summary>Does Referrer-Policy affect SEO?</summary>
+      <p>Using no-referrer prevents destination sites from seeing your URL in their analytics, but this does not affect search engine ranking. Google and Bing receive referrer data through Search Console, not via the HTTP Referer header.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is an Open Redirect Vulnerability? — LochBot</title>
+  <meta name="description" content="An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers explo">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-open-redirect.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is an Open Redirect Vulnerability? — LochBot">
+  <meta property="og:description" content="An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers explo">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-open-redirect.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is an Open Redirect Vulnerability? — LochBot">
+  <meta name="twitter:description" content="An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers explo">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an open redirect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An open redirect is when your application takes a URL from user input and redirects the browser to it without checking if the destination is safe. Attackers use this to create phishing links that appear to come from your trusted domain."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are open redirects dangerous?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Users trust links starting with your domain. An open redirect lets attackers create links like https://yoursite.com/redirect?url=https://evil.com that look legitimate but land on phishing pages. Email filters and security tools also trust your domain, letting the link through."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I fix an open redirect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only allow redirects to relative URLs (same site), maintain an allowlist of permitted destinations, or use indirect references (numeric IDs that map to URLs). Never pass user-supplied full URLs directly to redirect functions."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is an Open Redirect Vulnerability?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is an Open Redirect Vulnerability?</h1>
+
+    <p><strong>An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers exploit this to create phishing links that start with your trusted domain but redirect to a malicious site, bypassing spam filters and user suspicion.</strong></p>
+
+
+    <h2>Types of an Open Redirect Vulnerability?</h2>
+    <h3>URL parameter redirect</h3>
+    <p>Application uses a query parameter to determine redirect destination.</p>
+    <pre><code>https://trusted.com/login?redirect=https://evil.com/phishing</code></pre>
+
+    <h3>Header-based redirect</h3>
+    <p>Application reads the Referer or Host header to redirect.</p>
+
+    <h3>JavaScript redirect</h3>
+    <p>Client-side code reads URL parameters and redirects via window.location.</p>
+
+    <h2>How to Prevent It</h2>
+    <pre><code># 1. Allowlist approach — only permit known-safe destinations
+ALLOWED_REDIRECTS = ['/dashboard', '/profile', '/settings']
+def safe_redirect(url):
+    if url in ALLOWED_REDIRECTS:
+        return redirect(url)
+    return redirect('/dashboard')
+
+# 2. Validate the URL is relative (no protocol or host)
+def is_safe_url(url):
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    return not parsed.netloc and not parsed.scheme
+
+# 3. Use indirect references (map IDs to URLs)
+REDIRECTS = {'1': '/dashboard', '2': '/profile'}
+redirect_to = REDIRECTS.get(request.args.get('dest'), '/dashboard')
+
+# 4. Never redirect to user-supplied full URLs
+# BAD:  redirect(request.args.get('next'))
+# GOOD: redirect(validate_relative_url(request.args.get('next')))</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>Phishing attacks using your domain's reputation, OAuth token theft by redirecting authorization callbacks, bypassing URL-based security controls, and SSO token interception.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-ssrf.html">What Is Ssrf</a></li>
+      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
+      <li><a href="/answers/what-is-clickjacking.html">What Is Clickjacking</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is an open redirect?</summary>
+      <p>An open redirect is when your application takes a URL from user input and redirects the browser to it without checking if the destination is safe. Attackers use this to create phishing links that appear to come from your trusted domain.</p>
+    </details>
+    <details>
+      <summary>Why are open redirects dangerous?</summary>
+      <p>Users trust links starting with your domain. An open redirect lets attackers create links like https://yoursite.com/redirect?url=https://evil.com that look legitimate but land on phishing pages. Email filters and security tools also trust your domain, letting the link through.</p>
+    </details>
+    <details>
+      <summary>How do I fix an open redirect?</summary>
+      <p>Only allow redirects to relative URLs (same site), maintain an allowlist of permitted destinations, or use indirect references (numeric IDs that map to URLs). Never pass user-supplied full URLs directly to redirect functions.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

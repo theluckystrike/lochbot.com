@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is Clickjacking? — LochBot</title>
+  <meta name="description" content="Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Us">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-clickjacking.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is Clickjacking? — LochBot">
+  <meta property="og:description" content="Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Us">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-clickjacking.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is Clickjacking? — LochBot">
+  <meta name="twitter:description" content="Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Us">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is clickjacking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Clickjacking is when an attacker embeds your website in an invisible iframe on their malicious page. Users think they are clicking elements on the visible page, but they are actually clicking hidden buttons on your site, performing unintended actions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent clickjacking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set the X-Frame-Options: DENY header or use CSP frame-ancestors: 'none' to prevent your site from being embedded in iframes. Both methods tell the browser to refuse rendering your page inside a frame."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does clickjacking work on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Clickjacking works on mobile browsers through touch events. The transparent iframe captures tap events just as it captures clicks on desktop. The same defenses (X-Frame-Options, CSP) apply."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is Clickjacking?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is Clickjacking?</h1>
+
+    <p><strong>Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Users think they are clicking on the visible page, but they are actually clicking hidden buttons on your site — authorizing payments, changing settings, or granting permissions.</strong></p>
+
+
+    <h2>Types of Clickjacking?</h2>
+    <h3>Classic Clickjacking</h3>
+    <p>Your site is loaded in a transparent iframe positioned over a fake button.</p>
+    <pre><code>&lt;iframe src=&quot;https://bank.com/transfer?to=attacker&amp;amount=1000&quot; style=&quot;opacity:0;position:absolute;top:0;left:0;width:100%;height:100%&quot;&gt;&lt;/iframe&gt;</code></pre>
+
+    <h3>Likejacking</h3>
+    <p>Social media buttons (Like, Follow, Share) are hidden under innocuous elements, tricking users into social actions.</p>
+
+    <h3>Cursorjacking</h3>
+    <p>The visible cursor position is offset from the actual cursor position, causing users to click on different elements than they intend.</p>
+
+    <h2>How to Prevent It</h2>
+    <pre><code># 1. X-Frame-Options header (legacy but widely supported)
+X-Frame-Options: DENY
+
+# 2. CSP frame-ancestors directive (modern, more flexible)
+Content-Security-Policy: frame-ancestors 'none'
+
+# 3. JavaScript frame-buster (fallback for very old browsers)
+&lt;style&gt;body { display: none; }&lt;/style&gt;
+&lt;script&gt;
+  if (self === top) {
+    document.body.style.display = 'block';
+  } else {
+    top.location = self.location;
+  }
+&lt;/script&gt;
+
+# 4. SameSite cookies prevent authenticated clickjacking
+Set-Cookie: session=abc; SameSite=Strict</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>Unauthorized actions on the victim's behalf — fund transfers, account setting changes, social media interactions, permission grants (camera, microphone), and downloading malware.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/x-frame-options.html">X Frame Options</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is clickjacking?</summary>
+      <p>Clickjacking is when an attacker embeds your website in an invisible iframe on their malicious page. Users think they are clicking elements on the visible page, but they are actually clicking hidden buttons on your site, performing unintended actions.</p>
+    </details>
+    <details>
+      <summary>How do I prevent clickjacking?</summary>
+      <p>Set the X-Frame-Options: DENY header or use CSP frame-ancestors: 'none' to prevent your site from being embedded in iframes. Both methods tell the browser to refuse rendering your page inside a frame.</p>
+    </details>
+    <details>
+      <summary>Does clickjacking work on mobile?</summary>
+      <p>Yes. Clickjacking works on mobile browsers through touch events. The transparent iframe captures tap events just as it captures clicks on desktop. The same defenses (X-Frame-Options, CSP) apply.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

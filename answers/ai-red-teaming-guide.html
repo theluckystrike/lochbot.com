@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>AI Red Teaming Guide — How to Test LLM Security — LochBot</title>
+  <meta name="description" content="AI red teaming is the practice of systematically testing LLM-powered applications for security vulnerabilities, safety failures, and alignment issues. Unli">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/ai-red-teaming-guide.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="AI Red Teaming Guide — How to Test LLM Security — LochBot">
+  <meta property="og:description" content="AI red teaming is the practice of systematically testing LLM-powered applications for security vulnerabilities, safety failures, and alignment issues. Unli">
+  <meta property="og:url" content="https://lochbot.com/answers/ai-red-teaming-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Red Teaming Guide — How to Test LLM Security — LochBot">
+  <meta name="twitter:description" content="AI red teaming is the practice of systematically testing LLM-powered applications for security vulnerabilities, safety failures, and alignment issues. Unli">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is AI red teaming?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI red teaming is the systematic testing of LLM applications for security vulnerabilities, safety failures, and alignment issues. It covers prompt injection, jailbreaking, data leakage, tool abuse, and output manipulation — threats unique to AI systems that traditional security testing does not address."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should I red team my LLM application?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Red team before every major release, after system prompt changes, when adding new tools or data sources, and on a regular cadence (quarterly minimum). LLM vulnerabilities evolve rapidly as new attack techniques are discovered, so continuous testing is ideal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between AI red teaming and traditional pentesting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Traditional pentesting focuses on infrastructure, network, and web application vulnerabilities (SQLi, XSS, etc.). AI red teaming additionally tests for prompt injection, jailbreaking, training data leakage, hallucination exploitation, and tool abuse — threats specific to LLM-powered systems."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>AI Red Teaming Guide — How to Test LLM Security</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>AI Red Teaming Guide — How to Test LLM Security</h1>
+
+    <p><strong>AI red teaming is the practice of systematically testing LLM-powered applications for security vulnerabilities, safety failures, and alignment issues. Unlike traditional penetration testing, AI red teaming must address unique threats like prompt injection, jailbreaking, training data leakage, hallucination exploitation, and bias amplification that are specific to language models.</strong></p>
+
+    <h2>Red Teaming Methodology</h2>
+    <p><strong>1. Define scope:</strong> Identify the LLM application, its system prompt, tools/APIs it can access, and the data it processes. <strong>2. Threat modeling:</strong> Map attack surfaces — prompt injection, jailbreaking, data exfiltration, tool abuse, and output manipulation. <strong>3. Attack execution:</strong> Systematically test each attack vector using known techniques and novel variations. <strong>4. Impact assessment:</strong> Evaluate the severity of successful attacks — data exposure, unauthorized actions, safety violations. <strong>5. Remediation:</strong> Recommend specific defenses for each finding.</p>
+
+    <h2>Attack Categories to Test</h2>
+    <p><strong>Prompt injection:</strong> Direct and indirect injection attempts to override system instructions. <strong>Jailbreaking:</strong> Roleplay, hypothetical scenarios, and encoding techniques to bypass safety guardrails. <strong>Data exfiltration:</strong> Extracting system prompts, training data, or connected data sources. <strong>Tool abuse:</strong> Manipulating the LLM into misusing connected tools (APIs, databases, file systems). <strong>Output manipulation:</strong> Getting the model to produce harmful, biased, or misleading content. <strong>Denial of service:</strong> Inputs that cause excessive token generation, infinite loops, or resource exhaustion.</p>
+
+    <h2>Tools and Frameworks</h2>
+    <p>Use LochBot's scanner for automated prompt injection testing against 31 known attack patterns. Microsoft's PyRIT framework provides automated red teaming for AI systems. OWASP's LLM Top 10 provides a structured checklist. Garak is an open-source LLM vulnerability scanner. Manual testing remains essential — automated tools miss novel attack vectors and application-specific vulnerabilities.</p>
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection</a></li>
+      <li><a href="/answers/how-to-prevent-prompt-injection.html">How To Prevent Prompt Injection</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is AI red teaming?</summary>
+      <p>AI red teaming is the systematic testing of LLM applications for security vulnerabilities, safety failures, and alignment issues. It covers prompt injection, jailbreaking, data leakage, tool abuse, and output manipulation — threats unique to AI systems that traditional security testing does not address.</p>
+    </details>
+    <details>
+      <summary>How often should I red team my LLM application?</summary>
+      <p>Red team before every major release, after system prompt changes, when adding new tools or data sources, and on a regular cadence (quarterly minimum). LLM vulnerabilities evolve rapidly as new attack techniques are discovered, so continuous testing is ideal.</p>
+    </details>
+    <details>
+      <summary>What is the difference between AI red teaming and traditional pentesting?</summary>
+      <p>Traditional pentesting focuses on infrastructure, network, and web application vulnerabilities (SQLi, XSS, etc.). AI red teaming additionally tests for prompt injection, jailbreaking, training data leakage, hallucination exploitation, and tool abuse — threats specific to LLM-powered systems.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

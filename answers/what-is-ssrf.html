@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is SSRF (Server-Side Request Forgery)? — LochBot</title>
+  <meta name="description" content="Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-ssrf.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is SSRF (Server-Side Request Forgery)? — LochBot">
+  <meta property="og:description" content="Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-ssrf.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is SSRF (Server-Side Request Forgery)? — LochBot">
+  <meta name="twitter:description" content="Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is SSRF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SSRF is when an attacker makes your server send HTTP requests to unintended destinations. Since the request comes from your server (inside the firewall), it can access internal services, cloud metadata endpoints, and other resources the attacker cannot reach directly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is SSRF dangerous in cloud environments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cloud instances have metadata endpoints (169.254.169.254) that return IAM credentials, API keys, and configuration data. SSRF can access these endpoints from inside the cloud network, potentially compromising the entire cloud account."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent SSRF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use URL allowlists, block internal IP ranges (10.x, 172.16.x, 192.168.x, 169.254.x), disable HTTP redirects, and use cloud-specific protections like AWS IMDSv2. Never trust user-supplied URLs without validation."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is SSRF (Server-Side Request Forgery)?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is SSRF (Server-Side Request Forgery)?</h1>
+
+    <p><strong>Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically internal services, cloud metadata endpoints, or other systems behind the firewall. The server acts as a proxy, giving the attacker access to resources they cannot reach directly.</strong></p>
+
+
+    <h2>Types of SSRF (Server-Side Request Forgery)?</h2>
+    <h3>Basic SSRF</h3>
+    <p>The attacker provides a URL that the server fetches, targeting internal resources.</p>
+    <pre><code>POST /api/fetch-url { &quot;url&quot;: &quot;http://169.254.169.254/latest/meta-data/iam/security-credentials/&quot; }</code></pre>
+
+    <h3>Blind SSRF</h3>
+    <p>The server makes the request but does not return the response. The attacker infers information from timing or out-of-band channels.</p>
+
+    <h3>SSRF via redirects</h3>
+    <p>The attacker provides a URL that redirects to an internal resource, bypassing URL validation.</p>
+
+    <h2>How to Prevent It</h2>
+    <pre><code># 1. Allowlist approach — only permit known-safe destinations
+ALLOWED_HOSTS = ['api.example.com', 'cdn.example.com']
+def fetch_url(url):
+    parsed = urlparse(url)
+    if parsed.hostname not in ALLOWED_HOSTS:
+        raise ValueError(&quot;Host not allowed&quot;)
+
+# 2. Block internal IP ranges
+import ipaddress
+def is_internal(hostname):
+    ip = ipaddress.ip_address(socket.gethostbyname(hostname))
+    return ip.is_private or ip.is_loopback or ip.is_link_local
+
+# 3. Disable redirects
+requests.get(url, allow_redirects=False)
+
+# 4. Use a metadata firewall for cloud environments
+# AWS: IMDSv2 requires a PUT request with hop limit
+# GCP: Requires Metadata-Flavor: Google header</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>In the 2019 Capital One breach, SSRF was used to access AWS metadata endpoints, stealing credentials that led to 106 million customer records being exposed. SSRF can read cloud credentials, access internal databases, scan internal networks, and pivot to other services.</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-sql-injection.html">What Is Sql Injection</a></li>
+      <li><a href="/answers/what-is-open-redirect.html">What Is Open Redirect</a></li>
+      <li><a href="/answers/what-is-directory-traversal.html">What Is Directory Traversal</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is SSRF?</summary>
+      <p>SSRF is when an attacker makes your server send HTTP requests to unintended destinations. Since the request comes from your server (inside the firewall), it can access internal services, cloud metadata endpoints, and other resources the attacker cannot reach directly.</p>
+    </details>
+    <details>
+      <summary>Why is SSRF dangerous in cloud environments?</summary>
+      <p>Cloud instances have metadata endpoints (169.254.169.254) that return IAM credentials, API keys, and configuration data. SSRF can access these endpoints from inside the cloud network, potentially compromising the entire cloud account.</p>
+    </details>
+    <details>
+      <summary>How do I prevent SSRF?</summary>
+      <p>Use URL allowlists, block internal IP ranges (10.x, 172.16.x, 192.168.x, 169.254.x), disable HTTP redirects, and use cloud-specific protections like AWS IMDSv2. Never trust user-supplied URLs without validation.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

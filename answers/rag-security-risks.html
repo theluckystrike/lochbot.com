@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot</title>
+  <meta name="description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/rag-security-risks.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot">
+  <meta property="og:description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
+  <meta property="og:url" content="https://lochbot.com/answers/rag-security-risks.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot">
+  <meta name="twitter:description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the main security risks of RAG?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The main risks are: knowledge base poisoning (injecting malicious content), indirect prompt injection via retrieved documents, data exfiltration through crafted queries, and missing access controls that let users access documents they should not see."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I secure a RAG pipeline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Implement document-level access control, separate trusted and untrusted sources, sanitize retrieved content before passing to the LLM, filter sensitive data from outputs, and monitor for anomalous retrieval patterns. Treat retrieved documents as untrusted input."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can RAG systems leak private documents?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If the RAG system does not enforce access control at retrieval time, a user can craft queries that retrieve documents they should not have access to. The LLM may then include content from these documents in its response."
+      }
+    }
+  ]
+}
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities</h1>
+
+    <p><strong>Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge base with malicious content, use indirect prompt injection via retrieved documents, exfiltrate data through crafted queries, or manipulate retrieval rankings to surface attacker-controlled information.</strong></p>
+
+    <h2>Attack Vectors</h2>
+    <p><strong>Knowledge base poisoning:</strong> If the RAG system indexes user-generated content, emails, or web pages, attackers can inject content designed to manipulate LLM responses when retrieved. <strong>Indirect prompt injection:</strong> Hidden instructions in documents that activate when the document is retrieved and fed to the LLM. <strong>Data exfiltration:</strong> Crafted queries designed to retrieve and expose sensitive documents from the knowledge base. <strong>Retrieval manipulation:</strong> SEO-like techniques to ensure attacker-controlled documents rank highest for specific queries.</p>
+
+    <h2>Common RAG Vulnerabilities</h2>
+    <p><strong>No access control on retrieved documents:</strong> The RAG system retrieves documents the user should not have access to. <strong>Mixing trusted and untrusted sources:</strong> User-uploaded documents are treated with the same trust level as curated knowledge. <strong>No output filtering:</strong> Retrieved sensitive data passes through to the LLM response without redaction. <strong>Embedding injection:</strong> Adversarial text designed to have high similarity to target queries in the embedding space.</p>
+
+    <h2>Defense Strategies</h2>
+    <p>Implement document-level access control that mirrors your existing permissions model. Separate trusted (curated) and untrusted (user-uploaded) document collections. Sanitize retrieved documents before injecting into the LLM prompt. Use output filtering to detect and redact sensitive data patterns. Monitor retrieval patterns for anomalies. Apply the principle of least privilege — only retrieve documents relevant to the user's role.</p>
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-indirect-prompt-injection.html">What Is Indirect Prompt Injection</a></li>
+      <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection</a></li>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/llm-hallucination-security.html">Llm Hallucination Security</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <section class="faq-section" style="max-width:720px;margin:2rem auto;">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What are the main security risks of RAG?</summary>
+      <p>The main risks are: knowledge base poisoning (injecting malicious content), indirect prompt injection via retrieved documents, data exfiltration through crafted queries, and missing access controls that let users access documents they should not see.</p>
+    </details>
+    <details>
+      <summary>How do I secure a RAG pipeline?</summary>
+      <p>Implement document-level access control, separate trusted and untrusted sources, sanitize retrieved content before passing to the LLM, filter sensitive data from outputs, and monitor for anomalous retrieval patterns. Treat retrieved documents as untrusted input.</p>
+    </details>
+    <details>
+      <summary>Can RAG systems leak private documents?</summary>
+      <p>Yes. If the RAG system does not enforce access control at retrieval time, a user can craft queries that retrieve documents they should not have access to. The LLM may then include content from these documents in its response.</p>
+    </details>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime &mdash; $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>
