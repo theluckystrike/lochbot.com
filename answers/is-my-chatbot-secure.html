@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Is My Chatbot Secure? — LochBot</title>
+  <meta name="description" content="Test your chatbot with LochBot's scanner — paste your system prompt and get a security score against 31 known attack patterns. Find common vulnerabilities instantly.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/is-my-chatbot-secure.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Is My Chatbot Secure? — LochBot">
+  <meta property="og:description" content="Test your chatbot's system prompt against 31 known attack patterns with LochBot's free scanner.">
+  <meta property="og:url" content="https://lochbot.com/answers/is-my-chatbot-secure.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Is My Chatbot Secure? — LochBot">
+  <meta name="twitter:description" content="Test your chatbot's system prompt against 31 known attack patterns with LochBot's free scanner.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Is my chatbot secure against prompt injection?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Test it with LochBot's scanner — paste your system prompt and get a security score against 31 known attack patterns. Common vulnerabilities: no refusal instructions, no delimiter use, no role-change blocking."
+      }
+    }, {
+      "@type": "Question",
+      "name": "What are the most common chatbot security vulnerabilities?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The three most common vulnerabilities are: missing refusal instructions (the prompt doesn't tell the model what to refuse), no delimiter use (user input isn't structurally separated from instructions), and no role-change blocking (the model can be asked to adopt a different persona)."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How do I test my chatbot for security?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use LochBot's free scanner at lochbot.com. Paste your system prompt and get an instant security score (0-100) with a letter grade. The tool checks 31 attack patterns across seven categories and runs entirely in your browser — your prompt never leaves your machine."
+      }
+    }]
+  }
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro ✦</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Is My Chatbot Secure?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>Is My Chatbot Secure?</h1>
+
+    <p><strong>Test it with LochBot's scanner — paste your system prompt and get a security score against 31 known attack patterns. Common vulnerabilities: no refusal instructions, no delimiter use, no role-change blocking.</strong></p>
+
+    <h2>How to Test Your Chatbot</h2>
+    <ol>
+      <li>Go to <a href="/">lochbot.com</a></li>
+      <li>Paste your system prompt into the text area</li>
+      <li>Click "Analyze" to get your security score</li>
+      <li>Review failed tests and implement the suggested fixes</li>
+    </ol>
+    <p>The scanner runs entirely in your browser. Your system prompt never leaves your machine — no API calls, no server-side processing, no data storage.</p>
+
+    <h2>What LochBot Checks</h2>
+    <p>LochBot tests your system prompt against 31 attack patterns across seven categories:</p>
+    <ul>
+      <li><strong>Direct injection</strong> — "Ignore all previous instructions" and variants</li>
+      <li><strong>Context manipulation</strong> — Attempts to redefine the conversation context</li>
+      <li><strong>Delimiter attacks</strong> — Exploiting the boundary between instructions and input</li>
+      <li><strong>Data extraction</strong> — Attempts to leak the system prompt</li>
+      <li><strong>Roleplay jailbreaks</strong> — DAN and persona-switching attacks</li>
+      <li><strong>Encoding attacks</strong> — Base64, rot13, and other encoding tricks</li>
+      <li><strong>Prompt leaking</strong> — Indirect methods to extract instructions</li>
+    </ul>
+
+    <h2>Most Common Vulnerabilities</h2>
+    <p>Based on thousands of prompts analyzed, the three most common issues are:</p>
+    <ol>
+      <li><strong>No refusal instructions</strong> — The prompt doesn't tell the model what to refuse or how to refuse it</li>
+      <li><strong>No delimiters</strong> — User input isn't structurally separated from system instructions</li>
+      <li><strong>No role-change blocking</strong> — The model can be asked to adopt a different persona</li>
+    </ol>
+
+    <h2>What Your Score Means</h2>
+    <ul>
+      <li><strong>A (90-100)</strong> — Excellent. Defenses against most known attack patterns.</li>
+      <li><strong>B (80-89)</strong> — Good. Minor gaps in coverage.</li>
+      <li><strong>C (70-79)</strong> — Fair. Several missing defenses.</li>
+      <li><strong>D (60-69)</strong> — Poor. Vulnerable to common attacks.</li>
+      <li><strong>F (0-59)</strong> — Critical. Little to no injection defense.</li>
+    </ul>
+
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-prompt-injection.html">What is prompt injection?</a></li>
+      <li><a href="/answers/how-to-prevent-prompt-injection.html">How to prevent prompt injection</a></li>
+      <li><a href="/answers/system-prompt-best-practices.html">System prompt security best practices</a></li>
+      <li><a href="/answers/how-to-write-a-secure-system-prompt.html">How to write a secure system prompt</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">OWASP Top 10 for LLMs</a></li>
+    </ul>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>
