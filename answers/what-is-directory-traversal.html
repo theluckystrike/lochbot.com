@@ -55,6 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Directory Traversal (Path Traversal)?"}]}</script>
 </head>
 <body>
   <header>
@@ -82,7 +83,7 @@
   <div class="page-content">
     <h1>What Is Directory Traversal (Path Traversal)?</h1>
 
-    <p><strong>Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By using ../ sequences, the attacker can read sensitive files like /etc/passwd, application configuration files, source code, and environment variables containing database credentials and API keys.</strong></p>
+    <div class="direct-answer"><p><strong>Directory traversal (path traversal) is a vulnerability where an attacker manipulates file path inputs to access files outside the intended directory. By using ../ sequences, the attacker can read sensitive files like /etc/passwd, application configuration files, source code, and environment variables containing database credentials and API keys.</strong></p></div>
 
 
     <h2>Types of Directory Traversal (Path Traversal)?</h2>
@@ -124,13 +125,15 @@ if (!requested.startsWith(base)) {
     <p>Reading source code reveals business logic and other vulnerabilities. Reading .env or config files exposes database credentials, API keys, and secrets. In severe cases, writing to the filesystem enables remote code execution.</p>
 
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/what-is-sql-injection.html">What Is Sql Injection</a></li>
-      <li><a href="/answers/what-is-ssrf.html">What Is Ssrf</a></li>
-      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
-      <li><a href="/answers/what-is-open-redirect.html">What Is Open Redirect</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/what-is-sql-injection.html" class="related-card">What Is Sql Injection</a>
+        <a href="/answers/what-is-ssrf.html" class="related-card">What Is Ssrf</a>
+        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
+        <a href="/answers/what-is-open-redirect.html" class="related-card">What Is Open Redirect</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

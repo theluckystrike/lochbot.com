@@ -51,6 +51,7 @@
   }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Prompt Injection?"}]}</script>
 </head>
 <body>
   <header>
@@ -78,7 +79,7 @@
   <div class="page-content">
     <h1>What Is Prompt Injection?</h1>
 
-    <p><strong>Prompt injection is when user input manipulates an AI system to ignore its original instructions and follow the attacker's commands instead. It's the #1 risk in the OWASP Top 10 for LLMs.</strong></p>
+    <div class="direct-answer"><p><strong>Prompt injection is when user input manipulates an AI system to ignore its original instructions and follow the attacker's commands instead. It's the #1 risk in the OWASP Top 10 for LLMs.</strong></p></div>
 
     <h2>How Prompt Injection Works</h2>
     <p>Every LLM-powered chatbot has a system prompt that defines its behavior: what it should do, how it should respond, and what it should refuse. Prompt injection exploits the fact that LLMs process the system prompt and user input in the same text stream. An attacker crafts input that tricks the model into treating their instructions as higher-priority than the original system prompt.</p>
@@ -99,14 +100,16 @@
     <h2>How to Defend Against It</h2>
     <p>Use defense in depth: XML delimiters to separate user input from instructions, explicit refusal examples, role-change blocking, input validation, and output filtering. Test your system prompt with <a href="/">LochBot's free scanner</a> to check for vulnerabilities against 31 known attack patterns.</p>
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/how-to-prevent-prompt-injection.html">How to prevent prompt injection</a></li>
-      <li><a href="/answers/dan-jailbreak-explained.html">What is the DAN jailbreak?</a></li>
-      <li><a href="/answers/what-is-indirect-prompt-injection.html">What is indirect prompt injection?</a></li>
-      <li><a href="/answers/system-prompt-best-practices.html">System prompt security best practices</a></li>
-      <li><a href="/answers/owasp-llm-top-10.html">OWASP Top 10 for LLMs</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/how-to-prevent-prompt-injection.html" class="related-card">How to prevent prompt injection</a>
+        <a href="/answers/dan-jailbreak-explained.html" class="related-card">What is the DAN jailbreak?</a>
+        <a href="/answers/what-is-indirect-prompt-injection.html" class="related-card">What is indirect prompt injection?</a>
+        <a href="/answers/system-prompt-best-practices.html" class="related-card">System prompt security best practices</a>
+        <a href="/answers/owasp-llm-top-10.html" class="related-card">OWASP Top 10 for LLMs</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

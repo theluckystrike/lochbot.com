@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot</title>
+  <title>What Are RAG Security Risks? — LochBot</title>
   <meta name="description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/rag-security-risks.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot">
+  <meta property="og:title" content="What Are RAG Security Risks? — LochBot">
   <meta property="og:description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
   <meta property="og:url" content="https://lochbot.com/answers/rag-security-risks.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities — LochBot">
+  <meta name="twitter:title" content="What Are RAG Security Risks? — LochBot">
   <meta name="twitter:description" content="Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,6 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Are RAG Security Risks?"}]}</script>
 </head>
 <body>
   <header>
@@ -75,14 +76,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Are RAG Security Risks?</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>RAG Security Risks — Retrieval-Augmented Generation Vulnerabilities</h1>
+    <h1>What Are RAG Security Risks?</h1>
 
-    <p><strong>Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge base with malicious content, use indirect prompt injection via retrieved documents, exfiltrate data through crafted queries, or manipulate retrieval rankings to surface attacker-controlled information.</strong></p>
+    <div class="direct-answer"><p><strong>Retrieval-Augmented Generation (RAG) introduces unique security risks because it connects LLMs to external data sources. Attackers can poison the knowledge base with malicious content, use indirect prompt injection via retrieved documents, exfiltrate data through crafted queries, or manipulate retrieval rankings to surface attacker-controlled information.</strong></p></div>
 
     <h2>Attack Vectors</h2>
     <p><strong>Knowledge base poisoning:</strong> If the RAG system indexes user-generated content, emails, or web pages, attackers can inject content designed to manipulate LLM responses when retrieved. <strong>Indirect prompt injection:</strong> Hidden instructions in documents that activate when the document is retrieved and fed to the LLM. <strong>Data exfiltration:</strong> Crafted queries designed to retrieve and expose sensitive documents from the knowledge base. <strong>Retrieval manipulation:</strong> SEO-like techniques to ensure attacker-controlled documents rank highest for specific queries.</p>
@@ -93,13 +94,15 @@
     <h2>Defense Strategies</h2>
     <p>Implement document-level access control that mirrors your existing permissions model. Separate trusted (curated) and untrusted (user-uploaded) document collections. Sanitize retrieved documents before injecting into the LLM prompt. Use output filtering to detect and redact sensitive data patterns. Monitor retrieval patterns for anomalies. Apply the principle of least privilege — only retrieve documents relevant to the user's role.</p>
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/what-is-indirect-prompt-injection.html">What Is Indirect Prompt Injection</a></li>
-      <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection</a></li>
-      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
-      <li><a href="/answers/llm-hallucination-security.html">Llm Hallucination Security</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/what-is-indirect-prompt-injection.html" class="related-card">What Is Indirect Prompt Injection</a>
+        <a href="/answers/what-is-prompt-injection.html" class="related-card">What Is Prompt Injection</a>
+        <a href="/answers/llm-data-poisoning.html" class="related-card">Llm Data Poisoning</a>
+        <a href="/answers/llm-hallucination-security.html" class="related-card">Llm Hallucination Security</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

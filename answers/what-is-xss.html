@@ -55,6 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is XSS (Cross-Site Scripting)?"}]}</script>
 </head>
 <body>
   <header>
@@ -82,7 +83,7 @@
   <div class="page-content">
     <h1>What Is XSS (Cross-Site Scripting)?</h1>
 
-    <p><strong>Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injected script runs in the victim's browser with full access to their session, cookies, and the page DOM, enabling session hijacking, data theft, and account takeover.</strong></p>
+    <div class="direct-answer"><p><strong>Cross-Site Scripting (XSS) is a web security vulnerability that allows attackers to inject malicious JavaScript into pages viewed by other users. The injected script runs in the victim's browser with full access to their session, cookies, and the page DOM, enabling session hijacking, data theft, and account takeover.</strong></p></div>
 
 
     <h2>Types of XSS (Cross-Site Scripting)?</h2>
@@ -121,13 +122,15 @@ element.innerHTML = userInput;    // DANGEROUS
     <p>Session hijacking via cookie theft, account takeover, keylogging, phishing via page defacement, cryptocurrency mining, worm propagation (Samy worm infected 1M MySpace profiles in 20 hours).</p>
 
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
-      <li><a href="/answers/x-xss-protection.html">X Xss Protection</a></li>
-      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
-      <li><a href="/answers/how-to-prevent-prompt-injection.html">How To Prevent Prompt Injection</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
+        <a href="/answers/x-xss-protection.html" class="related-card">X Xss Protection</a>
+        <a href="/answers/what-is-csrf.html" class="related-card">What Is Csrf</a>
+        <a href="/answers/how-to-prevent-prompt-injection.html" class="related-card">How To Prevent Prompt Injection</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

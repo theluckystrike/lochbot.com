@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>LLM Model Extraction — Stealing AI Models via API — LochBot</title>
+  <title>What Is LLM Model Extraction? — LochBot</title>
   <meta name="description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/llm-model-extraction.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="LLM Model Extraction — Stealing AI Models via API — LochBot">
+  <meta property="og:title" content="What Is LLM Model Extraction? — LochBot">
   <meta property="og:description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
   <meta property="og:url" content="https://lochbot.com/answers/llm-model-extraction.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LLM Model Extraction — Stealing AI Models via API — LochBot">
+  <meta name="twitter:title" content="What Is LLM Model Extraction? — LochBot">
   <meta name="twitter:description" content="Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collectin">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,6 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is LLM Model Extraction?"}]}</script>
 </head>
 <body>
   <header>
@@ -75,14 +76,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Model Extraction — Stealing AI Models via API</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is LLM Model Extraction?</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>LLM Model Extraction — Stealing AI Models via API</h1>
+    <h1>What Is LLM Model Extraction?</h1>
 
-    <p><strong>Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collecting enough input-output pairs, the attacker can train a surrogate model that mimics the target's behavior without paying for training costs, violating intellectual property, or bypassing usage restrictions.</strong></p>
+    <div class="direct-answer"><p><strong>Model extraction is an attack where an adversary systematically queries an LLM API to reconstruct a functionally equivalent copy of the model. By collecting enough input-output pairs, the attacker can train a surrogate model that mimics the target's behavior without paying for training costs, violating intellectual property, or bypassing usage restrictions.</strong></p></div>
 
     <h2>How Model Extraction Works</h2>
     <p>The attacker sends a large number of carefully crafted queries to the target API and records the responses. These input-output pairs become training data for a surrogate model. Advanced attacks use active learning to minimize the number of queries needed — focusing on inputs where the surrogate model is most uncertain, thereby maximizing information gained per query.</p>
@@ -93,13 +94,15 @@
     <h2>Defense Strategies</h2>
     <p>Implement rate limiting and query budgets per API key. Monitor for unusual query patterns (high volume, systematic input variation, repeated edge-case probing). Add watermarking to model outputs. Limit output detail — return only top-1 predictions instead of full probability distributions. Use differential privacy during training to limit what can be learned from outputs.</p>
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
-      <li><a href="/answers/llm-training-data-leakage.html">Llm Training Data Leakage</a></li>
-      <li><a href="/answers/llm-supply-chain-risks.html">Llm Supply Chain Risks</a></li>
-      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/llm-data-poisoning.html" class="related-card">Llm Data Poisoning</a>
+        <a href="/answers/llm-training-data-leakage.html" class="related-card">Llm Training Data Leakage</a>
+        <a href="/answers/llm-supply-chain-risks.html" class="related-card">Llm Supply Chain Risks</a>
+        <a href="/answers/owasp-llm-top-10.html" class="related-card">Owasp Llm Top 10</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

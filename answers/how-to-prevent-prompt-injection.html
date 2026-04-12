@@ -51,6 +51,7 @@
   }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"How to Prevent Prompt Injection"}]}</script>
 </head>
 <body>
   <header>
@@ -78,7 +79,7 @@
   <div class="page-content">
     <h1>How to Prevent Prompt Injection</h1>
 
-    <p><strong>Use XML/delimiter-separated user input, explicit refusal instructions, input validation, output filtering, and least-privilege tool access. No single technique is sufficient — use defense in depth.</strong></p>
+    <div class="direct-answer"><p><strong>Use XML/delimiter-separated user input, explicit refusal instructions, input validation, output filtering, and least-privilege tool access. No single technique is sufficient — use defense in depth.</strong></p></div>
 
     <h2>1. Use Delimiters to Separate User Input</h2>
     <p>Wrap user input in XML tags like <code>&lt;user_input&gt;...&lt;/user_input&gt;</code> in your system prompt. This creates a structural boundary that helps the model distinguish between your instructions and the user's text. Research shows this alone reduces injection success rates by 30-50%.</p>
@@ -98,14 +99,16 @@
     <h2>6. Test Your Defenses</h2>
     <p>Use <a href="/">LochBot's scanner</a> to test your system prompt against 31 known attack patterns. It runs entirely in your browser — your prompt never leaves your machine.</p>
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/what-is-prompt-injection.html">What is prompt injection?</a></li>
-      <li><a href="/answers/system-prompt-best-practices.html">System prompt security best practices</a></li>
-      <li><a href="/answers/how-to-write-a-secure-system-prompt.html">How to write a secure system prompt</a></li>
-      <li><a href="/answers/is-my-chatbot-secure.html">Is my chatbot secure?</a></li>
-      <li><a href="/answers/what-is-indirect-prompt-injection.html">What is indirect prompt injection?</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/what-is-prompt-injection.html" class="related-card">What is prompt injection?</a>
+        <a href="/answers/system-prompt-best-practices.html" class="related-card">System prompt security best practices</a>
+        <a href="/answers/how-to-write-a-secure-system-prompt.html" class="related-card">How to write a secure system prompt</a>
+        <a href="/answers/is-my-chatbot-secure.html" class="related-card">Is my chatbot secure?</a>
+        <a href="/answers/what-is-indirect-prompt-injection.html" class="related-card">What is indirect prompt injection?</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

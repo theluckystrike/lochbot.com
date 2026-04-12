@@ -55,6 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Clickjacking?"}]}</script>
 </head>
 <body>
   <header>
@@ -82,7 +83,7 @@
   <div class="page-content">
     <h1>What Is Clickjacking?</h1>
 
-    <p><strong>Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Users think they are clicking on the visible page, but they are actually clicking hidden buttons on your site — authorizing payments, changing settings, or granting permissions.</strong></p>
+    <div class="direct-answer"><p><strong>Clickjacking (UI redressing) is an attack where a malicious website embeds your legitimate site in a transparent iframe and overlays it with a decoy UI. Users think they are clicking on the visible page, but they are actually clicking hidden buttons on your site — authorizing payments, changing settings, or granting permissions.</strong></p></div>
 
 
     <h2>Types of Clickjacking?</h2>
@@ -120,13 +121,15 @@ Set-Cookie: session=abc; SameSite=Strict</code></pre>
     <p>Unauthorized actions on the victim's behalf — fund transfers, account setting changes, social media interactions, permission grants (camera, microphone), and downloading malware.</p>
 
 
-    <h2>Related Questions</h2>
-    <ul>
-      <li><a href="/answers/x-frame-options.html">X Frame Options</a></li>
-      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
-      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
-      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
-    </ul>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/answers/x-frame-options.html" class="related-card">X Frame Options</a>
+        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
+        <a href="/answers/what-is-csrf.html" class="related-card">What Is Csrf</a>
+        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
+      </div>
+    </section>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>
