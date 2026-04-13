@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is LLM Training Data Leakage? — LochBot</title>
+  <title>LLM Training Data Leakage — When Models Memorize Secrets — LochBot</title>
   <meta name="description" content="Training data leakage occurs when an LLM memorizes and reproduces sensitive information from its training data — including personal information, API keys, ">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/llm-training-data-leakage.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is LLM Training Data Leakage? — LochBot">
+  <meta property="og:title" content="LLM Training Data Leakage — When Models Memorize Secrets — LochBot">
   <meta property="og:description" content="Training data leakage occurs when an LLM memorizes and reproduces sensitive information from its training data — including personal information, API keys, ">
   <meta property="og:url" content="https://lochbot.com/answers/llm-training-data-leakage.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is LLM Training Data Leakage? — LochBot">
+  <meta name="twitter:title" content="LLM Training Data Leakage — When Models Memorize Secrets — LochBot">
   <meta name="twitter:description" content="Training data leakage occurs when an LLM memorizes and reproduces sensitive information from its training data — including personal information, API keys, ">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is LLM Training Data Leakage?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is LLM Training Data Leakage?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Training Data Leakage — When Models Memorize Secrets</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is LLM Training Data Leakage?</h1>
+    <h1>LLM Training Data Leakage — When Models Memorize Secrets</h1>
 
-    <div class="direct-answer"><p><strong>Training data leakage occurs when an LLM memorizes and reproduces sensitive information from its training data — including personal information, API keys, passwords, proprietary code, and copyrighted content. This is not a theoretical risk: researchers have extracted verbatim training examples from GPT-2, GPT-3, and other models using targeted prompting techniques.</strong></p></div>
+    <p><strong>Training data leakage occurs when an LLM memorizes and reproduces sensitive information from its training data — including personal information, API keys, passwords, proprietary code, and copyrighted content. This is not a theoretical risk: researchers have extracted verbatim training examples from GPT-2, GPT-3, and other models using targeted prompting techniques.</strong></p>
 
     <h2>How Training Data Leaks Happen</h2>
     <p>LLMs memorize training data that appears frequently or is distinctive enough to be learned as a pattern. When prompted with the beginning of a memorized sequence, the model completes it verbatim. Larger models memorize more data. Fine-tuned models are especially vulnerable because the fine-tuning dataset is typically small and heavily memorized.</p>
@@ -94,15 +93,13 @@
     <h2>Defense Strategies</h2>
     <p>Scrub PII and secrets from training data before training. Use differential privacy during training to limit memorization. Implement output filters that detect and redact sensitive patterns (credit card numbers, API keys, SSNs). Test models for memorization using canary tokens — insert known unique strings during training and test if they can be extracted. Fine-tune with data deduplication to reduce memorization of repeated examples.</p>
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/llm-data-poisoning.html" class="related-card">Llm Data Poisoning</a>
-        <a href="/answers/llm-model-extraction.html" class="related-card">Llm Model Extraction</a>
-        <a href="/answers/what-is-prompt-injection.html" class="related-card">What Is Prompt Injection</a>
-        <a href="/answers/how-to-prevent-prompt-injection.html" class="related-card">How To Prevent Prompt Injection</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/llm-model-extraction.html">Llm Model Extraction</a></li>
+      <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection</a></li>
+      <li><a href="/answers/how-to-prevent-prompt-injection.html">How To Prevent Prompt Injection</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

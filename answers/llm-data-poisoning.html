@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is LLM Data Poisoning? — LochBot</title>
+  <title>LLM Data Poisoning — Training Data Attacks Explained — LochBot</title>
   <meta name="description" content="LLM data poisoning is an attack where adversaries manipulate training data to introduce backdoors, biases, or vulnerabilities into a language model. Becaus">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/llm-data-poisoning.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is LLM Data Poisoning? — LochBot">
+  <meta property="og:title" content="LLM Data Poisoning — Training Data Attacks Explained — LochBot">
   <meta property="og:description" content="LLM data poisoning is an attack where adversaries manipulate training data to introduce backdoors, biases, or vulnerabilities into a language model. Becaus">
   <meta property="og:url" content="https://lochbot.com/answers/llm-data-poisoning.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is LLM Data Poisoning? — LochBot">
+  <meta name="twitter:title" content="LLM Data Poisoning — Training Data Attacks Explained — LochBot">
   <meta name="twitter:description" content="LLM data poisoning is an attack where adversaries manipulate training data to introduce backdoors, biases, or vulnerabilities into a language model. Becaus">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is LLM Data Poisoning?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is LLM Data Poisoning?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Data Poisoning — Training Data Attacks Explained</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is LLM Data Poisoning?</h1>
+    <h1>LLM Data Poisoning — Training Data Attacks Explained</h1>
 
-    <div class="direct-answer"><p><strong>LLM data poisoning is an attack where adversaries manipulate training data to introduce backdoors, biases, or vulnerabilities into a language model. Because LLMs learn patterns from their training corpus, poisoned data can cause the model to produce incorrect outputs, leak sensitive information, or behave maliciously when triggered by specific inputs.</strong></p></div>
+    <p><strong>LLM data poisoning is an attack where adversaries manipulate training data to introduce backdoors, biases, or vulnerabilities into a language model. Because LLMs learn patterns from their training corpus, poisoned data can cause the model to produce incorrect outputs, leak sensitive information, or behave maliciously when triggered by specific inputs.</strong></p>
 
     <h2>How Data Poisoning Works</h2>
     <p>Attackers inject malicious content into publicly accessible training data sources — web crawls, open-source datasets, Wikipedia edits, Stack Overflow answers, or GitHub repositories. When the LLM trains on this poisoned data, it learns the attacker's intended behavior alongside legitimate patterns. The attack can be targeted (triggered by specific phrases) or broad (degrading overall model quality).</p>
@@ -94,15 +93,13 @@
     <h2>Defense Strategies</h2>
     <p>Curate training data from trusted sources and verify data provenance. Use data deduplication and outlier detection to identify suspicious samples. Implement robust evaluation benchmarks that test for known backdoor patterns. Fine-tune with high-quality, human-reviewed data. Monitor model outputs in production for unexpected behavior patterns.</p>
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/llm-training-data-leakage.html" class="related-card">Llm Training Data Leakage</a>
-        <a href="/answers/llm-supply-chain-risks.html" class="related-card">Llm Supply Chain Risks</a>
-        <a href="/answers/what-is-prompt-injection.html" class="related-card">What Is Prompt Injection</a>
-        <a href="/answers/ai-red-teaming-guide.html" class="related-card">Ai Red Teaming Guide</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-training-data-leakage.html">Llm Training Data Leakage</a></li>
+      <li><a href="/answers/llm-supply-chain-risks.html">Llm Supply Chain Risks</a></li>
+      <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection</a></li>
+      <li><a href="/answers/ai-red-teaming-guide.html">Ai Red Teaming Guide</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

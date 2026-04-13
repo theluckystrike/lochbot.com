@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is the Permissions-Policy Header? — LochBot</title>
+  <title>Permissions-Policy Header Explained — LochBot</title>
   <meta name="description" content="Permissions-Policy (formerly Feature-Policy) is an HTTP response header that controls which browser features and APIs can be used on your page. It allows y">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/permissions-policy.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is the Permissions-Policy Header? — LochBot">
+  <meta property="og:title" content="Permissions-Policy Header Explained — LochBot">
   <meta property="og:description" content="Permissions-Policy (formerly Feature-Policy) is an HTTP response header that controls which browser features and APIs can be used on your page. It allows y">
   <meta property="og:url" content="https://lochbot.com/answers/permissions-policy.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is the Permissions-Policy Header? — LochBot">
+  <meta name="twitter:title" content="Permissions-Policy Header Explained — LochBot">
   <meta name="twitter:description" content="Permissions-Policy (formerly Feature-Policy) is an HTTP response header that controls which browser features and APIs can be used on your page. It allows y">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is the Permissions-Policy Header?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is the Permissions-Policy Header?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Permissions-Policy</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is the Permissions-Policy Header?</h1>
+    <h1>Permissions-Policy Header Explained</h1>
 
-    <div class="direct-answer"><p><strong>Permissions-Policy (formerly Feature-Policy) is an HTTP response header that controls which browser features and APIs can be used on your page. It allows you to disable access to the camera, microphone, geolocation, and other sensitive APIs, reducing the attack surface if an attacker achieves code execution on your page.</strong></p></div>
+    <p><strong>Permissions-Policy (formerly Feature-Policy) is an HTTP response header that controls which browser features and APIs can be used on your page. It allows you to disable access to the camera, microphone, geolocation, and other sensitive APIs, reducing the attack surface if an attacker achieves code execution on your page.</strong></p>
 
 
     <h2>Recommended Value</h2>
@@ -121,14 +120,12 @@ app.use((req, res, next) =&gt; {
     <p>Permissions-Policy does not have a report-only mode. However, it is safe to deploy restrictively because most web apps do not use camera, microphone, or geolocation APIs. Only add exceptions for features you actually use.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/referrer-policy.html" class="related-card">Referrer Policy</a>
-        <a href="/answers/cross-origin-opener-policy.html" class="related-card">Cross Origin Opener Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/referrer-policy.html">Referrer Policy</a></li>
+      <li><a href="/answers/cross-origin-opener-policy.html">Cross Origin Opener Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

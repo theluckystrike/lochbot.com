@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Are LLM Supply Chain Risks? — LochBot</title>
+  <title>LLM Supply Chain Risks — Model and Dependency Attacks — LochBot</title>
   <meta name="description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/llm-supply-chain-risks.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Are LLM Supply Chain Risks? — LochBot">
+  <meta property="og:title" content="LLM Supply Chain Risks — Model and Dependency Attacks — LochBot">
   <meta property="og:description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
   <meta property="og:url" content="https://lochbot.com/answers/llm-supply-chain-risks.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Are LLM Supply Chain Risks? — LochBot">
+  <meta name="twitter:title" content="LLM Supply Chain Risks — Model and Dependency Attacks — LochBot">
   <meta name="twitter:description" content="LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedd">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Are LLM Supply Chain Risks?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Are LLM Supply Chain Risks?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Supply Chain Risks — Model and Dependency Attacks</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Are LLM Supply Chain Risks?</h1>
+    <h1>LLM Supply Chain Risks — Model and Dependency Attacks</h1>
 
-    <div class="direct-answer"><p><strong>LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedding models, vector databases, Python/JS packages, and API providers. A compromise at any point in this chain can introduce backdoors, leak data, or give attackers control over your AI system's behavior.</strong></p></div>
+    <p><strong>LLM supply chain risks arise from the complex dependency chain involved in building AI applications: pretrained model weights, fine-tuning datasets, embedding models, vector databases, Python/JS packages, and API providers. A compromise at any point in this chain can introduce backdoors, leak data, or give attackers control over your AI system's behavior.</strong></p>
 
     <h2>Attack Surfaces</h2>
     <p><strong>Model weights:</strong> Downloading pretrained models from Hugging Face or other hubs — malicious models can contain backdoors or execute arbitrary code via pickle deserialization. <strong>Dependencies:</strong> Python packages (transformers, langchain, etc.) can be compromised via typosquatting, dependency confusion, or maintainer account takeover. <strong>Fine-tuning data:</strong> Third-party datasets used for fine-tuning may be poisoned. <strong>API providers:</strong> Third-party LLM APIs can change model behavior, logging policies, or data retention without notice.</p>
@@ -94,15 +93,13 @@
     <h2>Defense Strategies</h2>
     <p>Pin and hash all dependencies. Use safetensors format instead of pickle for model weights. Audit model files before loading. Verify checksums of downloaded models. Use private model registries with access control. Scan dependencies with tools like pip-audit, npm audit, and Snyk. Implement model signing and provenance tracking. Use isolated environments (containers, VMs) for model inference.</p>
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/llm-data-poisoning.html" class="related-card">Llm Data Poisoning</a>
-        <a href="/answers/llm-model-extraction.html" class="related-card">Llm Model Extraction</a>
-        <a href="/answers/llm-hallucination-security.html" class="related-card">Llm Hallucination Security</a>
-        <a href="/answers/owasp-llm-top-10.html" class="related-card">Owasp Llm Top 10</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/llm-model-extraction.html">Llm Model Extraction</a></li>
+      <li><a href="/answers/llm-hallucination-security.html">Llm Hallucination Security</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

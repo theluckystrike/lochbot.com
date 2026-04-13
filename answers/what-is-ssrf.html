@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is SSRF (Server-Side Request Forgery)?"}]}</script>
 </head>
 <body>
   <header>
@@ -83,7 +82,7 @@
   <div class="page-content">
     <h1>What Is SSRF (Server-Side Request Forgery)?</h1>
 
-    <div class="direct-answer"><p><strong>Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically internal services, cloud metadata endpoints, or other systems behind the firewall. The server acts as a proxy, giving the attacker access to resources they cannot reach directly.</strong></p></div>
+    <p><strong>Server-Side Request Forgery (SSRF) is a vulnerability where an attacker tricks your server into making HTTP requests to unintended destinations — typically internal services, cloud metadata endpoints, or other systems behind the firewall. The server acts as a proxy, giving the attacker access to resources they cannot reach directly.</strong></p>
 
 
     <h2>Types of SSRF (Server-Side Request Forgery)?</h2>
@@ -122,15 +121,13 @@ requests.get(url, allow_redirects=False)
     <p>In the 2019 Capital One breach, SSRF was used to access AWS metadata endpoints, stealing credentials that led to 106 million customer records being exposed. SSRF can read cloud credentials, access internal databases, scan internal networks, and pivot to other services.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/what-is-sql-injection.html" class="related-card">What Is Sql Injection</a>
-        <a href="/answers/what-is-open-redirect.html" class="related-card">What Is Open Redirect</a>
-        <a href="/answers/what-is-directory-traversal.html" class="related-card">What Is Directory Traversal</a>
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-sql-injection.html">What Is Sql Injection</a></li>
+      <li><a href="/answers/what-is-open-redirect.html">What Is Open Redirect</a></li>
+      <li><a href="/answers/what-is-directory-traversal.html">What Is Directory Traversal</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

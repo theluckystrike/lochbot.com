@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is CSRF (Cross-Site Request Forgery)?"}]}</script>
 </head>
 <body>
   <header>
@@ -83,7 +82,7 @@
   <div class="page-content">
     <h1>What Is CSRF (Cross-Site Request Forgery)?</h1>
 
-    <div class="direct-answer"><p><strong>Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are authenticated. Because the browser automatically includes session cookies with every request, the server cannot distinguish between a legitimate request and a forged one.</strong></p></div>
+    <p><strong>Cross-Site Request Forgery (CSRF) is an attack that tricks a logged-in user's browser into sending an unwanted request to a web application where they are authenticated. Because the browser automatically includes session cookies with every request, the server cannot distinguish between a legitimate request and a forged one.</strong></p>
 
 
     <h2>Types of CSRF (Cross-Site Request Forgery)?</h2>
@@ -117,15 +116,13 @@ if (req.headers.origin !== 'https://yoursite.com') {
     <p>Unauthorized fund transfers, email/password changes, privilege escalation, data deletion. In 2008, a CSRF vulnerability in a major router allowed attackers to change DNS settings, redirecting all traffic through malicious servers.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
-        <a href="/answers/what-is-clickjacking.html" class="related-card">What Is Clickjacking</a>
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/referrer-policy.html" class="related-card">Referrer Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-clickjacking.html">What Is Clickjacking</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/referrer-policy.html">Referrer Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

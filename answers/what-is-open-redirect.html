@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is an Open Redirect Vulnerability?"}]}</script>
 </head>
 <body>
   <header>
@@ -83,7 +82,7 @@
   <div class="page-content">
     <h1>What Is an Open Redirect Vulnerability?</h1>
 
-    <div class="direct-answer"><p><strong>An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers exploit this to create phishing links that start with your trusted domain but redirect to a malicious site, bypassing spam filters and user suspicion.</strong></p></div>
+    <p><strong>An open redirect is a vulnerability where a web application accepts a user-supplied URL and redirects the browser to it without validation. Attackers exploit this to create phishing links that start with your trusted domain but redirect to a malicious site, bypassing spam filters and user suspicion.</strong></p>
 
 
     <h2>Types of an Open Redirect Vulnerability?</h2>
@@ -123,15 +122,13 @@ redirect_to = REDIRECTS.get(request.args.get('dest'), '/dashboard')
     <p>Phishing attacks using your domain's reputation, OAuth token theft by redirecting authorization callbacks, bypassing URL-based security controls, and SSO token interception.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
-        <a href="/answers/what-is-ssrf.html" class="related-card">What Is Ssrf</a>
-        <a href="/answers/what-is-csrf.html" class="related-card">What Is Csrf</a>
-        <a href="/answers/what-is-clickjacking.html" class="related-card">What Is Clickjacking</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-ssrf.html">What Is Ssrf</a></li>
+      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
+      <li><a href="/answers/what-is-clickjacking.html">What Is Clickjacking</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

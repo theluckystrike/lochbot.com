@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is the X-XSS-Protection Header? — LochBot</title>
+  <title>X-XSS-Protection Header Explained — LochBot</title>
   <meta name="description" content="X-XSS-Protection is a legacy HTTP response header that controlled the browser's built-in XSS filter. Modern browsers have removed this filter entirely. The">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/x-xss-protection.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is the X-XSS-Protection Header? — LochBot">
+  <meta property="og:title" content="X-XSS-Protection Header Explained — LochBot">
   <meta property="og:description" content="X-XSS-Protection is a legacy HTTP response header that controlled the browser's built-in XSS filter. Modern browsers have removed this filter entirely. The">
   <meta property="og:url" content="https://lochbot.com/answers/x-xss-protection.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is the X-XSS-Protection Header? — LochBot">
+  <meta name="twitter:title" content="X-XSS-Protection Header Explained — LochBot">
   <meta name="twitter:description" content="X-XSS-Protection is a legacy HTTP response header that controlled the browser's built-in XSS filter. Modern browsers have removed this filter entirely. The">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is the X-XSS-Protection Header?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is the X-XSS-Protection Header?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>X-XSS-Protection</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is the X-XSS-Protection Header?</h1>
+    <h1>X-XSS-Protection Header Explained</h1>
 
-    <div class="direct-answer"><p><strong>X-XSS-Protection is a legacy HTTP response header that controlled the browser's built-in XSS filter. Modern browsers have removed this filter entirely. The recommended setting is now X-XSS-Protection: 0 to explicitly disable it, because the filter itself introduced vulnerabilities in some cases. Use Content-Security-Policy instead for XSS protection.</strong></p></div>
+    <p><strong>X-XSS-Protection is a legacy HTTP response header that controlled the browser's built-in XSS filter. Modern browsers have removed this filter entirely. The recommended setting is now X-XSS-Protection: 0 to explicitly disable it, because the filter itself introduced vulnerabilities in some cases. Use Content-Security-Policy instead for XSS protection.</strong></p>
 
 
     <h2>Recommended Value</h2>
@@ -122,14 +121,12 @@ app.use((req, res, next) =&gt; {
     <p>X-XSS-Protection has no report-only mode. More importantly, it should be set to 0 (disabled) and replaced with Content-Security-Policy for actual XSS protection.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/x-content-type-options.html" class="related-card">X Content Type Options</a>
-        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/x-content-type-options.html">X Content Type Options</a></li>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

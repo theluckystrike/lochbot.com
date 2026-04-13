@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is CORS (Cross-Origin Resource Sharing)?"}]}</script>
 </head>
 <body>
   <header>
@@ -83,7 +82,7 @@
   <div class="page-content">
     <h1>What Is CORS (Cross-Origin Resource Sharing)?</h1>
 
-    <div class="direct-answer"><p><strong>CORS (Cross-Origin Resource Sharing) is a browser security mechanism that controls which websites can make requests to your server. By default, browsers block cross-origin requests (Same-Origin Policy). CORS headers let you selectively allow specific origins to access your API, while keeping everyone else blocked.</strong></p></div>
+    <p><strong>CORS (Cross-Origin Resource Sharing) is a browser security mechanism that controls which websites can make requests to your server. By default, browsers block cross-origin requests (Same-Origin Policy). CORS headers let you selectively allow specific origins to access your API, while keeping everyone else blocked.</strong></p>
 
 
     <h2>Types of CORS (Cross-Origin Resource Sharing)?</h2>
@@ -122,15 +121,13 @@ app.use((req, res, next) =&gt; {
     <p>Misconfigured CORS (especially reflecting any Origin with credentials) allows any website to make authenticated requests to your API, stealing user data, performing unauthorized actions, and exfiltrating sensitive information.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/what-is-csrf.html" class="related-card">What Is Csrf</a>
-        <a href="/answers/cross-origin-resource-policy.html" class="related-card">Cross Origin Resource Policy</a>
-        <a href="/answers/cross-origin-opener-policy.html" class="related-card">Cross Origin Opener Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/what-is-csrf.html">What Is Csrf</a></li>
+      <li><a href="/answers/cross-origin-resource-policy.html">Cross Origin Resource Policy</a></li>
+      <li><a href="/answers/cross-origin-opener-policy.html">Cross Origin Opener Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

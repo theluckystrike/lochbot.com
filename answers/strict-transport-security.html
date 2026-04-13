@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is Strict-Transport-Security (HSTS)? — LochBot</title>
+  <title>Strict-Transport-Security (HSTS) Header Explained — LochBot</title>
   <meta name="description" content="Strict-Transport-Security (HSTS) is an HTTP response header that tells browsers to only connect to your site over HTTPS, never HTTP. Once a browser receive">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/strict-transport-security.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is Strict-Transport-Security (HSTS)? — LochBot">
+  <meta property="og:title" content="Strict-Transport-Security (HSTS) Header Explained — LochBot">
   <meta property="og:description" content="Strict-Transport-Security (HSTS) is an HTTP response header that tells browsers to only connect to your site over HTTPS, never HTTP. Once a browser receive">
   <meta property="og:url" content="https://lochbot.com/answers/strict-transport-security.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is Strict-Transport-Security (HSTS)? — LochBot">
+  <meta name="twitter:title" content="Strict-Transport-Security (HSTS) Header Explained — LochBot">
   <meta name="twitter:description" content="Strict-Transport-Security (HSTS) is an HTTP response header that tells browsers to only connect to your site over HTTPS, never HTTP. Once a browser receive">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Strict-Transport-Security (HSTS)?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is Strict-Transport-Security (HSTS)?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Strict-Transport-Security</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is Strict-Transport-Security (HSTS)?</h1>
+    <h1>Strict-Transport-Security (HSTS) Header Explained</h1>
 
-    <div class="direct-answer"><p><strong>Strict-Transport-Security (HSTS) is an HTTP response header that tells browsers to only connect to your site over HTTPS, never HTTP. Once a browser receives this header, it will automatically upgrade all future HTTP requests to HTTPS for the specified duration, preventing SSL stripping attacks and protocol downgrade attacks.</strong></p></div>
+    <p><strong>Strict-Transport-Security (HSTS) is an HTTP response header that tells browsers to only connect to your site over HTTPS, never HTTP. Once a browser receives this header, it will automatically upgrade all future HTTP requests to HTTPS for the specified duration, preventing SSL stripping attacks and protocol downgrade attacks.</strong></p>
 
 
     <h2>Recommended Value</h2>
@@ -119,14 +118,12 @@ app.use((req, res, next) =&gt; {
     <p>HSTS does not have a report-only mode. Start with a short max-age (e.g., 300 seconds = 5 minutes) to test, then gradually increase to 31536000 (1 year) once confirmed working.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/x-content-type-options.html" class="related-card">X Content Type Options</a>
-        <a href="/answers/referrer-policy.html" class="related-card">Referrer Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/x-content-type-options.html">X Content Type Options</a></li>
+      <li><a href="/answers/referrer-policy.html">Referrer Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is Content-Security-Policy (CSP)? — LochBot</title>
+  <title>Content-Security-Policy (CSP) Header Explained — LochBot</title>
   <meta name="description" content="Content-Security-Policy (CSP) is an HTTP response header that tells browsers which sources of content are allowed to load on your page. It is the single mo">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/content-security-policy.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is Content-Security-Policy (CSP)? — LochBot">
+  <meta property="og:title" content="Content-Security-Policy (CSP) Header Explained — LochBot">
   <meta property="og:description" content="Content-Security-Policy (CSP) is an HTTP response header that tells browsers which sources of content are allowed to load on your page. It is the single mo">
   <meta property="og:url" content="https://lochbot.com/answers/content-security-policy.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is Content-Security-Policy (CSP)? — LochBot">
+  <meta name="twitter:title" content="Content-Security-Policy (CSP) Header Explained — LochBot">
   <meta name="twitter:description" content="Content-Security-Policy (CSP) is an HTTP response header that tells browsers which sources of content are allowed to load on your page. It is the single mo">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Content-Security-Policy (CSP)?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is Content-Security-Policy (CSP)?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Content-Security-Policy</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is Content-Security-Policy (CSP)?</h1>
+    <h1>Content-Security-Policy (CSP) Header Explained</h1>
 
-    <div class="direct-answer"><p><strong>Content-Security-Policy (CSP) is an HTTP response header that tells browsers which sources of content are allowed to load on your page. It is the single most effective defense against Cross-Site Scripting (XSS) attacks because it prevents the browser from executing inline scripts or loading resources from unauthorized origins.</strong></p></div>
+    <p><strong>Content-Security-Policy (CSP) is an HTTP response header that tells browsers which sources of content are allowed to load on your page. It is the single most effective defense against Cross-Site Scripting (XSS) attacks because it prevents the browser from executing inline scripts or loading resources from unauthorized origins.</strong></p>
 
 
     <h2>Recommended Value</h2>
@@ -123,15 +122,13 @@ app.use((req, res, next) =&gt; {
     <p>Use Content-Security-Policy-Report-Only first to test your policy without breaking anything. This header logs violations to a reporting endpoint without blocking content. Once you've resolved all violations, switch to the enforcing header.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/x-frame-options.html" class="related-card">X Frame Options</a>
-        <a href="/answers/x-xss-protection.html" class="related-card">X Xss Protection</a>
-        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
-        <a href="/answers/what-is-clickjacking.html" class="related-card">What Is Clickjacking</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/x-frame-options.html">X Frame Options</a></li>
+      <li><a href="/answers/x-xss-protection.html">X Xss Protection</a></li>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-clickjacking.html">What Is Clickjacking</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is SQL Injection?"}]}</script>
 </head>
 <body>
   <header>
@@ -83,7 +82,7 @@
   <div class="page-content">
     <h1>What Is SQL Injection?</h1>
 
-    <div class="direct-answer"><p><strong>SQL injection is a vulnerability where an attacker inserts malicious SQL code into application queries through user input fields. If the application builds SQL queries by concatenating user input directly, the attacker can read, modify, or delete database data, bypass authentication, and in some cases execute operating system commands.</strong></p></div>
+    <p><strong>SQL injection is a vulnerability where an attacker inserts malicious SQL code into application queries through user input fields. If the application builds SQL queries by concatenating user input directly, the attacker can read, modify, or delete database data, bypass authentication, and in some cases execute operating system commands.</strong></p>
 
 
     <h2>Types of SQL Injection?</h2>
@@ -124,15 +123,13 @@ session.query(User).filter(User.id == user_id)
     <p>Complete database compromise, authentication bypass, data exfiltration, data deletion, privilege escalation to database admin, and potentially remote code execution via xp_cmdshell (SQL Server) or LOAD_FILE (MySQL).</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/what-is-xss.html" class="related-card">What Is Xss</a>
-        <a href="/answers/what-is-ssrf.html" class="related-card">What Is Ssrf</a>
-        <a href="/answers/owasp-llm-top-10.html" class="related-card">Owasp Llm Top 10</a>
-        <a href="/answers/what-is-directory-traversal.html" class="related-card">What Is Directory Traversal</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/what-is-xss.html">What Is Xss</a></li>
+      <li><a href="/answers/what-is-ssrf.html">What Is Ssrf</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+      <li><a href="/answers/what-is-directory-traversal.html">What Is Directory Traversal</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

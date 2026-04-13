@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>How Are LLM Hallucinations a Security Risk? — LochBot</title>
+  <title>LLM Hallucinations as a Security Risk — LochBot</title>
   <meta name="description" content="LLM hallucinations become a security risk when fabricated information is trusted and acted upon. Models confidently generate fake package names (dependency">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/llm-hallucination-security.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="How Are LLM Hallucinations a Security Risk? — LochBot">
+  <meta property="og:title" content="LLM Hallucinations as a Security Risk — LochBot">
   <meta property="og:description" content="LLM hallucinations become a security risk when fabricated information is trusted and acted upon. Models confidently generate fake package names (dependency">
   <meta property="og:url" content="https://lochbot.com/answers/llm-hallucination-security.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="How Are LLM Hallucinations a Security Risk? — LochBot">
+  <meta name="twitter:title" content="LLM Hallucinations as a Security Risk — LochBot">
   <meta name="twitter:description" content="LLM hallucinations become a security risk when fabricated information is trusted and acted upon. Models confidently generate fake package names (dependency">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"How Are LLM Hallucinations a Security Risk?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>How Are LLM Hallucinations a Security Risk?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>LLM Hallucinations as a Security Risk</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>How Are LLM Hallucinations a Security Risk?</h1>
+    <h1>LLM Hallucinations as a Security Risk</h1>
 
-    <div class="direct-answer"><p><strong>LLM hallucinations become a security risk when fabricated information is trusted and acted upon. Models confidently generate fake package names (dependency confusion attacks), non-existent API endpoints, incorrect security advice, fabricated legal citations, and made-up CVE numbers. When developers or automated systems act on hallucinated information, they introduce real vulnerabilities.</strong></p></div>
+    <p><strong>LLM hallucinations become a security risk when fabricated information is trusted and acted upon. Models confidently generate fake package names (dependency confusion attacks), non-existent API endpoints, incorrect security advice, fabricated legal citations, and made-up CVE numbers. When developers or automated systems act on hallucinated information, they introduce real vulnerabilities.</strong></p>
 
     <h2>Security Risks from Hallucinations</h2>
     <p><strong>Package hallucination:</strong> LLMs recommend non-existent npm/PyPI packages. Attackers register these names and publish malicious packages, knowing developers will install them based on LLM suggestions. Research has found that 30%+ of packages recommended by GPT-4 for uncommon tasks do not exist. <strong>API hallucination:</strong> Models generate plausible but non-existent API endpoints or parameters, leading developers to build integrations that fail or connect to attacker-controlled endpoints. <strong>Security advice hallucination:</strong> Models provide incorrect security guidance — wrong CSP directives, insecure cryptographic configurations, or outdated mitigation strategies.</p>
@@ -94,15 +93,13 @@
     <h2>Mitigation Strategies</h2>
     <p>Never trust LLM output for security-critical decisions without human verification. Validate all package names before installing. Use lockfiles and dependency scanning tools. Cross-reference LLM security advice against official documentation. Implement guardrails that flag high-confidence claims about non-verifiable facts.</p>
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/llm-supply-chain-risks.html" class="related-card">Llm Supply Chain Risks</a>
-        <a href="/answers/llm-data-poisoning.html" class="related-card">Llm Data Poisoning</a>
-        <a href="/answers/rag-security-risks.html" class="related-card">Rag Security Risks</a>
-        <a href="/answers/owasp-llm-top-10.html" class="related-card">Owasp Llm Top 10</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/llm-supply-chain-risks.html">Llm Supply Chain Risks</a></li>
+      <li><a href="/answers/llm-data-poisoning.html">Llm Data Poisoning</a></li>
+      <li><a href="/answers/rag-security-risks.html">Rag Security Risks</a></li>
+      <li><a href="/answers/owasp-llm-top-10.html">Owasp Llm Top 10</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>

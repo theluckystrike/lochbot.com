@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>What Is Cross-Origin-Opener-Policy (COOP)? — LochBot</title>
+  <title>Cross-Origin-Opener-Policy (COOP) Header Explained — LochBot</title>
   <meta name="description" content="Cross-Origin-Opener-Policy (COOP) is an HTTP response header that isolates your page from cross-origin windows. Setting it to same-origin prevents other we">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/answers/cross-origin-opener-policy.html">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <meta property="og:title" content="What Is Cross-Origin-Opener-Policy (COOP)? — LochBot">
+  <meta property="og:title" content="Cross-Origin-Opener-Policy (COOP) Header Explained — LochBot">
   <meta property="og:description" content="Cross-Origin-Opener-Policy (COOP) is an HTTP response header that isolates your page from cross-origin windows. Setting it to same-origin prevents other we">
   <meta property="og:url" content="https://lochbot.com/answers/cross-origin-opener-policy.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
   <meta property="og:site_name" content="Zovo Tools">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What Is Cross-Origin-Opener-Policy (COOP)? — LochBot">
+  <meta name="twitter:title" content="Cross-Origin-Opener-Policy (COOP) Header Explained — LochBot">
   <meta name="twitter:description" content="Cross-Origin-Opener-Policy (COOP) is an HTTP response header that isolates your page from cross-origin windows. Setting it to same-origin prevents other we">
   <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
   <script type="application/ld+json">
@@ -55,7 +55,6 @@
 }
   </script>
   <link rel="stylesheet" href="/assets/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"What Is Cross-Origin-Opener-Policy (COOP)?"}]}</script>
 </head>
 <body>
   <header>
@@ -76,14 +75,14 @@
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <div class="container">
-      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>What Is Cross-Origin-Opener-Policy (COOP)?</span>
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>Cross-Origin-Opener-Policy</span>
     </div>
   </nav>
 
   <div class="page-content">
-    <h1>What Is Cross-Origin-Opener-Policy (COOP)?</h1>
+    <h1>Cross-Origin-Opener-Policy (COOP) Header Explained</h1>
 
-    <div class="direct-answer"><p><strong>Cross-Origin-Opener-Policy (COOP) is an HTTP response header that isolates your page from cross-origin windows. Setting it to same-origin prevents other websites from gaining a reference to your window object via window.open(), blocking Spectre-type side-channel attacks and cross-origin information leaks.</strong></p></div>
+    <p><strong>Cross-Origin-Opener-Policy (COOP) is an HTTP response header that isolates your page from cross-origin windows. Setting it to same-origin prevents other websites from gaining a reference to your window object via window.open(), blocking Spectre-type side-channel attacks and cross-origin information leaks.</strong></p>
 
 
     <h2>Recommended Value</h2>
@@ -119,14 +118,12 @@ app.use((req, res, next) =&gt; {
     <p>Use Cross-Origin-Opener-Policy-Report-Only to test COOP before enforcing. Violations are reported to the endpoint specified in the Reporting-Endpoints header.</p>
 
 
-    <section class="related-links">
-      <h2>Related Questions</h2>
-      <div class="related-grid">
-        <a href="/answers/cross-origin-resource-policy.html" class="related-card">Cross Origin Resource Policy</a>
-        <a href="/answers/content-security-policy.html" class="related-card">Content Security Policy</a>
-        <a href="/answers/permissions-policy.html" class="related-card">Permissions Policy</a>
-      </div>
-    </section>
+    <h2>Related Questions</h2>
+    <ul>
+      <li><a href="/answers/cross-origin-resource-policy.html">Cross Origin Resource Policy</a></li>
+      <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+      <li><a href="/answers/permissions-policy.html">Permissions Policy</a></li>
+    </ul>
 
     <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
   </div>
