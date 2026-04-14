@@ -8,6 +8,7 @@
   <meta name="description" content="Test your chatbot's system prompt against 31 injection attack patterns. Client-side analysis with vulnerability scoring, defense suggestions, and JSON export. Free and private.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://lochbot.com/">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="alternate" type="application/atom+xml" title="LochBot — Prompt Injection Vulnerability Checker for Chatbots Blog Feed" href="/blog/feed.xml">
   <meta property="og:title" content="LochBot — Prompt Injection Vulnerability Checker">
   <meta property="og:description" content="Analyze your system prompt for injection vulnerabilities. 31 attack patterns, 7 categories, instant scoring.">
@@ -98,7 +99,9 @@
       <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
       <nav>
         <a href="/" class="active">Scanner</a>
-        <a href="/about.html">About</a>
+        <a href="/tools/">Tools</a>
+        <a href="/research/">Research</a>
+        <a href="/answers/">Answers</a>
         <a href="/blog/">Blog</a>
           <div class="nav-right">
       <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro ✦</a>
@@ -194,6 +197,65 @@
         <summary>Can I export the vulnerability report?</summary>
         <p>Yes. After analyzing your system prompt, click the Export JSON button to download a complete vulnerability report. The export includes your security score, grade, and detailed results for each of the 31 attack patterns tested.</p>
       </details>
+    </section>
+
+    <!-- Internal Content Discovery -->
+    <section class="content-discovery" style="max-width:960px;margin:3rem auto;padding:0 1.5rem;">
+      <style>
+        .content-discovery h2 { text-align:center; margin-bottom:2rem; }
+        .content-discovery .disc-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; margin-bottom:2.5rem; }
+        .content-discovery .disc-group h3 { font-size:1.1rem; margin-bottom:0.75rem; color:var(--accent, #14B8A6); border-bottom:1px solid var(--border, #333); padding-bottom:0.5rem; }
+        .content-discovery .disc-group ul { list-style:none; padding:0; margin:0; }
+        .content-discovery .disc-group li { margin-bottom:0.4rem; }
+        .content-discovery .disc-group a { color:var(--text, #e0e0e0); text-decoration:none; font-size:0.9rem; }
+        .content-discovery .disc-group a:hover { color:var(--accent, #14B8A6); text-decoration:underline; }
+        .content-discovery .disc-more { text-align:center; margin-top:0.5rem; }
+        .content-discovery .disc-more a { color:var(--accent, #14B8A6); font-size:0.85rem; text-decoration:none; }
+        .content-discovery .disc-more a:hover { text-decoration:underline; }
+      </style>
+      <h2>Explore LochBot</h2>
+      <div class="disc-grid">
+        <div class="disc-group">
+          <h3>Security Tools</h3>
+          <ul>
+            <li><a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a></li>
+            <li><a href="/tools/xss-prevention.html">XSS Prevention Checker</a></li>
+            <li><a href="/tools/sql-injection-prevention.html">SQL Injection Prevention</a></li>
+            <li><a href="/tools/csp-generator.html">CSP Generator</a></li>
+            <li><a href="/tools/security-headers.html">Security Headers Analyzer</a></li>
+          </ul>
+          <div class="disc-more"><a href="/tools/">View all tools &rarr;</a></div>
+        </div>
+        <div class="disc-group">
+          <h3>Latest Answers</h3>
+          <ul>
+            <li><a href="/answers/what-is-prompt-injection.html">What Is Prompt Injection?</a></li>
+            <li><a href="/answers/how-to-prevent-prompt-injection.html">How to Prevent Prompt Injection</a></li>
+            <li><a href="/answers/dan-jailbreak-explained.html">DAN Jailbreak Explained</a></li>
+            <li><a href="/answers/system-prompt-best-practices.html">System Prompt Best Practices</a></li>
+            <li><a href="/answers/owasp-llm-top-10.html">OWASP LLM Top 10</a></li>
+            <li><a href="/answers/what-is-xss.html">What Is XSS?</a></li>
+            <li><a href="/answers/what-is-sql-injection.html">What Is SQL Injection?</a></li>
+            <li><a href="/answers/content-security-policy.html">Content Security Policy</a></li>
+            <li><a href="/answers/rag-security-risks.html">RAG Security Risks</a></li>
+            <li><a href="/answers/ai-red-teaming-guide.html">AI Red Teaming Guide</a></li>
+          </ul>
+          <div class="disc-more"><a href="/answers/">View all answers &rarr;</a></div>
+        </div>
+        <div class="disc-group">
+          <h3>Research</h3>
+          <ul>
+            <li><a href="/research/prompt-security-patterns.html">Prompt Security Patterns</a></li>
+            <li><a href="/research/minimum-viable-secure-prompt.html">Minimum Viable Secure Prompt</a></li>
+            <li><a href="/research/prompt-defense-techniques.html">Prompt Defense Techniques</a></li>
+            <li><a href="/research/owasp-top-10-frequency-2026.html">OWASP Top 10 Frequency 2026</a></li>
+            <li><a href="/research/security-header-adoption.html">Security Header Adoption</a></li>
+            <li><a href="/research/llm-jailbreak-timeline.html">LLM Jailbreak Timeline</a></li>
+            <li><a href="/research/cve-severity-trends.html">CVE Severity Trends</a></li>
+          </ul>
+          <div class="disc-more"><a href="/research/">View all research &rarr;</a></div>
+        </div>
+      </div>
     </section>
   </main>
 
