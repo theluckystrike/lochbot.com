@@ -885,7 +885,7 @@ ${faq.map(f => `    <details>
       <div class="zovo-network-links">
         <a href="https://abwex.com">ABWex — A/B Testing</a>
         <a href="https://claudflow.com">ClaudFlow — Workflows</a>
-        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudhq.com">ClaudHQ — AI Code Tools & Fixes</a>
         <a href="https://claudkit.com">ClaudKit — API</a>
         <a href="https://enhio.com">Enhio — Text Tools</a>
         <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
@@ -1077,7 +1077,7 @@ ${body}
       <div class="zovo-network-links">
         <a href="https://abwex.com">ABWex — A/B Testing</a>
         <a href="https://claudflow.com">ClaudFlow — Workflows</a>
-        <a href="https://claudhq.com">ClaudHQ — Prompts</a>
+        <a href="https://claudhq.com">ClaudHQ — AI Code Tools & Fixes</a>
         <a href="https://claudkit.com">ClaudKit — API</a>
         <a href="https://enhio.com">Enhio — Text Tools</a>
         <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
