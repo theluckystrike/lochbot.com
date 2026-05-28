@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Conversation Flow Designer — Visual Bot Builder | LochBot</title>
+  <meta name="description" content="Visual chatbot flow designer. Drag to create nodes, connect them with arrows, double-click to edit content, and export your bot flow as JSON. Pre-built templates for FAQ bot, lead gen, and support triage.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/conversation-flow-designer.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <meta property="og:title" content="Conversation Flow Designer — Visual Bot Builder">
+  <meta property="og:description" content="Visual chatbot flow designer. Drag to create nodes, connect them with arrows, and export your bot flow as JSON. Includes FAQ bot, lead gen, and support triage templates.">
+  <meta property="og:url" content="https://lochbot.com/tools/conversation-flow-designer.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="LochBot">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Conversation Flow Designer — Visual Bot Builder">
+  <meta name="twitter:description" content="Canvas-based conversation flow builder. Create chatbot flows visually, connect nodes with arrows, and export as JSON.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <link rel="alternate" hreflang="en" href="https://lochbot.com/tools/conversation-flow-designer.html">
+  <link rel="alternate" hreflang="x-default" href="https://lochbot.com/tools/conversation-flow-designer.html">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Conversation Flow Designer",
+    "url": "https://lochbot.com/tools/conversation-flow-designer.html",
+    "description": "Canvas-based visual chatbot flow builder. Drag to create nodes (greeting, question, response, condition, handoff), connect them with arrows, double-click to edit content, and export the flow as JSON. Includes three pre-built templates.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "browserRequirements": "Requires JavaScript and HTML5 Canvas",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Conversation Flow Designer — Visual Bot Builder",
+    "description": "Canvas-based visual chatbot flow builder with drag-to-create nodes, arrow connections, inline editing, JSON export, and three pre-built bot templates.",
+    "url": "https://lochbot.com/tools/conversation-flow-designer.html",
+    "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+    "publisher": { "@type": "Organization", "name": "LochBot", "url": "https://lochbot.com" },
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28"
+  }
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://lochbot.com/tools/"},{"@type":"ListItem","position":3,"name":"Conversation Flow Designer"}]}</script>
+  <style>
+    :root{
+      --bg:#0a0a0a;--bg-card:#141414;--bg-hover:#1c1c1c;
+      --border:#2a2a2a;--text:#e8e8e8;--text-dim:#888;
+      --accent:#6366F1;--accent2:#22C55E;--warn:#EAB308;--danger:#EF4444;
+      --node-greeting:#1e3a5f;--node-question:#1e4a2a;--node-response:#2a1e4a;
+      --node-condition:#4a3a1e;--node-handoff:#4a1e1e;
+      --font-mono:'Space Mono',monospace;--font-body:'IBM Plex Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    h1,h2,h3,h4{font-family:var(--font-mono);font-weight:700;line-height:1.2}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;background:rgba(10,10,10,.95);backdrop-filter:blur(10px);z-index:100}
+    .header-inner{display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:var(--font-mono);font-size:1.3rem;font-weight:700;color:var(--text)}
+    .logo span{color:var(--accent)}
+    nav{display:flex;gap:24px;align-items:center}
+    nav a{color:var(--text-dim);font-size:.9rem;transition:color .2s}
+    nav a:hover,nav a.active{color:var(--text);text-decoration:none}
+    .nav-right{display:flex;gap:12px;align-items:center;margin-left:12px}
+    .nav-pro{background:var(--accent);color:#fff !important;padding:6px 14px;border-radius:6px;font-size:.82rem;font-weight:600}
+    .nav-pro:hover{background:#4F46E5;text-decoration:none !important}
+    .nav-zovo{color:var(--text-dim) !important;font-size:.82rem}
+    .mobile-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+    .hero{text-align:center;padding:40px 0 24px}
+    .hero h1{font-size:1.9rem;margin-bottom:12px}
+    .hero p{color:var(--text-dim);font-size:.97rem;max-width:700px;margin:0 auto}
+    .breadcrumb{font-size:.85rem;color:var(--text-dim);margin-bottom:16px}
+    .breadcrumb a{color:var(--text-dim)}
+    .breadcrumb a:hover{color:var(--text)}
+    /* Designer layout */
+    .designer-wrap{max-width:1060px;margin:0 auto;padding:0 1rem 3rem}
+    .toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--border);border-radius:10px 10px 0 0;padding:12px 16px;border-bottom:none}
+    .toolbar-sep{width:1px;height:28px;background:var(--border);margin:0 4px}
+    .tool-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.8rem;font-family:var(--font-body);cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap}
+    .tool-btn:hover{background:var(--bg-hover);border-color:#444}
+    .tool-btn.active{background:rgba(99,102,241,.18);border-color:var(--accent);color:#fff}
+    .tool-btn .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+    .tool-btn.danger{border-color:var(--danger);color:var(--danger)}
+    .tool-btn.danger:hover{background:rgba(239,68,68,.1)}
+    .tool-btn.success{border-color:var(--accent2);color:var(--accent2)}
+    .tool-btn.success:hover{background:rgba(34,197,94,.08)}
+    .canvas-container{position:relative;background:#0d0d0d;border:1px solid var(--border);border-radius:0 0 10px 10px;overflow:hidden;cursor:default}
+    #flowCanvas{display:block;touch-action:none}
+    .hint{font-size:.75rem;color:var(--text-dim);padding:7px 14px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;display:flex;gap:20px;flex-wrap:wrap}
+    .hint span{white-space:nowrap}
+    /* Inline editor */
+    #nodeEditor{display:none;position:absolute;z-index:200;background:var(--bg-card);border:1px solid var(--accent);border-radius:8px;padding:12px;min-width:220px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+    #nodeEditor textarea{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:var(--font-body);font-size:.88rem;padding:8px;resize:vertical;min-height:70px}
+    #nodeEditor textarea:focus{outline:none;border-color:var(--accent)}
+    #nodeEditor .ed-row{display:flex;gap:8px;margin-top:8px;justify-content:flex-end}
+    #nodeEditor .ed-btn{padding:5px 14px;border-radius:5px;border:none;font-size:.82rem;cursor:pointer;font-family:var(--font-body)}
+    #nodeEditor .ed-save{background:var(--accent);color:#fff}
+    #nodeEditor .ed-cancel{background:var(--bg-hover);color:var(--text);border:1px solid var(--border)}
+    #nodeEditor label{font-size:.75rem;color:var(--text-dim);display:block;margin-bottom:4px;font-family:var(--font-mono)}
+    /* JSON output */
+    .json-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-top:18px}
+    .json-panel-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+    .json-panel-head h3{font-size:.82rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em}
+    #jsonOut{padding:14px 16px;font-size:.78rem;font-family:var(--font-mono);color:#a5b4fc;white-space:pre;overflow-x:auto;max-height:220px;overflow-y:auto;background:transparent}
+    /* Stats bar */
+    .stats-bar{display:flex;gap:24px;padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-top:12px;font-size:.8rem;color:var(--text-dim);flex-wrap:wrap}
+    .stats-bar strong{color:var(--text);font-family:var(--font-mono)}
+    /* Cross links */
+    .cross-links{max-width:800px;margin:2rem auto;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:10px}
+    .cross-links h3{font-family:var(--font-mono);font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+    .cross-links a{display:inline-block;margin:4px 8px 4px 0;font-size:.88rem;color:var(--accent)}
+    footer.site-footer{border-top:1px solid var(--border);padding:32px 20px;text-align:center;margin-top:40px}
+    .footer-inner{max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:8px}
+    .footer-brand{font-family:var(--font-mono);font-weight:700;font-size:1rem}
+    .footer-tagline{font-size:.82rem;color:var(--text-dim)}
+    .footer-cta{background:var(--accent);color:#fff;padding:10px 22px;border-radius:7px;font-size:.88rem;font-weight:600}
+    .footer-cta:hover{background:#4F46E5;text-decoration:none}
+    .footer-copy{font-size:.78rem;color:var(--text-dim)}
+    .footer-copy a{color:var(--text-dim)}
+    .zovo-network{border-top:1px solid var(--border);padding:24px 20px;margin-top:0}
+    .zovo-network-inner{max-width:1100px;margin:0 auto}
+    .zovo-network-title{font-family:var(--font-mono);font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+    .zovo-network-links{display:flex;flex-wrap:wrap;gap:8px 20px}
+    .zovo-network-links a{font-size:.8rem;color:var(--text-dim)}
+    .zovo-network-links a:hover{color:var(--text)}
+    .author-section{max-width:800px;margin:2rem auto;padding:1.5rem;background:rgba(88,166,255,.05);border:1px solid rgba(88,166,255,.15);border-radius:12px}
+    .author-section p{font-size:.9rem;color:#8b949e;margin:0}
+    .author-section a{color:#58a6ff}
+    /* Responsive canvas */
+    @media(max-width:600px){.toolbar{gap:5px}.tool-btn{padding:6px 9px;font-size:.73rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/tools/" class="active">Tools</a>
+        <a href="/research/">Research</a>
+        <a href="/answers/">Answers</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro &#10022;</a>
+          <a href="https://zovo.one/tools" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/tools/">Tools</a> &rsaquo; <span>Conversation Flow Designer</span>
+      </nav>
+      <h1>Conversation Flow Designer</h1>
+      <p>Build chatbot conversation flows visually. Click the canvas to place nodes, drag to move them, click two nodes to connect with arrows, and double-click any node to edit its content. Export the completed flow as JSON.</p>
+    </div>
+
+    <div class="designer-wrap">
+      <div class="toolbar">
+        <!-- Mode buttons -->
+        <button class="tool-btn active" id="modeSelect" onclick="setMode('select')" title="Select / drag nodes">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2l4 9 1.5-3.5L11 6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg> Select
+        </button>
+        <div class="toolbar-sep"></div>
+        <!-- Node type add buttons -->
+        <button class="tool-btn" onclick="setAddMode('greeting')" id="btnGreeting" title="Add Greeting node">
+          <span class="dot" style="background:#3b82f6"></span>Greeting
+        </button>
+        <button class="tool-btn" onclick="setAddMode('question')" id="btnQuestion" title="Add Question node">
+          <span class="dot" style="background:#22c55e"></span>Question
+        </button>
+        <button class="tool-btn" onclick="setAddMode('response')" id="btnResponse" title="Add Response node">
+          <span class="dot" style="background:#a855f7"></span>Response
+        </button>
+        <button class="tool-btn" onclick="setAddMode('condition')" id="btnCondition" title="Add Condition node">
+          <span class="dot" style="background:#eab308"></span>Condition
+        </button>
+        <button class="tool-btn" onclick="setAddMode('handoff')" id="btnHandoff" title="Add Handoff node">
+          <span class="dot" style="background:#ef4444"></span>Handoff
+        </button>
+        <div class="toolbar-sep"></div>
+        <button class="tool-btn" onclick="setMode('connect')" id="modeConnect" title="Connect two nodes with an arrow">
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h10M8 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Connect
+        </button>
+        <div class="toolbar-sep"></div>
+        <button class="tool-btn danger" onclick="deleteSelected()" title="Delete selected node / edge">Delete</button>
+        <button class="tool-btn" onclick="clearAll()" title="Clear all">Clear</button>
+        <div class="toolbar-sep"></div>
+        <!-- Templates -->
+        <button class="tool-btn" onclick="loadTemplate('faq')" title="Load FAQ Bot template">FAQ Bot</button>
+        <button class="tool-btn" onclick="loadTemplate('leadgen')" title="Load Lead Gen template">Lead Gen</button>
+        <button class="tool-btn" onclick="loadTemplate('support')" title="Load Support Triage template">Support</button>
+        <div class="toolbar-sep"></div>
+        <button class="tool-btn success" onclick="exportJSON()" title="Export flow as JSON">Export JSON</button>
+      </div>
+
+      <div class="canvas-container" id="canvasContainer">
+        <canvas id="flowCanvas"></canvas>
+        <div id="nodeEditor">
+          <label id="edLabel">Edit node content</label>
+          <textarea id="edText" rows="3"></textarea>
+          <div class="ed-row">
+            <button class="ed-btn ed-cancel" onclick="cancelEdit()">Cancel</button>
+            <button class="ed-btn ed-save" onclick="saveEdit()">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">
+        <span>Click canvas = place selected node type</span>
+        <span>Drag node = move</span>
+        <span>Connect mode = click source then target</span>
+        <span>Double-click = edit text</span>
+        <span>Click edge = select/delete</span>
+      </div>
+
+      <div class="stats-bar" id="statsBar">
+        <span>Nodes: <strong id="statNodes">0</strong></span>
+        <span>Edges: <strong id="statEdges">0</strong></span>
+        <span>Selected: <strong id="statSel">—</strong></span>
+        <span>Mode: <strong id="statMode">Select</strong></span>
+      </div>
+
+      <div class="json-panel">
+        <div class="json-panel-head">
+          <h3>Flow JSON</h3>
+          <button class="tool-btn success" onclick="copyJSON()" style="padding:5px 12px;font-size:.78rem">Copy</button>
+        </div>
+        <pre id="jsonOut">// Load a template or build a flow to see JSON output.</pre>
+      </div>
+
+      <div class="cross-links" style="margin-top:24px">
+        <h3>Related Tools</h3>
+        <a href="/tools/">All Tools</a>
+        <a href="/tools/chatbot-analytics-dashboard.html">Chatbot Analytics Dashboard</a>
+        <a href="/tools/prompt-injection-examples.html">Prompt Injection Examples</a>
+        <a href="/tools/csp-generator.html">CSP Generator</a>
+        <a href="/">LochBot Scanner</a>
+      </div>
+
+      <div class="author-section">
+        <p>Built by <a href="https://zovo.one">Michael Lip</a> &mdash; chatbot and security tools at <a href="https://lochbot.com">LochBot</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot.com&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+      <h3 class="zovo-network-title">Explore More Tools</h3>
+      <div class="zovo-network-links">
+        <a href="https://abwex.com">ABWex — A/B Testing</a>
+        <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+        <a href="https://claudhq.com">ClaudHQ — AI Code Tools &amp; Fixes</a>
+        <a href="https://claudkit.com">ClaudKit — API</a>
+        <a href="https://enhio.com">Enhio — Text Tools</a>
+        <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+        <a href="https://gen8x.com">Gen8X — Color Tools</a>
+        <a href="https://gpt0x.com">GPT0X — AI Models</a>
+        <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+        <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+        <a href="https://kappafy.com">Kappafy — JSON</a>
+        <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+        <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+        <a href="https://krzen.com">Krzen — Image Tools</a>
+        <a href="https://lockml.com">LockML — ML Compare</a>
+        <a href="https://ml3x.com">ML3X — Matrix Math</a>
+      </div>
+    </div>
+  </nav>
+
+<script>
+// =====================================================================
+// Conversation Flow Designer — all logic self-contained, zero deps
+// =====================================================================
+
+// ----- State -----
+var nodes = [];   // {id, type, x, y, w, h, text}
+var edges = [];   // {id, from, to, label}
+var selectedNode = null;
+var selectedEdge = null;
+var mode = 'select';   // 'select' | 'connect' | 'add:<type>'
+var connectFrom = null;
+var dragging = null;
+var dragOffX = 0, dragOffY = 0;
+var editingNode = null;
+var idCounter = 1;
+var W = 880, H = 560;
+
+// Node geometry
+var NW = 148, NH = 52;
+
+// Colors per type
+var TYPE_COLORS = {
+  greeting:  {bg:'#1a2e4a', border:'#3b82f6', text:'#93c5fd', label:'Greeting'},
+  question:  {bg:'#1a3528', border:'#22c55e', text:'#86efac', label:'Question'},
+  response:  {bg:'#251a40', border:'#a855f7', text:'#d8b4fe', label:'Response'},
+  condition: {bg:'#3a2e10', border:'#eab308', text:'#fde047', label:'Condition'},
+  handoff:   {bg:'#3a1414', border:'#ef4444', text:'#fca5a5', label:'Handoff'},
+};
+
+var DEFAULT_TEXT = {
+  greeting:  'Hi! How can I help you today?',
+  question:  'Can you tell me more about your issue?',
+  response:  'Here is the information you need.',
+  condition: 'Is the issue resolved?',
+  handoff:   'Transferring to a human agent.',
+};
+
+// ----- Canvas setup -----
+var canvas = document.getElementById('flowCanvas');
+var ctx = canvas.getContext('2d');
+
+function resizeCanvas(){
+  var container = document.getElementById('canvasContainer');
+  W = Math.max(500, container.clientWidth || 880);
+  H = 560;
+  canvas.width = W;
+  canvas.height = H;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  draw();
+}
+
+window.addEventListener('load', function(){ resizeCanvas(); loadTemplate('faq'); });
+window.addEventListener('resize', function(){ resizeCanvas(); });
+
+// ----- Mode management -----
+function setMode(m){
+  mode = m;
+  connectFrom = null;
+  // reset button highlights
+  ['modeSelect','modeConnect','btnGreeting','btnQuestion','btnResponse','btnCondition','btnHandoff'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.classList.remove('active');
+  });
+  if(m==='select') document.getElementById('modeSelect').classList.add('active');
+  if(m==='connect') document.getElementById('modeConnect').classList.add('active');
+  canvas.style.cursor = m==='select' ? 'default' : 'crosshair';
+  updateStats();
+}
+
+function setAddMode(type){
+  mode = 'add:'+type;
+  ['modeSelect','modeConnect','btnGreeting','btnQuestion','btnResponse','btnCondition','btnHandoff'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.classList.remove('active');
+  });
+  var mp={'greeting':'btnGreeting','question':'btnQuestion','response':'btnResponse','condition':'btnCondition','handoff':'btnHandoff'};
+  if(mp[type]) document.getElementById(mp[type]).classList.add('active');
+  canvas.style.cursor='crosshair';
+  updateStats();
+}
+
+// ----- Node & Edge creation -----
+function makeNode(type, x, y){
+  return {id: idCounter++, type:type, x:x, y:y, w:NW, h:NH, text:DEFAULT_TEXT[type]||type};
+}
+
+function makeEdge(from, to){
+  return {id: idCounter++, from:from, to:to, label:''};
+}
+
+function addNode(type, x, y){
+  var n = makeNode(type, x - NW/2, y - NH/2);
+  nodes.push(n);
+  updateJSON(); updateStats(); draw();
+  return n;
+}
+
+function addEdge(fromId, toId){
+  // avoid duplicates
+  for(var i=0;i<edges.length;i++){
+    if(edges[i].from===fromId && edges[i].to===toId) return;
+  }
+  edges.push(makeEdge(fromId, toId));
+  updateJSON(); updateStats(); draw();
+}
+
+// ----- Hit testing -----
+function nodeAt(x, y){
+  for(var i=nodes.length-1;i>=0;i--){
+    var n=nodes[i];
+    if(x>=n.x && x<=n.x+n.w && y>=n.y && y<=n.y+n.h) return n;
+  }
+  return null;
+}
+
+function edgeNear(x, y){
+  for(var i=edges.length-1;i>=0;i--){
+    var e=edges[i];
+    var from=getNode(e.from), to=getNode(e.to);
+    if(!from||!to) continue;
+    var fx=from.x+from.w/2, fy=from.y+from.h/2;
+    var tx=to.x+to.w/2,   ty=to.y+to.h/2;
+    if(pointToSegDist(x,y,fx,fy,tx,ty)<8) return e;
+  }
+  return null;
+}
+
+function pointToSegDist(px,py,ax,ay,bx,by){
+  var dx=bx-ax, dy=by-ay;
+  if(dx===0&&dy===0) return Math.hypot(px-ax,py-ay);
+  var t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/(dx*dx+dy*dy)));
+  return Math.hypot(px-(ax+t*dx), py-(ay+t*dy));
+}
+
+function getNode(id){ for(var i=0;i<nodes.length;i++) if(nodes[i].id===id) return nodes[i]; return null; }
+
+// ----- Canvas events -----
+canvas.addEventListener('mousedown', onMouseDown);
+canvas.addEventListener('mousemove', onMouseMove);
+canvas.addEventListener('mouseup',   onMouseUp);
+canvas.addEventListener('dblclick',  onDblClick);
+
+function canvasXY(e){
+  var r=canvas.getBoundingClientRect();
+  return {x: e.clientX-r.left, y: e.clientY-r.top};
+}
+
+function onMouseDown(e){
+  var p=canvasXY(e);
+  closeEditor();
+
+  if(mode==='select'){
+    var n=nodeAt(p.x,p.y);
+    if(n){
+      selectedNode=n; selectedEdge=null;
+      dragging=n; dragOffX=p.x-n.x; dragOffY=p.y-n.y;
+      draw(); updateStats(); return;
+    }
+    var edge=edgeNear(p.x,p.y);
+    if(edge){ selectedEdge=edge; selectedNode=null; draw(); updateStats(); return; }
+    selectedNode=null; selectedEdge=null; draw(); updateStats();
+  }
+  else if(mode==='connect'){
+    var n=nodeAt(p.x,p.y);
+    if(n){
+      if(!connectFrom){ connectFrom=n; draw(); }
+      else if(connectFrom.id!==n.id){ addEdge(connectFrom.id, n.id); connectFrom=null; setMode('select'); }
+    }
+  }
+  else if(mode.indexOf('add:')===0){
+    var type=mode.slice(4);
+    addNode(type, p.x, p.y);
+    // Stay in add mode so user can place multiple
+  }
+}
+
+function onMouseMove(e){
+  if(dragging){
+    var p=canvasXY(e);
+    dragging.x=Math.max(0,Math.min(W-dragging.w, p.x-dragOffX));
+    dragging.y=Math.max(0,Math.min(H-dragging.h, p.y-dragOffY));
+    draw();
+  }
+}
+
+function onMouseUp(){
+  if(dragging){ updateJSON(); }
+  dragging=null;
+}
+
+function onDblClick(e){
+  var p=canvasXY(e);
+  var n=nodeAt(p.x,p.y);
+  if(n){ openEditor(n, p.x, p.y); }
+}
+
+// ----- Inline editor -----
+function openEditor(node, cx, cy){
+  editingNode=node;
+  var ed=document.getElementById('nodeEditor');
+  var c=TYPE_COLORS[node.type]||TYPE_COLORS.response;
+  document.getElementById('edLabel').textContent='Edit '+c.label+' node';
+  document.getElementById('edText').value=node.text;
+  // Position editor near click but keep it inside canvas container
+  var container=document.getElementById('canvasContainer');
+  var cr=container.getBoundingClientRect();
+  var canvasR=canvas.getBoundingClientRect();
+  var relX=cx+10, relY=cy+10;
+  if(relX+240 > W) relX=cx-250;
+  if(relY+140 > H) relY=cy-150;
+  ed.style.left=Math.max(0,relX)+'px';
+  ed.style.top=Math.max(0,relY)+'px';
+  ed.style.display='block';
+  setTimeout(function(){ document.getElementById('edText').focus(); },30);
+}
+
+function saveEdit(){
+  if(editingNode){
+    editingNode.text=document.getElementById('edText').value;
+    updateJSON(); draw();
+  }
+  closeEditor();
+}
+
+function cancelEdit(){ closeEditor(); }
+
+function closeEditor(){
+  document.getElementById('nodeEditor').style.display='none';
+  editingNode=null;
+}
+
+// Keyboard shortcut: Enter = save, Esc = cancel (in textarea)
+document.getElementById('edText').addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ cancelEdit(); }
+  if(e.key==='Enter'&&e.ctrlKey){ saveEdit(); }
+});
+
+// ----- Delete -----
+function deleteSelected(){
+  if(selectedNode){
+    var id=selectedNode.id;
+    nodes=nodes.filter(function(n){ return n.id!==id; });
+    edges=edges.filter(function(e){ return e.from!==id && e.to!==id; });
+    selectedNode=null;
+  } else if(selectedEdge){
+    var eid=selectedEdge.id;
+    edges=edges.filter(function(e){ return e.id!==eid; });
+    selectedEdge=null;
+  }
+  updateJSON(); updateStats(); draw();
+}
+
+document.addEventListener('keydown',function(e){
+  if((e.key==='Delete'||e.key==='Backspace')&&document.activeElement===document.body){
+    e.preventDefault(); deleteSelected();
+  }
+});
+
+function clearAll(){
+  nodes=[]; edges=[]; selectedNode=null; selectedEdge=null; connectFrom=null;
+  idCounter=1; setMode('select'); updateJSON(); updateStats(); draw();
+}
+
+// ----- Drawing -----
+function draw(){
+  ctx.clearRect(0,0,W,H);
+
+  // Background grid
+  ctx.strokeStyle='#161616'; ctx.lineWidth=1;
+  for(var gx=0;gx<W;gx+=40){ ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
+  for(var gy=0;gy<H;gy+=40){ ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+
+  // Edges
+  edges.forEach(function(e){
+    var from=getNode(e.from), to=getNode(e.to);
+    if(!from||!to) return;
+    var fx=from.x+from.w/2, fy=from.y+from.h/2;
+    var tx=to.x+to.w/2,   ty=to.y+to.h/2;
+    var sel=(selectedEdge&&selectedEdge.id===e.id);
+    ctx.strokeStyle=sel?'#818cf8':'#444';
+    ctx.lineWidth=sel?2.5:1.8;
+    drawArrow(ctx,fx,fy,tx,ty, from, to);
+  });
+
+  // Connect preview
+  if(connectFrom){
+    ctx.strokeStyle='rgba(99,102,241,.5)'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
+    ctx.beginPath(); ctx.rect(connectFrom.x,connectFrom.y,connectFrom.w,connectFrom.h); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Nodes
+  nodes.forEach(function(n){ drawNode(n); });
+}
+
+function drawNode(n){
+  var c=TYPE_COLORS[n.type]||TYPE_COLORS.response;
+  var sel=(selectedNode&&selectedNode.id===n.id);
+  var cf=(connectFrom&&connectFrom.id===n.id);
+  var r=8;
+
+  // Shadow
+  if(sel||cf){
+    ctx.shadowColor=c.border; ctx.shadowBlur=14;
+  }
+
+  // Box
+  ctx.fillStyle=c.bg;
+  ctx.strokeStyle=sel||cf?c.border:'#333';
+  ctx.lineWidth=sel||cf?2:1.2;
+  roundRect(ctx,n.x,n.y,n.w,n.h,r);
+  ctx.fill(); ctx.stroke();
+  ctx.shadowBlur=0;
+
+  // Type badge
+  ctx.fillStyle=c.border;
+  roundRect(ctx,n.x+7,n.y+6,n.w-14,14,3);
+  ctx.fill();
+  ctx.fillStyle='#000';
+  ctx.font='bold 9px monospace';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(c.label.toUpperCase(), n.x+n.w/2, n.y+13);
+
+  // Content text
+  ctx.fillStyle=c.text;
+  ctx.font='11px sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='top';
+  var maxW=n.w-16;
+  var txt=n.text||'';
+  // Truncate to 2 lines
+  var lines=wrapText(ctx,txt,maxW,2);
+  lines.forEach(function(line,i){ ctx.fillText(line, n.x+n.w/2, n.y+24+i*13); });
+
+  ctx.textBaseline='alphabetic';
+}
+
+function wrapText(ctx, text, maxW, maxLines){
+  var words=text.split(' ');
+  var lines=[], cur='';
+  words.forEach(function(w){
+    var test=cur?cur+' '+w:w;
+    if(ctx.measureText(test).width>maxW&&cur){
+      lines.push(cur); cur=w;
+    } else { cur=test; }
+  });
+  if(cur) lines.push(cur);
+  if(lines.length>maxLines){ lines=lines.slice(0,maxLines); lines[maxLines-1]+='…'; }
+  return lines;
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);   ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);     ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function drawArrow(ctx,fx,fy,tx,ty,fromNode,toNode){
+  // Entry/exit on node borders
+  var ep=edgeEndpoints(fromNode,toNode);
+  fx=ep.fx; fy=ep.fy; tx=ep.tx; ty=ep.ty;
+
+  var angle=Math.atan2(ty-fy,tx-fx);
+  var ahead=10;
+  var cx1=fx+Math.cos(angle-0.4)*60, cy1=fy+Math.sin(angle-0.4)*60;
+  var cx2=tx-Math.cos(angle)*40,     cy2=ty-Math.sin(angle)*40;
+
+  ctx.beginPath();
+  ctx.moveTo(fx,fy);
+  ctx.bezierCurveTo(cx1,cy1,cx2,cy2,tx,ty);
+  ctx.stroke();
+
+  // Arrowhead
+  ctx.fillStyle=ctx.strokeStyle;
+  ctx.beginPath();
+  ctx.moveTo(tx,ty);
+  ctx.lineTo(tx-ahead*Math.cos(angle-0.4),ty-ahead*Math.sin(angle-0.4));
+  ctx.lineTo(tx-ahead*Math.cos(angle+0.4),ty-ahead*Math.sin(angle+0.4));
+  ctx.closePath(); ctx.fill();
+}
+
+function edgeEndpoints(from,to){
+  var fx=from.x+from.w/2, fy=from.y+from.h/2;
+  var tx=to.x+to.w/2,   ty=to.y+to.h/2;
+  var ang=Math.atan2(ty-fy,tx-fx);
+  // exit from border
+  var ex=fx, ey=fy;
+  var hw=from.w/2+2, hh=from.h/2+2;
+  if(Math.abs(Math.cos(ang))*hh > Math.abs(Math.sin(ang))*hw){
+    var s=Math.sign(Math.cos(ang)); ex=fx+s*hw; ey=fy+Math.tan(ang)*s*hw;
+  } else {
+    var s=Math.sign(Math.sin(ang)); ey=fy+s*hh; ex=fx+(s*hh)/Math.tan(ang);
+  }
+  // entry to border
+  var ang2=ang+Math.PI;
+  var ix=tx, iy=ty;
+  var hw2=to.w/2+2, hh2=to.h/2+2;
+  if(Math.abs(Math.cos(ang2))*hh2 > Math.abs(Math.sin(ang2))*hw2){
+    var s2=Math.sign(Math.cos(ang2)); ix=tx+s2*hw2; iy=ty+Math.tan(ang2)*s2*hw2;
+  } else {
+    var s2=Math.sign(Math.sin(ang2)); iy=ty+s2*hh2; ix=tx+(s2*hh2)/Math.tan(ang2);
+  }
+  return {fx:ex,fy:ey,tx:ix,ty:iy};
+}
+
+// ----- Templates -----
+var TEMPLATES = {
+  faq: {
+    name:'FAQ Bot',
+    nodes:[
+      {type:'greeting', x:60,  y:80,  text:'Hi! What can I help you with today?'},
+      {type:'question', x:280, y:60,  text:'Are you asking about billing, shipping, or returns?'},
+      {type:'response', x:500, y:30,  text:'Here are our billing FAQs: [link]'},
+      {type:'response', x:500, y:140, text:'Your order ships in 3–5 business days.'},
+      {type:'response', x:500, y:250, text:'Returns accepted within 30 days. Email support@example.com'},
+      {type:'condition',x:280, y:280, text:'Did that answer your question?'},
+      {type:'handoff',  x:60,  y:350, text:'Connecting you to a human agent now.'},
+    ],
+    edges:[
+      [0,1],[1,2],[1,3],[1,4],[1,5],[5,6]
+    ]
+  },
+  leadgen: {
+    name:'Lead Gen Bot',
+    nodes:[
+      {type:'greeting', x:50,  y:100, text:'Hey! Looking to learn more about our product?'},
+      {type:'question', x:250, y:50,  text:"What's your name?"},
+      {type:'question', x:250, y:160, text:"What's your work email?"},
+      {type:'question', x:250, y:270, text:"What's your company size?"},
+      {type:'condition',x:450, y:160, text:'Are you the decision-maker?'},
+      {type:'response', x:620, y:80,  text:"Great! I'll have a specialist reach out within 24 hours."},
+      {type:'response', x:620, y:260, text:"No problem — I'll send you a product overview instead."},
+      {type:'handoff',  x:450, y:340, text:'Routing to sales team.'},
+    ],
+    edges:[
+      [0,1],[1,2],[2,3],[3,4],[4,5],[4,6],[5,7]
+    ]
+  },
+  support: {
+    name:'Support Triage',
+    nodes:[
+      {type:'greeting', x:50,  y:150, text:'Welcome to Support. How urgent is your issue?'},
+      {type:'condition',x:250, y:100, text:'Is the service completely down?'},
+      {type:'handoff',  x:450, y:50,  text:'P1 ESCALATION — routing to on-call engineer.'},
+      {type:'question', x:450, y:170, text:'Please describe the issue in detail.'},
+      {type:'condition',x:250, y:270, text:'Have you tried restarting the service?'},
+      {type:'response', x:450, y:300, text:'Please restart and monitor for 5 minutes.'},
+      {type:'question', x:50,  y:350, text:'Can you share your account ID and error code?'},
+      {type:'handoff',  x:250, y:400, text:'Opening ticket and routing to Tier 2 support.'},
+    ],
+    edges:[
+      [0,1],[1,2],[1,3],[3,4],[4,5],[4,6],[6,7]
+    ]
+  }
+};
+
+function loadTemplate(name){
+  clearAll();
+  var t=TEMPLATES[name];
+  if(!t) return;
+  t.nodes.forEach(function(nd){
+    var n=makeNode(nd.type, nd.x, nd.y);
+    n.text=nd.text;
+    nodes.push(n);
+  });
+  t.edges.forEach(function(pair){
+    if(nodes[pair[0]]&&nodes[pair[1]])
+      edges.push(makeEdge(nodes[pair[0]].id, nodes[pair[1]].id));
+  });
+  updateJSON(); updateStats(); draw();
+}
+
+// ----- JSON output -----
+function updateJSON(){
+  var flow={
+    version:'1.0',
+    generated:'2026-05-28',
+    nodes: nodes.map(function(n){ return {id:n.id,type:n.type,text:n.text,x:Math.round(n.x),y:Math.round(n.y)}; }),
+    edges: edges.map(function(e){ return {from:e.from,to:e.to,label:e.label||''}; })
+  };
+  document.getElementById('jsonOut').textContent=JSON.stringify(flow,null,2);
+}
+
+function exportJSON(){
+  updateJSON();
+  var blob=new Blob([document.getElementById('jsonOut').textContent],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='conversation-flow.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyJSON(){
+  var txt=document.getElementById('jsonOut').textContent;
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt); }
+  else{ var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta); }
+}
+
+// ----- Stats bar -----
+function updateStats(){
+  document.getElementById('statNodes').textContent=nodes.length;
+  document.getElementById('statEdges').textContent=edges.length;
+  var selLabel='—';
+  if(selectedNode) selLabel=TYPE_COLORS[selectedNode.type].label+' #'+selectedNode.id;
+  else if(selectedEdge) selLabel='Edge #'+selectedEdge.id;
+  document.getElementById('statSel').textContent=selLabel;
+  var modeLabel=mode==='select'?'Select':mode==='connect'?'Connect (click source)':mode.slice(4).charAt(0).toUpperCase()+mode.slice(5)+' (click to place)';
+  document.getElementById('statMode').textContent=modeLabel;
+}
+</script>
+</body>
+</html>
