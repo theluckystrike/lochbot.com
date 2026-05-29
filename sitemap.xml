@@ -1,370 +1,283 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lochbot.com/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://lochbot.com/about.html</loc>
-    <lastmod>2026-04-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/blog/</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/blog/testing-system-prompts-injection-vulnerabilities.html</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/blog/how-to-write-injection-resistant-system-prompt.html</loc>
-    <lastmod>2026-04-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/prompt-security-patterns.html</loc>
-    <lastmod>2026-04-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/minimum-viable-secure-prompt.html</loc>
-    <lastmod>2026-04-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/prompt-defense-techniques.html</loc>
-    <lastmod>2026-04-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/xss-prevention.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/sql-injection-prevention.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/csp-generator.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/security-headers.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/tools/prompt-injection-examples.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/owasp-top-10-frequency-2026.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/security-header-adoption.html</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/llm-jailbreak-timeline.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/research/cve-severity-trends.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/what-is-prompt-injection.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/how-to-prevent-prompt-injection.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/dan-jailbreak-explained.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/system-prompt-best-practices.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/is-my-chatbot-secure.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/owasp-llm-top-10.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/how-to-write-a-secure-system-prompt.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/what-is-indirect-prompt-injection.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/content-security-policy.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/x-frame-options.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/strict-transport-security.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/x-content-type-options.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/referrer-policy.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/permissions-policy.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/cross-origin-opener-policy.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/cross-origin-resource-policy.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/x-xss-protection.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/ai-red-teaming-guide.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lochbot.com/answers/cache-control-security.html</loc>
-    <lastmod>2026-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-xss.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/content-security-policy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-csrf.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/cross-origin-opener-policy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-sql-injection.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/cross-origin-resource-policy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-cors.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/dan-jailbreak-explained.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-clickjacking.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/how-to-prevent-prompt-injection.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-ssrf.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/how-to-write-a-secure-system-prompt.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-open-redirect.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://lochbot.com/answers/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/what-is-directory-traversal.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/is-my-chatbot-secure.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lochbot.com/answers/llm-data-poisoning.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/llm-model-extraction.html</loc>
-    <lastmod>2026-04-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lochbot.com/answers/llm-training-data-leakage.html</loc>
-    <lastmod>2026-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lochbot.com/answers/llm-hallucination-security.html</loc>
-    <lastmod>2026-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/rag-security-risks.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/llm-model-extraction.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lochbot.com/answers/llm-supply-chain-risks.html</loc>
-    <lastmod>2026-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/answers/ai-red-teaming-guide.html</loc>
-    <lastmod>2026-04-11</lastmod>
+    <loc>https://lochbot.com/answers/llm-training-data-leakage.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lochbot.com/research/prompt-injection-defense-guide.html</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <!-- Sprint 7 Auto-Added -->
-  <url>
-    <loc>https://lochbot.com/answers/index.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://lochbot.com/answers/owasp-llm-top-10.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <!-- Sprint 7 Auto-Added -->
   <url>
-    <loc>https://lochbot.com/blog/index.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://lochbot.com/answers/permissions-policy.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
-  <!-- Sprint 7 Auto-Added -->
   <url>
-    <loc>https://lochbot.com/index.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://lochbot.com/answers/rag-security-risks.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/referrer-policy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/strict-transport-security.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/system-prompt-best-practices.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-clickjacking.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-cors.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-csrf.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-directory-traversal.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-indirect-prompt-injection.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-open-redirect.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-prompt-injection.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-sql-injection.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-ssrf.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/what-is-xss.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/x-content-type-options.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/x-frame-options.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/x-xss-protection.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/blog/how-to-write-injection-resistant-system-prompt.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <!-- Sprint 7 Auto-Added -->
   <url>
-    <loc>https://lochbot.com/research/index.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://lochbot.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/blog/testing-system-prompts-injection-vulnerabilities.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/cve-severity-trends.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Sprint 7 Auto-Added -->
   <url>
-    <loc>https://lochbot.com/tools/index.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://lochbot.com/research/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/llm-jailbreak-timeline.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/minimum-viable-secure-prompt.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/owasp-top-10-frequency-2026.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/prompt-defense-techniques.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/prompt-injection-defense-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/prompt-security-patterns.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/research/security-header-adoption.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/tools/csp-generator.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Sprint 8 Auto-Added -->
+  <url>
+    <loc>https://lochbot.com/tools/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/tools/prompt-injection-examples.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/tools/security-headers.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/tools/sql-injection-prevention.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/tools/xss-prevention.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://lochbot.com/tools/chatbot-analytics-dashboard.html</loc>
-    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  <!-- Sprint 8 Auto-Added -->
   <url>
     <loc>https://lochbot.com/tools/conversation-flow-designer.html</loc>
-    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>
