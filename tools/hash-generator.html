@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Hash Generator — MD5, SHA-1, SHA-256 & SHA-512 | lochbot.com</title>
+  <meta name="description" content="Generate MD5, SHA-1, SHA-256, SHA-512 hashes online. Supports text, file drag & drop, HMAC mode, and hash comparison. Uses Web Crypto API and pure JS MD5.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/hash-generator">
+  <!-- JSON-LD FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What hash algorithms are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MD5 (128-bit), SHA-1 (160-bit), SHA-256 (256-bit), and SHA-512 (512-bit)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is MD5 or SHA-1 secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, MD5 and SHA-1 are cryptographically broken and should not be used for security-sensitive applications. Use SHA-256 or SHA-512."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I hash a file?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, drag & drop a file onto the designated area to hash its contents with all algorithms."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is HMAC mode?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HMAC (Hash-based Message Authentication Code) uses a secret key combined with the hash algorithm. Enter a key in the 'Secret key' field to enable HMAC."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      color: #94a3b8;
+      margin-top: 0.4rem;
+    }
+    .tool-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border: 1px solid #2d3a52;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    textarea, input[type="text"], .drop-zone {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.75rem;
+      padding: 0.9rem 1rem;
+      color: #e2e8f0;
+      font-size: 1rem;
+      width: 100%;
+      transition: border 0.2s;
+    }
+    textarea:focus, input:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .secret-key-field {
+      flex: 2;
+      min-width: 180px;
+    }
+    .action-btn {
+      background: #2d3a52;
+      border: none;
+      color: #e2e8f0;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid #3b4a66;
+      white-space: nowrap;
+    }
+    .action-btn:hover {
+      background: #38bdf8;
+      color: #0f172a;
+      border-color: #38bdf8;
+    }
+    .action-btn.secondary {
+      background: transparent;
+      border: 1px solid #475569;
+    }
+    .action-btn.secondary:hover {
+      background: #334155;
+      border-color: #38bdf8;
+    }
+    .drop-zone {
+      border: 2px dashed #475569;
+      border-radius: 1rem;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .drop-zone.dragover {
+      background: #1e293b;
+      border-color: #38bdf8;
+    }
+    .drop-zone p {
+      color: #94a3b8;
+      pointer-events: none;
+    }
+    .drop-zone .filename {
+      color: #38bdf8;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+    .hash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .hash-item {
+      background: #0f172a;
+      border-radius: 1rem;
+      padding: 1rem 1rem 0.9rem;
+      border: 1px solid #2d3a52;
+    }
+    .hash-item .algo-name {
+      font-weight: 600;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .hash-item .algo-name span {
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .hash-output {
+      background: #0b1120;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.6rem;
+      margin: 0.5rem 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      word-break: break-all;
+      line-height: 1.4;
+      color: #cbd5e1;
+      border: 1px solid #1e2a3a;
+    }
+    .hash-output.label {
+      color: #94a3b8;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.1rem;
+      border: none;
+      background: transparent;
+      padding: 0;
+    }
+    .copy-btn {
+      background: #2d3a52;
+      border: none;
+      color: #e2e8f0;
+      padding: 0.25rem 0.9rem;
+      border-radius: 1.5rem;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.1s;
+      border: 1px solid #475569;
+      margin-top: 0.2rem;
+    }
+    .copy-btn:hover {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+    .comparison-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .comparison-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .comparison-row input {
+      flex: 1;
+      min-width: 140px;
+    }
+    .match-badge {
+      font-weight: 600;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+    }
+    .match-badge.match {
+      background: #064e3b;
+      border-color: #10b981;
+      color: #6ee7b7;
+    }
+    .match-badge.no-match {
+      background: #4c1d1d;
+      border-color: #b91c1c;
+      color: #fca5a5;
+    }
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #475569;
+      font-size: 0.9rem;
+      border-top: 1px solid #1e293b;
+      padding-top: 2rem;
+    }
+    .security-note {
+      background: #1e293b;
+      border-left: 4px solid #f59e0b;
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      color: #fcd34d;
+      margin: 1rem 0;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+      .card { padding: 1rem; }
+      .hash-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🔐 Hash Generator</h1>
+    <p>MD5 · SHA-1 · SHA-256 · SHA-512 — hex & base64</p>
+  </header>
+
+  <div class="tool-grid">
+    <!-- Input & HMAC -->
+    <div class="card">
+      <div class="card-title">✏️ Input</div>
+      <div class="input-area">
+        <textarea id="textInput" placeholder="Enter text or paste content here..." rows="3"></textarea>
+        <div class="flex-row">
+          <input type="text" id="secretKey" class="secret-key-field" placeholder="Secret key (HMAC mode)" autocomplete="off">
+          <button class="action-btn" id="hashBtn">Generate hashes</button>
+          <button class="action-btn secondary" id="clearBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- File drag & drop -->
+    <div class="card">
+      <div class="card-title">📁 File hash (drag & drop)</div>
+      <div id="dropZone" class="drop-zone">
+        <p>Drop a file here, or click to select</p>
+        <div class="filename" id="fileName"></div>
+      </div>
+      <input type="file" id="fileInput" accept="*" style="display:none;">
+    </div>
+
+    <!-- Security note -->
+    <div class="security-note">
+      ⚠️ <strong>Security:</strong> MD5 and SHA-1 are cryptographically broken. Use SHA-256 or SHA-512 for secure applications.
+    </div>
+
+    <!-- Hash outputs -->
+    <div class="card" id="hashResults">
+      <div class="card-title">📊 Hash outputs <span style="font-size:0.8rem; color:#64748b;">(bits / chars)</span></div>
+      <div class="hash-grid" id="hashGrid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- Comparison tool -->
+    <div class="card">
+      <div class="card-title">🔎 Hash comparison</div>
+      <div class="comparison-area">
+        <div class="comparison-row">
+          <input type="text" id="hashA" placeholder="Paste first hash">
+          <input type="text" id="hashB" placeholder="Paste second hash">
+          <button class="action-btn" id="compareBtn">Compare</button>
+        </div>
+        <div id="compareResult" class="match-badge" style="align-self: flex-start;">—</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 lochbot.com
+  </footer>
+</div>
+
+<script>
+  (function() {
+    // ----- MD5 pure JS (from https://css-tricks.com/snippets/javascript/javascript-md5/) -----
+    const md5 = (str) => {
+      const rotateLeft = (lValue, iShiftBits) => (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+      const addUnsigned = (lX, lY) => {
+        const lX4 = lX & 0x3FFFFFFF, lY4 = lY & 0x3FFFFFFF;
+        return (lX4 + lY4) | (lX >>> 28) | (lY >>> 28);
+      };
+      const F = (x, y, z) => (x & y) | (~x & z);
+      const G = (x, y, z) => (x & z) | (y & ~z);
+      const H = (x, y, z) => x ^ y ^ z;
+      const I = (x, y, z) => y ^ (x | ~z);
+      const FF = (a, b, c, d, x, s, ac) => { a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); };
+      const GG = (a, b, c, d, x, s, ac) => { a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); };
+      const HH = (a, b, c, d, x, s, ac) => { a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); };
+      const II = (a, b, c, d, x, s, ac) => { a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); };
+      const convertToWordArray = (str) => {
+        let lWordCount;
+        const lMessageLength = str.length;
+        const lNumberOfWords = (((lMessageLength + 8) >>> 6) + 1) * 16;
+        const lWordArray = new Array(lNumberOfWords);
+        let lBytePosition = 0, lByteCount = 0;
+        while (lByteCount < lMessageLength) {
+          lWordCount = (lByteCount >>> 2);
+          lBytePosition = (lByteCount & 3) * 8;
+          lWordArray[lWordCount] = (lWordArray[lWordCount] | (str.charCodeAt(lByteCount) << lBytePosition));
+          lByteCount++;
+        }
+        lWordCount = (lByteCount >>> 2);
+        lBytePosition = (lByteCount & 3) * 8;
+        lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+        lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+        lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+        return lWordArray;
+      };
+      const wordToHex = (lValue) => {
+        let wordToHexValue = '', lByte, lCount;
+        for (lCount = 0; lCount <= 3; lCount++) {
+          lByte = (lValue >>> (lCount * 8)) & 255;
+          wordToHexValue += ('0' + lByte.toString(16)).slice(-2);
+        }
+        return wordToHexValue;
+      };
+      const x = convertToWordArray(str);
+      let a = 0x67452301, b = 0xEFCDAB89, c = 0x98BADCFE, d = 0x10325476;
+      for (let k = 0; k < x.length; k += 16) {
+        const aa = a, bb = b, cc = c, dd = d;
+        a = FF(a, b, c, d, x[k], 7, 0xD76AA478); d = FF(d, a, b, c, x[k+1], 12, 0xE8C7B756); c = FF(c, d, a, b, x[k+2], 17, 0x242070DB); b = FF(b, c, d, a, x[k+3], 22, 0xC1BDCEEE);
+        a = FF(a, b, c, d, x[k+4], 7, 0xF57C0FAF); d = FF(d, a, b, c, x[k+5], 12, 0x4787C62A); c = FF(c, d, a, b, x[k+6], 17, 0xA8304613); b = FF(b, c, d, a, x[k+7], 22, 0xFD469501);
+        a = FF(a, b, c, d, x[k+8], 7, 0x698098D8); d = FF(d, a, b, c, x[k+9], 12, 0x8B44F7AF); c = FF(c, d, a, b, x[k+10], 17, 0xFFFF5BB1); b = FF(b, c, d, a, x[k+11], 22, 0x895CD7BE);
+        a = FF(a, b, c, d, x[k+12], 7, 0x6B901122); d = FF(d, a, b, c, x[k+13], 12, 0xFD987193); c = FF(c, d, a, b, x[k+14], 17, 0xA679438E); b = FF(b, c, d, a, x[k+15], 22, 0x49B40821);
+        a = GG(a, b, c, d, x[k+1], 5, 0xF61E2562); d = GG(d, a, b, c, x[k+6], 9, 0xC040B340); c = GG(c, d, a, b, x[k+11], 14, 0x265E5A51); b = GG(b, c, d, a, x[k], 20, 0xE9B6C7AA);
+        a = GG(a, b, c, d, x[k+5], 5, 0xD62F105D); d = GG(d, a, b, c, x[k+10], 9, 0x2441453); c = GG(c, d, a, b, x[k+15], 14, 0xD8A1E681); b = GG(b, c, d, a, x[k+4], 20, 0xE7D3FBC8);
+        a = GG(a, b, c, d, x[k+9], 5, 0x21E1CDE6); d = GG(d, a, b, c, x[k+14], 9, 0xC33707D6); c = GG(c, d, a, b, x[k+3], 14, 0xF4D50D87); b = GG(b, c, d, a, x[k+8], 20, 0x455A14ED);
+        a = GG(a, b, c, d, x[k+13], 5, 0xA9E3E905); d = GG(d, a, b, c, x[k+2], 9, 0xFCEFA3F8); c = GG(c, d, a, b, x[k+7], 14, 0x676F02D9); b = GG(b, c, d, a, x[k+12], 20, 0x8D2A4C8A);
+        a = HH(a, b, c, d, x[k+5], 4, 0xFFFA3942); d = HH(d, a, b, c, x[k+8], 11, 0x8771F681); c = HH(c, d, a, b, x[k+11], 16, 0x6D9D6122); b = HH(b, c, d, a, x[k+14], 23, 0xFDE5380C);
+        a = HH(a, b, c, d, x[k+1], 4, 0xA4BEEA44); d = HH(d, a, b, c, x[k+4], 11, 0x4BDECFA9); c = HH(c, d, a, b, x[k+7], 16, 0xF6BB4B60); b = HH(b, c, d, a, x[k+10], 23, 0xBEBFBC70);
+        a = HH(a, b, c, d, x[k+13], 4, 0x289B7EC6); d = HH(d, a, b, c, x[k], 11, 0xEAA127FA); c = HH(c, d, a, b, x[k+3], 16, 0xD4EF3085); b = HH(b, c, d, a, x[k+6], 23, 0x4881D05);
+        a = HH(a, b, c, d, x[k+9], 4, 0xD9D4D039); d = HH(d, a, b, c, x[k+12], 11, 0xE6DB99E5); c = HH(c, d, a, b, x[k+15], 16, 0x1FA27CF8); b = HH(b, c, d, a, x[k+2], 23, 0xC4AC5665);
+        a = II(a, b, c, d, x[k], 6, 0xF4292244); d = II(d, a, b, c, x[k+7], 10, 0x432AFF97); c = II(c, d, a, b, x[k+14], 15, 0xAB9423A7); b = II(b, c, d, a, x[k+5], 21, 0xFC93A039);
+        a = II(a, b, c, d, x[k+12], 6, 0x655B59C3); d = II(d, a, b, c, x[k+3], 10, 0x8F0CCC92); c = II(c, d, a, b, x[k+10], 15, 0xFFEFF47D); b = II(b, c, d, a, x[k+1], 21, 0x85845DD1);
+        a = II(a, b, c, d, x[k+8], 6, 0x6FA87E4F); d = II(d, a, b, c, x[k+15], 10, 0xFE2CE6E0); c = II(c, d, a, b, x[k+6], 15, 0xA3014314); b = II(b, c, d, a, x[k+13], 21, 0x4E0811A1);
+        a = II(a, b, c, d, x[k+4], 6, 0xF7537E82); d = II(d, a, b, c, x[k+11], 10, 0xBD3AF235); c = II(c, d, a, b, x[k+2], 15, 0x2AD7D2BB); b = II(b, c, d, a, x[k+9], 21, 0xEB86D391);
+        a = addUnsigned(a, aa); b = addUnsigned(b, bb); c = addUnsigned(c, cc); d = addUnsigned(d, dd);
+      }
+      return (wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d)).toLowerCase();
+    };
+
+    // ----- DOM refs -----
+    const textInput = document.getElementById('textInput');
+    const secretKey = document.getElementById('secretKey');
+    const hashBtn = document.getElementById('hashBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const hashGrid = document.getElementById('hashGrid');
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const hashA = document.getElementById('hashA');
+    const hashB = document.getElementById('hashB');
+    const compareBtn = document.getElementById('compareBtn');
+    const compareResult = document.getElementById('compareResult');
+
+    // ----- helpers -----
+    function ab2hex(buffer) {
+      return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    function ab2b64(buffer) {
+      const bytes = new Uint8Array(buffer);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      return btoa(binary);
+    }
+    function hexToBase64(hex) {
+      const bytes = hex.match(/.{1,2}/g).map(b => parseInt(b, 16));
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      return btoa(binary);
+    }
+
+    // ----- hash computation -----
+    async function computeHashes(text, key) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const useHMAC = key && key.length > 0;
+      const algoList = [
+        { name: 'MD5', bits: 128, short: 'MD5' },
+        { name: 'SHA-1', bits: 160, short: 'SHA1' },
+        { name: 'SHA-256', bits: 256, short: 'SHA256' },
+        { name: 'SHA-512', bits: 512, short: 'SHA512' }
+      ];
+      const results = [];
+
+      for (const algo of algoList) {
+        let hex, b64;
+        if (algo.name === 'MD5') {
+          hex = md5(text);
+          b64 = hexToBase64(hex);
+        } else {
+          let hashBuffer;
+          if (useHMAC) {
+            const keyData = encoder.encode(key);
+            const cryptoKey = await crypto.subtle.importKey('raw', keyData, { name: 'HMAC', hash: algo.name }, false, ['sign']);
+            const sig = await crypto.subtle.sign('HMAC', cryptoKey, data);
+            hashBuffer = sig;
+          } else {
+            hashBuffer = await crypto.subtle.digest(algo.name, data);
+          }
+          hex = ab2hex(hashBuffer);
+          b64 = ab2b64(hashBuffer);
+        }
+        results.push({ algo: algo.name, bits: algo.bits, hex, b64 });
+      }
+      return results;
+    }
+
+    function renderHashes(results) {
+      hashGrid.innerHTML = '';
+      for (const r of results) {
+        const chars = r.hex.length;
+        const div = document.createElement('div');
+        div.className = 'hash-item';
+        div.innerHTML = `
+          <div class="algo-name">${r.algo} <span>${r.bits} bits / ${chars} chars</span></div>
+          <div class="hash-output label">HEX</div>
+          <div class="hash-output hex-output">${r.hex}</div>
+          <div class="hash-output label">Base64</div>
+          <div class="hash-output b64-output">${r.b64}</div>
+          <button class="copy-btn" data-hex="${r.hex}" data-b64="${r.b64}">📋 Copy HEX</button>
+          <button class="copy-btn" data-hex="${r.hex}" data-b64="${r.b64}" data-copy-b64="1">📋 Copy B64</button>
+        `;
+        hashGrid.appendChild(div);
+      }
+      // copy handlers
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const hex = btn.dataset.hex;
+          const b64 = btn.dataset.b64;
+          const isB64 = btn.dataset.copyB64 !== undefined;
+          const text = isB64 ? b64 : hex;
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = '✅ Copied';
+            setTimeout(() => btn.textContent = orig, 1200);
+          }).catch(() => alert('Copy failed'));
+        });
+      });
+    }
+
+    async function generateFromText(text, key) {
+      if (!text.trim()) {
+        hashGrid.innerHTML = '<div style="color:#94a3b8; padding:1rem;">Enter text to generate hashes.</div>';
+        return;
+      }
+      const results = await computeHashes(text, key);
+      renderHashes(results);
+    }
+
+    // ----- main hash button -----
+    hashBtn.addEventListener('click', () => {
+      generateFromText(textInput.value, secretKey.value);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      textInput.value = '';
+      secretKey.value = '';
+      fileName.textContent = '';
+      hashGrid.innerHTML = '<div style="color:#94a3b8; padding:1rem;">Hashes will appear here.</div>';
+      compareResult.textContent = '—';
+      compareResult.className = 'match-badge';
+    });
+
+    // ----- file drag & drop -----
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) handleFile(files[0]);
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) handleFile(fileInput.files[0]);
+    });
+
+    async function handleFile(file) {
+      fileName.textContent = `📄 ${file.name}`;
+      const text = await file.text();
+      textInput.value = text;
+      generateFromText(text, secretKey.value);
+    }
+
+    // ----- comparison tool -----
+    compareBtn.addEventListener('click', () => {
+      const a = hashA.value.trim();
+      const b = hashB.value.trim();
+      if (!a || !b) {
+        compareResult.textContent = 'Please enter both hashes.';
+        compareResult.className = 'match-badge';
+        return;
+      }
+      const match = a.toLowerCase() === b.toLowerCase();
+      compareResult.textContent = match ? '✅ MATCH' : '❌ NO MATCH';
+      compareResult.className = match ? 'match-badge match' : 'match-badge no-match';
+    });
+
+    // ----- auto-generate on load example -----
+    window.addEventListener('DOMContentLoaded', () => {
+      textInput.value = 'Hello, lochbot!';
+      generateFromText(textInput.value, '');
+    });
+  })();
+</script>
+</body>
+</html>
