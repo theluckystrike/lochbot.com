@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Base64 Encoder & Decoder — Convert Text, URLs & Files</title>
+  <meta name="description" content="Free online Base64 encoder & decoder. Convert text, URLs and files to/from Base64. URL-safe mode, drag-and-drop file support, size overhead, line...">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/base64-encoder">
+  <!-- JSON-LD FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Base64 encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 encodes binary data into ASCII characters. It is 33% larger than the original."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Base64URL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64URL is a URL-safe variant replacing '+' with '-' and '/' with '_', and omitting padding '='."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How to decode Base64?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paste Base64 string into input, tool auto-detects and decodes. You can also use the decode button."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+    header {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #f1f5f9;
+    }
+    h1 span {
+      color: #38bdf8;
+    }
+    .subhead {
+      color: #94a3b8;
+      margin-top: 0.25rem;
+      font-size: 0.95rem;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 0.5rem;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .tab-btn:hover {
+      background: #1e293b;
+      color: #e2e8f0;
+    }
+    .tab-btn.active {
+      background: #1e293b;
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+    .tab-content {
+      display: none;
+      animation: fade 0.2s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fade { from { opacity: 0.3; } to { opacity: 1; } }
+
+    .dual-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .panel {
+      flex: 1 1 280px;
+      min-width: 0;
+      background: #0b1322;
+      border-radius: 16px;
+      padding: 1rem;
+      border: 1px solid #1e293b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+    .panel-header label {
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+    textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      color: #e2e8f0;
+      padding: 0.8rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 140px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    textarea:focus {
+      border-color: #38bdf8;
+    }
+    .swap-btn {
+      background: #1e293b;
+      border: none;
+      color: #38bdf8;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      flex-shrink: 0;
+    }
+    .swap-btn:hover {
+      background: #2d3a52;
+      transform: scale(1.05);
+    }
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0.8rem 0 0.4rem;
+      align-items: center;
+    }
+    .btn {
+      background: #1e293b;
+      border: none;
+      color: #e2e8f0;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: #38bdf8;
+      color: #0f172a;
+      border-color: #38bdf8;
+    }
+    .btn-primary:hover {
+      background: #7dd3fc;
+    }
+    .btn-outline {
+      border-color: #334155;
+    }
+    .btn-outline:hover {
+      background: #2d3a52;
+      border-color: #38bdf8;
+    }
+    .btn-sm {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+      background: #0b1322;
+      padding: 0.7rem 1rem;
+      border-radius: 40px;
+      margin: 0.5rem 0 0.2rem;
+      border: 1px solid #1e293b;
+      font-size: 0.8rem;
+    }
+    .stat-item {
+      display: flex;
+      gap: 0.3rem;
+    }
+    .stat-item strong {
+      color: #38bdf8;
+    }
+    .file-drop {
+      border: 2px dashed #334155;
+      border-radius: 20px;
+      padding: 2rem 1rem;
+      text-align: center;
+      background: #0b1322;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .file-drop.dragover {
+      border-color: #38bdf8;
+      background: #162033;
+    }
+    .file-drop p {
+      color: #94a3b8;
+    }
+    .file-drop .icon {
+      font-size: 2rem;
+    }
+    .file-info {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      background: #0f172a;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      display: inline-block;
+    }
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gap-1 { gap: 0.5rem; }
+    .mt-1 { margin-top: 0.5rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .text-muted { color: #94a3b8; }
+    .text-accent { color: #38bdf8; }
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #475569;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+      padding-top: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      .panel { flex: 1 1 100%; }
+      .swap-btn { margin: 0.2rem auto; }
+    }
+  </style>
+
+    <meta property="og:title" content="Base64 Encoder & Decoder — Convert Text, URLs & Files">
+    <meta property="og:description" content="Free online Base64 encoder & decoder. Convert text, URLs and files to/from Base64. URL-safe mode, drag-and-drop file support, size overhead, line...">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/tools/base64-encoder">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🔐 <span>Base64</span> Encoder & Decoder</h1>
+    <div class="subhead">Text · URL-safe · Files · real-time conversion</div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="text" role="tab">📝 Text</button>
+    <button class="tab-btn" data-tab="urlsafe" role="tab">🔗 URL-safe</button>
+    <button class="tab-btn" data-tab="file" role="tab">📁 File</button>
+  </div>
+
+  <!-- TAB: TEXT -->
+  <div id="tab-text" class="tab-content active">
+    <div class="dual-panel">
+      <div class="panel">
+        <div class="panel-header"><label>Input</label> <span id="inputStatsText" class="text-muted">0 chars · 0 B</span></div>
+        <textarea id="textInput" placeholder="Type text or paste Base64…" spellcheck="false"></textarea>
+        <div class="action-bar">
+          <button class="btn btn-primary" id="encodeTextBtn">⬆ Encode</button>
+          <button class="btn btn-primary" id="decodeTextBtn">⬇ Decode</button>
+          <button class="btn btn-outline btn-sm" id="copyInputText">📋 Copy</button>
+        </div>
+      </div>
+      <div class="flex-center">
+        <button class="swap-btn" id="swapTextBtn" title="Swap input/output">⇄</button>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><label>Output</label> <span id="outputStatsText" class="text-muted">0 chars · 0 B</span></div>
+        <textarea id="textOutput" placeholder="Result appears here…" readonly spellcheck="false"></textarea>
+        <div class="action-bar">
+          <button class="btn btn-outline" id="copyOutputText">📋 Copy</button>
+          <button class="btn btn-outline" id="downloadTextBtn">⬇ Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="stats" id="textStats">
+      <span class="stat-item">📊 Overhead: <strong id="overheadText">—</strong></span>
+      <span class="stat-item">🔁 Base64 vs Base64URL: <strong id="compareText">—</strong></span>
+      <span class="stat-item"><label><input type="checkbox" id="lineWrapToggle"> Wrap at 76 chars (MIME)</label></span>
+    </div>
+  </div>
+
+  <!-- TAB: URL-SAFE -->
+  <div id="tab-urlsafe" class="tab-content">
+    <div class="dual-panel">
+      <div class="panel">
+        <div class="panel-header"><label>Input</label> <span id="inputStatsUrl" class="text-muted">0 chars</span></div>
+        <textarea id="urlInput" placeholder="Text or Base64URL…" spellcheck="false"></textarea>
+        <div class="action-bar">
+          <button class="btn btn-primary" id="encodeUrlBtn">⬆ Encode (URL-safe)</button>
+          <button class="btn btn-primary" id="decodeUrlBtn">⬇ Decode</button>
+        </div>
+      </div>
+      <div class="flex-center">
+        <button class="swap-btn" id="swapUrlBtn">⇄</button>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><label>Output</label> <span id="outputStatsUrl" class="text-muted">0 chars</span></div>
+        <textarea id="urlOutput" readonly placeholder="Result…" spellcheck="false"></textarea>
+        <div class="action-bar">
+          <button class="btn btn-outline" id="copyUrlOutput">📋 Copy</button>
+          <button class="btn btn-outline" id="downloadUrlBtn">⬇ Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <span class="stat-item">🔁 Base64 vs Base64URL: <strong id="compareUrl">—</strong></span>
+    </div>
+  </div>
+
+  <!-- TAB: FILE -->
+  <div id="tab-file" class="tab-content">
+    <div class="dual-panel">
+      <div class="panel">
+        <div class="panel-header"><label>Drop file</label></div>
+        <div class="file-drop" id="fileDrop">
+          <div class="icon">📂</div>
+          <p>Drag & drop file here, or click to select</p>
+          <input type="file" id="fileInput" hidden accept="*">
+        </div>
+        <div id="fileInfo" class="file-info">No file selected</div>
+      </div>
+      <div class="flex-center">
+        <button class="swap-btn" id="clearFileBtn" title="Clear file">✕</button>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><label>Data URI (Base64)</label> <span id="fileSizeLabel" class="text-muted"></span></div>
+        <textarea id="fileOutput" readonly placeholder="Base64 data URI…" spellcheck="false"></textarea>
+        <div class="action-bar">
+          <button class="btn btn-outline" id="copyFileOutput">📋 Copy</button>
+          <button class="btn btn-outline" id="downloadFileBtn">⬇ Download .txt</button>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <span class="stat-item">📁 MIME: <strong id="fileMime">—</strong></span>
+      <span class="stat-item">📦 Size overhead: <strong id="fileOverhead">—</strong></span>
+    </div>
+  </div>
+
+  <footer class="footer">© 2025 lochbot.com</footer>
+</div>
+
+<script>
+  (function() {
+    // DOM refs
+    const textInput = document.getElementById('textInput');
+    const textOutput = document.getElementById('textOutput');
+    const urlInput = document.getElementById('urlInput');
+    const urlOutput = document.getElementById('urlOutput');
+    const fileDrop = document.getElementById('fileDrop');
+    const fileInput = document.getElementById('fileInput');
+    const fileOutput = document.getElementById('fileOutput');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileMime = document.getElementById('fileMime');
+    const fileOverhead = document.getElementById('fileOverhead');
+    const fileSizeLabel = document.getElementById('fileSizeLabel');
+
+    // stats
+    const inputStatsText = document.getElementById('inputStatsText');
+    const outputStatsText = document.getElementById('outputStatsText');
+    const overheadText = document.getElementById('overheadText');
+    const compareText = document.getElementById('compareText');
+    const inputStatsUrl = document.getElementById('inputStatsUrl');
+    const outputStatsUrl = document.getElementById('outputStatsUrl');
+    const compareUrl = document.getElementById('compareUrl');
+    const lineWrapToggle = document.getElementById('lineWrapToggle');
+
+    // tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = {
+      text: document.getElementById('tab-text'),
+      urlsafe: document.getElementById('tab-urlsafe'),
+      file: document.getElementById('tab-file')
+    };
+
+    // ---- Tab switching ----
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        Object.keys(tabContents).forEach(k => tabContents[k].classList.toggle('active', k === tab));
+      });
+    });
+
+    // ---- helpers ----
+    function bytesToSize(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function base64ToBase64URL(b64) {
+      return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function base64URLToBase64(b64url) {
+      let b64 = b64url.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      return b64;
+    }
+
+    function isValidBase64(str) {
+      try {
+        return btoa(atob(str)) === str;
+      } catch (e) { return false; }
+    }
+
+    function detectAndDecode(str) {
+      // try base64
+      let cleaned = str.trim();
+      if (isValidBase64(cleaned)) return { type: 'base64', decoded: atob(cleaned) };
+      // try base64url
+      let converted = base64URLToBase64(cleaned);
+      if (isValidBase64(converted)) return { type: 'base64url', decoded: atob(converted) };
+      return null;
+    }
+
+    function wrapBase64(str, width = 76) {
+      if (!width || width <= 0) return str;
+      const regex = new RegExp(`.{1,${width}}`, 'g');
+      return str.match(regex).join('\r\n');
+    }
+
+    // ---- Text tab logic ----
+    function updateTextStats(input, output) {
+      const inLen = input.length;
+      const inBytes = new TextEncoder().encode(input).length;
+      inputStatsText.textContent = `${inLen} chars · ${bytesToSize(inBytes)}`;
+      const outLen = output.length;
+      const outBytes = new TextEncoder().encode(output).length;
+      outputStatsText.textContent = `${outLen} chars · ${bytesToSize(outBytes)}`;
+      // overhead
+      if (inBytes > 0 && outBytes > 0) {
+        const ratio = ((outBytes / inBytes) - 1) * 100;
+        overheadText.textContent = `${ratio.toFixed(1)}% larger (≈33% expected)`;
+      } else {
+        overheadText.textContent = '—';
+      }
+      // compare base64 vs base64url
+      try {
+        const b64 = btoa(input);
+        const b64url = base64ToBase64URL(b64);
+        compareText.textContent = `Base64: ${b64.length} chars · Base64URL: ${b64url.length} chars`;
+      } catch (e) { compareText.textContent = '—'; }
+    }
+
+    function encodeText() {
+      const input = textInput.value;
+      let encoded;
+      try {
+        encoded = btoa(input);
+      } catch (e) { encoded = 'Error: cannot encode (maybe binary?)'; }
+      if (lineWrapToggle.checked) encoded = wrapBase64(encoded, 76);
+      textOutput.value = encoded;
+      updateTextStats(input, encoded);
+    }
+
+    function decodeText() {
+      const input = textInput.value.trim();
+      if (!input) { textOutput.value = ''; updateTextStats('',''); return; }
+      const detection = detectAndDecode(input);
+      if (detection) {
+        textOutput.value = detection.decoded;
+        updateTextStats(input, detection.decoded);
+      } else {
+        textOutput.value = '⚠️ Not valid Base64 or Base64URL';
+        updateTextStats(input, '');
+      }
+    }
+
+    // auto-detect on input
+    textInput.addEventListener('input', function() {
+      const val = this.value.trim();
+      if (!val) { textOutput.value = ''; updateTextStats('',''); return; }
+      const detection = detectAndDecode(val);
+      if (detection) {
+        let decoded = detection.decoded;
+        textOutput.value = decoded;
+        updateTextStats(val, decoded);
+      } else {
+        // maybe plain text -> show nothing
+        textOutput.value = '';
+        updateTextStats(val, '');
+      }
+    });
+
+    document.getElementById('encodeTextBtn').addEventListener('click', encodeText);
+    document.getElementById('decodeTextBtn').addEventListener('click', decodeText);
+    document.getElementById('swapTextBtn').addEventListener('click', function() {
+      const tmp = textInput.value;
+      textInput.value = textOutput.value;
+      textOutput.value = tmp;
+      textInput.dispatchEvent(new Event('input'));
+    });
+    document.getElementById('copyInputText').addEventListener('click', function() {
+      navigator.clipboard.writeText(textInput.value);
+    });
+    document.getElementById('copyOutputText').addEventListener('click', function() {
+      navigator.clipboard.writeText(textOutput.value);
+    });
+    document.getElementById('downloadTextBtn').addEventListener('click', function() {
+      const blob = new Blob([textOutput.value], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'base64-output.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ---- URL-safe tab ----
+    function updateUrlStats(input, output) {
+      inputStatsUrl.textContent = `${input.length} chars`;
+      outputStatsUrl.textContent = `${output.length} chars`;
+      try {
+        const b64 = btoa(input);
+        const b64url = base64ToBase64URL(b64);
+        compareUrl.textContent = `Base64: ${b64.length} · Base64URL: ${b64url.length}`;
+      } catch (e) { compareUrl.textContent = '—'; }
+    }
+
+    function encodeUrl() {
+      const input = urlInput.value;
+      let b64;
+      try { b64 = btoa(input); } catch (e) { urlOutput.value = 'Error'; updateUrlStats(input,''); return; }
+      const b64url = base64ToBase64URL(b64);
+      urlOutput.value = b64url;
+      updateUrlStats(input, b64url);
+    }
+
+    function decodeUrl() {
+      const input = urlInput.value.trim();
+      if (!input) { urlOutput.value = ''; updateUrlStats('',''); return; }
+      const detection = detectAndDecode(input);
+      if (detection) {
+        urlOutput.value = detection.decoded;
+        updateUrlStats(input, detection.decoded);
+      } else {
+        urlOutput.value = '⚠️ Invalid Base64URL';
+        updateUrlStats(input, '');
+      }
+    }
+
+    urlInput.addEventListener('input', function() {
+      const val = this.value.trim();
+      if (!val) { urlOutput.value = ''; updateUrlStats('',''); return; }
+      const detection = detectAndDecode(val);
+      if (detection) {
+        urlOutput.value = detection.decoded;
+        updateUrlStats(val, detection.decoded);
+      } else {
+        urlOutput.value = '';
+        updateUrlStats(val, '');
+      }
+    });
+
+    document.getElementById('encodeUrlBtn').addEventListener('click', encodeUrl);
+    document.getElementById('decodeUrlBtn').addEventListener('click', decodeUrl);
+    document.getElementById('swapUrlBtn').addEventListener('click', function() {
+      const tmp = urlInput.value;
+      urlInput.value = urlOutput.value;
+      urlOutput.value = tmp;
+      urlInput.dispatchEvent(new Event('input'));
+    });
+    document.getElementById('copyUrlOutput').addEventListener('click', function() {
+      navigator.clipboard.writeText(urlOutput.value);
+    });
+    document.getElementById('downloadUrlBtn').addEventListener('click', function() {
+      const blob = new Blob([urlOutput.value], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'base64url-output.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ---- File tab ----
+    let currentFileData = null; // { mime, size, dataUri }
+
+    function handleFile(file) {
+      if (!file) return;
+      const mime = file.type || 'application/octet-stream';
+      const size = file.size;
+      fileMime.textContent = mime;
+      fileInfo.textContent = `${file.name} (${bytesToSize(size)})`;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUri = e.target.result;
+        fileOutput.value = dataUri;
+        currentFileData = { mime, size, dataUri };
+        const b64size = dataUri.length;
+        fileSizeLabel.textContent = `${bytesToSize(b64size)}`;
+        const overhead = size > 0 ? ((b64size / size) - 1) * 100 : 0;
+        fileOverhead.textContent = `${overhead.toFixed(1)}% larger (≈33%)`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    fileDrop.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+    fileDrop.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileDrop.classList.add('dragover');
+    });
+    fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
+    fileDrop.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileDrop.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    document.getElementById('clearFileBtn').addEventListener('click', function() {
+      fileOutput.value = '';
+      fileInfo.textContent = 'No file selected';
+      fileMime.textContent = '—';
+      fileOverhead.textContent = '—';
+      fileSizeLabel.textContent = '';
+      currentFileData = null;
+      fileInput.value = '';
+    });
+    document.getElementById('copyFileOutput').addEventListener('click', function() {
+      navigator.clipboard.writeText(fileOutput.value);
+    });
+    document.getElementById('downloadFileBtn').addEventListener('click', function() {
+      if (!fileOutput.value) return;
+      const blob = new Blob([fileOutput.value], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'data-uri.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ---- init ----
+    updateTextStats('','');
+    updateUrlStats('','');
+  })();
+</script>
+</body>
+</html>

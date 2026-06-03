@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>CORS Policy Generator — Build Cross-Origin Resource</title>
+  <meta name="description" content="Generate complete CORS headers, Express.js, Nginx, Apache, Flask, Django configs. Simulate preflight requests, see common errors and security warnings.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/tools/cors-policy-generator">
+  <!-- JSON-LD FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is CORS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cross-Origin Resource Sharing (CORS) is a security mechanism that allows a web page from one domain to access resources on a different domain."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How to set Access-Control-Allow-Origin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use '*' for any origin, or specify exact origins like https://example.com. Avoid using '*' with credentials."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a preflight request?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A preflight request is an OPTIONS request sent before the actual request to check CORS permissions."
+        }
+      }
+    }
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 1400px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subhead {
+      color: #94a3b8;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 1.25rem;
+      padding: 1.5rem 1.8rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+      border: 1px solid #334155;
+      transition: border 0.2s;
+    }
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      border-left: 4px solid #38bdf8;
+      padding-left: 0.75rem;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 1.5rem 0 0.8rem 0;
+      color: #cbd5e1;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: #cbd5e1;
+    }
+    .input-field, select, textarea {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.75rem;
+      padding: 0.7rem 1rem;
+      color: #e2e8f0;
+      width: 100%;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    .input-field:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+    }
+    .btn {
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+    .btn-outline:hover {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+    .btn-sm {
+      padding: 0.3rem 1rem;
+      font-size: 0.85rem;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0.5rem 0 0.2rem;
+    }
+    .chip {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 2rem;
+      padding: 0.3rem 1rem;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .chip .remove {
+      cursor: pointer;
+      color: #f87171;
+      font-weight: bold;
+      margin-left: 0.2rem;
+    }
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .toggle {
+      position: relative;
+      width: 3rem;
+      height: 1.6rem;
+      background: #334155;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .toggle.active {
+      background: #38bdf8;
+    }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 0.2rem;
+      left: 0.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: #e2e8f0;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .toggle.active::after {
+      left: 1.6rem;
+    }
+    .code-block {
+      background: #0f172a;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85rem;
+      border: 1px solid #334155;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .warning-box {
+      background: #1e293b;
+      border-left: 6px solid #f59e0b;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin: 1rem 0;
+    }
+    .error-box {
+      background: #1e293b;
+      border-left: 6px solid #ef4444;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin: 1rem 0;
+    }
+    .success-box {
+      background: #1e293b;
+      border-left: 6px solid #22c55e;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin: 1rem 0;
+    }
+    .mt-2 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .text-sm { font-size: 0.9rem; color: #94a3b8; }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid #1e293b;
+      padding-top: 2rem;
+      width: 100%;
+    }
+    .badge {
+      background: #334155;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .card { padding: 1.2rem; }
+    }
+  </style>
+
+    <meta property="og:title" content="CORS Policy Generator — Build Cross-Origin Resource">
+    <meta property="og:description" content="Generate complete CORS headers, Express.js, Nginx, Apache, Flask, Django configs. Simulate preflight requests, see common errors and security warnings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/tools/cors-policy-generator">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🌐 CORS Policy Generator</h1>
+    <div class="subhead">Build, simulate, and deploy cross-origin rules • Express • Nginx • Apache • Flask • Django</div>
+  </header>
+
+  <div class="grid-2col">
+    <!-- LEFT: Builder -->
+    <div class="card">
+      <h2>🔧 Policy Builder</h2>
+      <div class="form-group">
+        <label>Allowed origins (one per line, or * for all)</label>
+        <textarea id="originsInput" rows="3" class="input-field" placeholder="https://example.com&#10;https://app.example.com&#10;*">https://myapp.com</textarea>
+      </div>
+      <div class="form-group">
+        <label>Allowed methods</label>
+        <div class="chip-group" id="methodsContainer">
+          <span class="chip" data-method="GET">GET <span class="remove" data-remove="GET">✕</span></span>
+          <span class="chip" data-method="POST">POST <span class="remove" data-remove="POST">✕</span></span>
+          <span class="chip" data-method="PUT">PUT <span class="remove" data-remove="PUT">✕</span></span>
+          <span class="chip" data-method="DELETE">DELETE <span class="remove" data-remove="DELETE">✕</span></span>
+          <span class="chip" data-method="PATCH">PATCH <span class="remove" data-remove="PATCH">✕</span></span>
+          <span class="chip" data-method="OPTIONS">OPTIONS <span class="remove" data-remove="OPTIONS">✕</span></span>
+        </div>
+        <div class="flex-row mt-2">
+          <select id="methodSelect" class="input-field" style="width:auto; flex:1;">
+            <option value="GET">GET</option><option value="POST">POST</option><option value="PUT">PUT</option><option value="DELETE">DELETE</option><option value="PATCH">PATCH</option><option value="OPTIONS">OPTIONS</option>
+          </select>
+          <button class="btn btn-outline btn-sm" id="addMethodBtn">+ Add</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Allowed headers</label>
+        <div class="chip-group" id="headersContainer">
+          <span class="chip" data-header="Content-Type">Content-Type <span class="remove" data-remove="Content-Type">✕</span></span>
+          <span class="chip" data-header="Authorization">Authorization <span class="remove" data-remove="Authorization">✕</span></span>
+          <span class="chip" data-header="X-Custom-Header">X-Custom-Header <span class="remove" data-remove="X-Custom-Header">✕</span></span>
+        </div>
+        <div class="flex-row mt-2">
+          <input type="text" id="headerInput" class="input-field" placeholder="Header name" style="flex:1;" value="X-Requested-With">
+          <button class="btn btn-outline btn-sm" id="addHeaderBtn">+ Add</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Max-Age (seconds) for preflight cache</label>
+        <input type="number" id="maxAgeInput" class="input-field" value="3600" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label>Access-Control-Allow-Credentials</label>
+        <div class="toggle-group">
+          <div class="toggle" id="credentialsToggle"></div>
+          <span id="credentialsStatus">Disabled</span>
+        </div>
+      </div>
+      <div class="flex-row" style="gap:1rem; margin-top: 0.5rem;">
+        <button class="btn" id="generateBtn">⚡ Generate Policy</button>
+        <button class="btn btn-outline" id="resetBtn">Reset</button>
+      </div>
+      <div id="securityWarnings" class="mt-2"></div>
+    </div>
+
+    <!-- RIGHT: Output + Simulator -->
+    <div class="card">
+      <h2>📋 Generated Headers</h2>
+      <div class="code-block" id="headersOutput">Access-Control-Allow-Origin: https://myapp.com<br>Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS<br>Access-Control-Allow-Headers: Content-Type, Authorization, X-Custom-Header<br>Access-Control-Max-Age: 3600</div>
+      
+      <h3>⚙️ Server Config</h3>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+        <button class="btn btn-outline btn-sm config-tab active" data-target="express">Express</button>
+        <button class="btn btn-outline btn-sm config-tab" data-target="nginx">Nginx</button>
+        <button class="btn btn-outline btn-sm config-tab" data-target="apache">Apache</button>
+        <button class="btn btn-outline btn-sm config-tab" data-target="flask">Flask</button>
+        <button class="btn btn-outline btn-sm config-tab" data-target="django">Django</button>
+      </div>
+      <div class="code-block" id="configOutput">// Express.js example<br>app.use(cors({ origin: 'https://myapp.com', methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'], allowedHeaders: ['Content-Type','Authorization','X-Custom-Header'], maxAge: 3600 }));</div>
+
+      <h3>🧪 Preflight Simulator</h3>
+      <div class="form-group">
+        <label>Origin</label>
+        <input type="text" id="simOrigin" class="input-field" value="https://evil.com">
+      </div>
+      <div class="form-group">
+        <label>Method</label>
+        <select id="simMethod" class="input-field"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option><option>PATCH</option><option>OPTIONS</option></select>
+      </div>
+      <div class="form-group">
+        <label>Custom headers (comma separated)</label>
+        <input type="text" id="simHeaders" class="input-field" value="Authorization, X-Custom-Header">
+      </div>
+      <button class="btn btn-sm" id="simulateBtn">🚀 Simulate preflight</button>
+      <div id="simResult" class="mt-2"></div>
+    </div>
+  </div>
+
+  <!-- Common errors -->
+  <div class="card" style="margin-top: 2rem;">
+    <h2>⚠️ Common CORS errors & fixes</h2>
+    <div class="grid-2col" style="gap:1rem;">
+      <div class="error-box">❌ <strong>No 'Access-Control-Allow-Origin'</strong><br>Add the correct origin or use '*' (not with credentials).</div>
+      <div class="error-box">❌ <strong>Method not allowed</strong><br>Include the request method in allowed methods.</div>
+      <div class="error-box">❌ <strong>Request header field not allowed</strong><br>Add the custom header to allowed headers.</div>
+      <div class="error-box">❌ <strong>Credentials + wildcard</strong><br>Cannot use '*' with credentials. Specify exact origins.</div>
+    </div>
+  </div>
+
+  <footer>© 2025 lochbot.com</footer>
+</div>
+
+<script>
+  (function() {
+    // State
+    let allowedOrigins = ['https://myapp.com'];
+    let allowedMethods = ['GET','POST','PUT','DELETE','PATCH','OPTIONS'];
+    let allowedHeaders = ['Content-Type','Authorization','X-Custom-Header'];
+    let maxAge = 3600;
+    let credentialsEnabled = false;
+
+    // DOM refs
+    const originsTextarea = document.getElementById('originsInput');
+    const methodsContainer = document.getElementById('methodsContainer');
+    const headersContainer = document.getElementById('headersContainer');
+    const maxAgeInput = document.getElementById('maxAgeInput');
+    const credentialsToggle = document.getElementById('credentialsToggle');
+    const credentialsStatus = document.getElementById('credentialsStatus');
+    const headersOutput = document.getElementById('headersOutput');
+    const configOutput = document.getElementById('configOutput');
+    const securityWarnings = document.getElementById('securityWarnings');
+    const simOrigin = document.getElementById('simOrigin');
+    const simMethod = document.getElementById('simMethod');
+    const simHeaders = document.getElementById('simHeaders');
+    const simResult = document.getElementById('simResult');
+
+    // Helper: render chips
+    function renderMethods() {
+      methodsContainer.innerHTML = allowedMethods.map(m => 
+        `<span class="chip" data-method="${m}">${m} <span class="remove" data-remove="${m}">✕</span></span>`
+      ).join('');
+    }
+    function renderHeaders() {
+      headersContainer.innerHTML = allowedHeaders.map(h => 
+        `<span class="chip" data-header="${h}">${h} <span class="remove" data-remove="${h}">✕</span></span>`
+      ).join('');
+    }
+
+    // Update UI from state
+    function updateUI() {
+      originsTextarea.value = allowedOrigins.join('\n');
+      renderMethods();
+      renderHeaders();
+      maxAgeInput.value = maxAge;
+      credentialsToggle.classList.toggle('active', credentialsEnabled);
+      credentialsStatus.textContent = credentialsEnabled ? 'Enabled' : 'Disabled';
+      generatePolicy();
+    }
+
+    // Parse origins from textarea
+    function parseOrigins() {
+      const raw = originsTextarea.value.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+      allowedOrigins = raw.length ? raw : ['*'];
+    }
+
+    // Core generate
+    function generatePolicy() {
+      parseOrigins();
+      const origins = allowedOrigins;
+      const methods = allowedMethods;
+      const headers = allowedHeaders;
+      const age = parseInt(maxAgeInput.value, 10) || 3600;
+      maxAge = age;
+
+      // Build header lines
+      let headerLines = [];
+      if (origins.includes('*')) {
+        headerLines.push('Access-Control-Allow-Origin: *');
+      } else {
+        origins.forEach(o => headerLines.push(`Access-Control-Allow-Origin: ${o}`));
+      }
+      headerLines.push(`Access-Control-Allow-Methods: ${methods.join(', ')}`);
+      headerLines.push(`Access-Control-Allow-Headers: ${headers.join(', ')}`);
+      headerLines.push(`Access-Control-Max-Age: ${age}`);
+      if (credentialsEnabled) {
+        headerLines.push('Access-Control-Allow-Credentials: true');
+      }
+      headersOutput.innerHTML = headerLines.join('<br>');
+
+      // Security warnings
+      let warnings = [];
+      if (origins.includes('*') && credentialsEnabled) {
+        warnings.push('🚨 <strong>Wildcard origin with credentials:</strong> Browsers reject this. Use specific origins.');
+      }
+      if (origins.includes('*')) {
+        warnings.push('⚠️ <strong>Wildcard origin:</strong> Allows any site. Avoid in production with sensitive data.');
+      }
+      if (methods.length === 0) warnings.push('⚠️ No methods selected.');
+      if (headers.length === 0) warnings.push('⚠️ No allowed headers.');
+      securityWarnings.innerHTML = warnings.map(w => `<div class="warning-box">${w}</div>`).join('');
+
+      // Config generation
+      generateConfigs(origins, methods, headers, age);
+    }
+
+    function generateConfigs(origins, methods, headers, age) {
+      const activeTab = document.querySelector('.config-tab.active');
+      const target = activeTab ? activeTab.dataset.target : 'express';
+      let code = '';
+      const originStr = origins.includes('*') ? "'*'" : (origins.length === 1 ? `'${origins[0]}'` : `[${origins.map(o => `'${o}'`).join(', ')}]`);
+      const methodsStr = `[${methods.map(m => `'${m}'`).join(', ')}]`;
+      const headersStr = `[${headers.map(h => `'${h}'`).join(', ')}]`;
+      const credStr = credentialsEnabled ? 'true' : 'false';
+
+      switch(target) {
+        case 'express':
+          code = `// Express.js (cors middleware)\nconst cors = require('cors');\nconst corsOptions = {\n  origin: ${originStr},\n  methods: ${methodsStr},\n  allowedHeaders: ${headersStr},\n  credentials: ${credStr},\n  maxAge: ${age}\n};\napp.use(cors(corsOptions));`;
+          break;
+        case 'nginx':
+          code = `# Nginx (inside server or location block)\nadd_header Access-Control-Allow-Origin ${origins.includes('*') ? '*' : origins.join(' ') };\nadd_header Access-Control-Allow-Methods "${methods.join(', ')}";\nadd_header Access-Control-Allow-Headers "${headers.join(', ')}";\nadd_header Access-Control-Max-Age ${age};\n${credentialsEnabled ? 'add_header Access-Control-Allow-Credentials true;' : ''}\nif ($request_method = OPTIONS) { return 204; }`;
+          break;
+        case 'apache':
+          code = `# Apache (.htaccess)\nHeader set Access-Control-Allow-Origin "${origins.includes('*') ? '*' : origins.join(' ')}"\nHeader set Access-Control-Allow-Methods "${methods.join(', ')}"\nHeader set Access-Control-Allow-Headers "${headers.join(', ')}"\nHeader set Access-Control-Max-Age ${age}\n${credentialsEnabled ? 'Header set Access-Control-Allow-Credentials "true"' : ''}`;
+          break;
+        case 'flask':
+          code = `# Flask (flask-cors)\nfrom flask_cors import CORS\ncors = CORS(app, resources={r"/api/*": {\n  "origins": ${originStr},\n  "methods": ${methodsStr},\n  "allow_headers": ${headersStr},\n  "supports_credentials": ${credStr},\n  "max_age": ${age}\n}})`;
+          break;
+        case 'django':
+          code = `# Django (django-cors-headers)\nCORS_ALLOWED_ORIGINS = ${originStr}\nCORS_ALLOW_METHODS = ${methodsStr}\nCORS_ALLOW_HEADERS = ${headersStr}\nCORS_ALLOW_CREDENTIALS = ${credStr}\nCORS_PREFLIGHT_MAX_AGE = ${age}`;
+          break;
+        default: code = '// select a config tab';
+      }
+      configOutput.textContent = code;
+    }
+
+    // Simulate preflight
+    function simulatePreflight() {
+      const origin = simOrigin.value.trim();
+      const method = simMethod.value;
+      const reqHeaders = simHeaders.value.split(',').map(h => h.trim()).filter(Boolean);
+      parseOrigins();
+      const origins = allowedOrigins;
+      const methods = allowedMethods;
+      const headers = allowedHeaders;
+      let errors = [];
+
+      // origin check
+      if (!origins.includes('*') && !origins.includes(origin)) {
+        errors.push(`Origin "${origin}" not allowed. Allowed: ${origins.join(', ')}`);
+      }
+      // method check
+      if (!methods.includes(method)) {
+        errors.push(`Method "${method}" not allowed. Allowed: ${methods.join(', ')}`);
+      }
+      // headers check
+      for (let h of reqHeaders) {
+        if (!headers.includes(h)) {
+          errors.push(`Header "${h}" not allowed. Allowed: ${headers.join(', ')}`);
+        }
+      }
+      // credentials + wildcard
+      if (origins.includes('*') && credentialsEnabled) {
+        errors.push('Credentials enabled with wildcard origin — blocked by browser.');
+      }
+
+      if (errors.length === 0) {
+        simResult.innerHTML = `<div class="success-box">✅ Preflight would succeed. All checks passed.</div>`;
+      } else {
+        simResult.innerHTML = `<div class="error-box">❌ CORS preflight would fail:<br>${errors.join('<br>')}</div>`;
+      }
+    }
+
+    // Event listeners
+    document.getElementById('addMethodBtn').addEventListener('click', function() {
+      const sel = document.getElementById('methodSelect');
+      const val = sel.value;
+      if (!allowedMethods.includes(val)) {
+        allowedMethods.push(val);
+        renderMethods();
+        generatePolicy();
+      }
+    });
+    document.getElementById('addHeaderBtn').addEventListener('click', function() {
+      const inp = document.getElementById('headerInput');
+      const val = inp.value.trim();
+      if (val && !allowedHeaders.includes(val)) {
+        allowedHeaders.push(val);
+        renderHeaders();
+        generatePolicy();
+      }
+      inp.value = '';
+    });
+    // Remove via delegation
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove')) {
+        const val = e.target.dataset.remove;
+        if (e.target.closest('#methodsContainer')) {
+          allowedMethods = allowedMethods.filter(m => m !== val);
+          renderMethods();
+          generatePolicy();
+        } else if (e.target.closest('#headersContainer')) {
+          allowedHeaders = allowedHeaders.filter(h => h !== val);
+          renderHeaders();
+          generatePolicy();
+        }
+      }
+    });
+    credentialsToggle.addEventListener('click', function() {
+      credentialsEnabled = !credentialsEnabled;
+      credentialsToggle.classList.toggle('active', credentialsEnabled);
+      credentialsStatus.textContent = credentialsEnabled ? 'Enabled' : 'Disabled';
+      generatePolicy();
+    });
+    document.getElementById('generateBtn').addEventListener('click', generatePolicy);
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      allowedOrigins = ['https://myapp.com'];
+      allowedMethods = ['GET','POST','PUT','DELETE','PATCH','OPTIONS'];
+      allowedHeaders = ['Content-Type','Authorization','X-Custom-Header'];
+      maxAge = 3600;
+      credentialsEnabled = false;
+      updateUI();
+      simResult.innerHTML = '';
+    });
+    // Config tabs
+    document.querySelectorAll('.config-tab').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.config-tab').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        generatePolicy();
+      });
+    });
+    document.getElementById('simulateBtn').addEventListener('click', simulatePreflight);
+    // Auto-update on origin change
+    originsTextarea.addEventListener('input', generatePolicy);
+    maxAgeInput.addEventListener('input', generatePolicy);
+
+    // Init
+    updateUI();
+  })();
+</script>
+</body>
+</html>
