@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP Policy Generator</title>
+  <meta name="description" content="Build secure Content Security Policies with directive explanations, presets, and configuration snippets.">
+  <meta name="canonical" href="https://lochbot.com/tools/csp-policy-generator">
+  <meta property="og:title" content="CSP Policy Generator">
+  <meta property="og:description" content="Build secure Content Security Policies with directive explanations, presets, and configuration snippets.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lochbot.com/tools/csp-policy-generator">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSP Policy Generator",
+    "description": "Build secure Content Security Policies with directive explanations, presets, and configuration snippets.",
+    "url": "https://lochbot.com/tools/csp-policy-generator",
+    "applicationCategory": "SecurityApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #ef4444;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #999;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #ef4444;
+    }
+
+    .directive-item {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #0d0d0d;
+      border-radius: 4px;
+    }
+
+    .directive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .toggle {
+      width: 44px;
+      height: 24px;
+      background: #333;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .toggle.active {
+      background: #ef4444;
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+    }
+
+    .toggle.active::after {
+      left: 22px;
+    }
+
+    .directive-label {
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .directive-sources {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #333;
+    }
+
+    .source-add {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .source-add select,
+    .source-add input,
+    .source-add button {
+      padding: 8px 12px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .source-add button {
+      background: #ef4444;
+      cursor: pointer;
+      border: none;
+      font-weight: 500;
+    }
+
+    .source-add button:hover {
+      background: #dc2626;
+    }
+
+    .source-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .source-tag {
+      background: #ef4444;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .source-tag button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 0;
+    }
+
+    .mode-select {
+      margin: 16px 0;
+    }
+
+    .mode-select label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .mode-select select {
+      width: 100%;
+      padding: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+    }
+
+    .input-group {
+      margin: 16px 0;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+    }
+
+    .preset-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .preset-btn {
+      padding: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .preset-btn:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+    }
+
+    .output-section {
+      background: #0d0d0d;
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 12px;
+      word-break: break-all;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+
+    .copy-button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .copy-button:hover {
+      background: #dc2626;
+    }
+
+    .score-bar {
+      background: #2a2a2a;
+      height: 24px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .score-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    .reference-table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .reference-table th,
+    .reference-table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    .reference-table th {
+      background: #1a1a1a;
+      font-weight: 600;
+      color: #ef4444;
+    }
+
+    .reference-table td {
+      background: #0d0d0d;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .violation-sim {
+      background: #1a1a1a;
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 12px;
+      border-left: 4px solid #ef4444;
+    }
+
+    .violation-sim h4 {
+      color: #ef4444;
+      margin-bottom: 8px;
+    }
+
+    .blocked {
+      color: #ef4444;
+    }
+
+    .allowed {
+      color: #10b981;
+    }
+  </style>
+<link rel="canonical" href="https://lochbot.com/tools/csp-policy-generator">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CSP Policy Generator</h1>
+      <p class="subtitle">Build secure Content Security Policies with ease</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Directives</h2>
+        <div id="directivesContainer"></div>
+        <div class="preset-buttons">
+          <button class="preset-btn" onclick="applyPreset('strict')">Strict</button>
+          <button class="preset-btn" onclick="applyPreset('moderate')">Moderate</button>
+          <button class="preset-btn" onclick="applyPreset('permissive')">Permissive</button>
+          <button class="preset-btn" onclick="applyPreset('reset')">Reset</button>
+        </div>
+        <div class="mode-select">
+          <label for="policyMode">Policy Mode:</label>
+          <select id="policyMode" onchange="updatePolicy()">
+            <option value="enforce">Content-Security-Policy (Enforce)</option>
+            <option value="report-only">Content-Security-Policy-Report-Only</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="reportUri">Report URI (optional):</label>
+          <input type="text" id="reportUri" placeholder="https://your-domain.com/csp-report" onchange="updatePolicy()">
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Output & Score</h2>
+        <div style="margin-bottom: 16px;">
+          <strong>Security Score</strong>
+          <div class="score-bar">
+            <div class="score-fill" id="scoreDisplay" style="width: 50%;">50/100</div>
+          </div>
+        </div>
+
+        <strong>HTTP Header:</strong>
+        <div class="output-section" id="headerOutput">Content-Security-Policy: default-src 'self'</div>
+        <button class="copy-button" onclick="copyToClipboard('headerOutput')">Copy Header</button>
+
+        <strong style="display: block; margin-top: 16px;">Meta Tag:</strong>
+        <div class="output-section" id="metaOutput">&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self'"&gt;</div>
+        <button class="copy-button" onclick="copyToClipboard('metaOutput')">Copy Meta Tag</button>
+
+        <strong style="display: block; margin-top: 16px;">Express.js:</strong>
+        <div class="output-section" id="expressOutput">app.use((req, res, next) => { res.setHeader('Content-Security-Policy', "default-src 'self'"); next(); });</div>
+        <button class="copy-button" onclick="copyToClipboard('expressOutput')">Copy Code</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Directive Reference</h2>
+      <table class="reference-table">
+        <thead>
+          <tr>
+            <th>Directive</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>default-src</td>
+            <td>Fallback for all fetch directives</td>
+          </tr>
+          <tr>
+            <td>script-src</td>
+            <td>Controls JavaScript source</td>
+          </tr>
+          <tr>
+            <td>style-src</td>
+            <td>Controls stylesheet source</td>
+          </tr>
+          <tr>
+            <td>img-src</td>
+            <td>Controls image source</td>
+          </tr>
+          <tr>
+            <td>font-src</td>
+            <td>Controls font source</td>
+          </tr>
+          <tr>
+            <td>connect-src</td>
+            <td>Controls fetch, XHR, WebSocket source</td>
+          </tr>
+          <tr>
+            <td>media-src</td>
+            <td>Controls audio/video source</td>
+          </tr>
+          <tr>
+            <td>object-src</td>
+            <td>Controls plugin source</td>
+          </tr>
+          <tr>
+            <td>frame-src</td>
+            <td>Controls iframe source</td>
+          </tr>
+          <tr>
+            <td>frame-ancestors</td>
+            <td>Controls who can embed this site</td>
+          </tr>
+          <tr>
+            <td>base-uri</td>
+            <td>Restricts base element URLs</td>
+          </tr>
+          <tr>
+            <td>form-action</td>
+            <td>Restricts form submission targets</td>
+          </tr>
+          <tr>
+            <td>upgrade-insecure-requests</td>
+            <td>Upgrade HTTP to HTTPS</td>
+          </tr>
+          <tr>
+            <td>block-all-mixed-content</td>
+            <td>Block all mixed HTTP/HTTPS content</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Violation Simulation</h2>
+      <div class="violation-sim">
+        <h4>Testing Inline Script:</h4>
+        <p id="violationTest"></p>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 lochbot.com
+    </footer>
+  </div>
+
+  <script>
+    const directives = [
+      'default-src',
+      'script-src',
+      'style-src',
+      'img-src',
+      'font-src',
+      'connect-src',
+      'media-src',
+      'object-src',
+      'frame-src',
+      'frame-ancestors',
+      'base-uri',
+      'form-action',
+      'upgrade-insecure-requests',
+      'block-all-mixed-content'
+    ];
+
+    const sourceOptions = [
+      "'self'",
+      "'none'",
+      "'unsafe-inline'",
+      "'unsafe-eval'",
+      "'strict-dynamic'",
+      "nonce-[random]",
+      "sha256-[hash]",
+      "https:"
+    ];
+
+    const policy = {
+      mode: 'enforce',
+      directives: {},
+      sources: {},
+      reportUri: ''
+    };
+
+    function initDirectives() {
+      const container = document.getElementById('directivesContainer');
+      container.innerHTML = '';
+
+      directives.forEach(dir => {
+        const item = document.createElement('div');
+        item.className = 'directive-item';
+        item.innerHTML = `
+          <div class="directive-toggle">
+            <button class="toggle" id="toggle-${dir}" onclick="toggleDirective('${dir}')" data-enabled="false"></button>
+            <label class="directive-label">${dir}</label>
+          </div>
+          <div class="directive-sources" id="sources-${dir}" style="display:none;">
+            <div class="source-add">
+              <select onchange="addSource('${dir}', this.value); this.value='';">
+                <option value="">Add source...</option>
+                ${sourceOptions.map(s => `<option value="${s}">${s}</option>`).join('')}
+                <option value="custom">Custom domain...</option>
+              </select>
+            </div>
+            <div class="source-tags" id="tags-${dir}"></div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleDirective(dir) {
+      const toggle = document.getElementById(`toggle-${dir}`);
+      const isEnabled = toggle.dataset.enabled === 'true';
+      const sources = document.getElementById(`sources-${dir}`);
+
+      toggle.dataset.enabled = !isEnabled;
+      toggle.classList.toggle('active');
+      sources.style.display = isEnabled ? 'none' : 'block';
+
+      if (!isEnabled) {
+        policy.directives[dir] = true;
+        if (!policy.sources[dir]) policy.sources[dir] = [];
+      } else {
+        delete policy.directives[dir];
+        delete policy.sources[dir];
+      }
+
+      updatePolicy();
+    }
+
+    function addSource(dir, source) {
+      if (!source) return;
+
+      let value = source;
+      if (source === 'custom') {
+        value = prompt('Enter domain (e.g., https://example.com):');
+        if (!value) return;
+      } else if (source === 'nonce-[random]') {
+        value = 'nonce-' + Math.random().toString(36).substring(2, 15);
+      } else if (source === 'sha256-[hash]') {
+        value = 'sha256-' + Math.random().toString(36).substring(2, 15);
+      }
+
+      if (!policy.sources[dir]) policy.sources[dir] = [];
+      if (!policy.sources[dir].includes(value)) {
+        policy.sources[dir].push(value);
+      }
+
+      updateSourceTags(dir);
+      updatePolicy();
+    }
+
+    function removeSource(dir, source) {
+      const idx = policy.sources[dir].indexOf(source);
+      if (idx > -1) {
+        policy.sources[dir].splice(idx, 1);
+      }
+      updateSourceTags(dir);
+      updatePolicy();
+    }
+
+    function updateSourceTags(dir) {
+      const tagsContainer = document.getElementById(`tags-${dir}`);
+      tagsContainer.innerHTML = (policy.sources[dir] || []).map(source => `
+        <div class="source-tag">
+          ${source}
+          <button onclick="removeSource('${dir}', '${source}')">×</button>
+        </div>
+      `).join('');
+    }
+
+    function updatePolicy() {
+      policy.mode = document.getElementById('policyMode').value;
+      policy.reportUri = document.getElementById('reportUri').value;
+
+      const headerName = policy.mode === 'enforce' ? 'Content-Security-Policy' : 'Content-Security-Policy-Report-Only';
+      let policyString = '';
+
+      Object.keys(policy.directives).forEach(dir => {
+        const sources = policy.sources[dir] || [];
+        if (dir === 'upgrade-insecure-requests' || dir === 'block-all-mixed-content') {
+          policyString += dir + '; ';
+        } else {
+          const sourcesStr = sources.length > 0 ? sources.join(' ') : "'self'";
+          policyString += `${dir} ${sourcesStr}; `;
+        }
+      });
+
+      if (policy.reportUri) {
+        policyString += `report-uri ${policy.reportUri};`;
+      }
+
+      policyString = policyString.trim();
+
+      document.getElementById('headerOutput').textContent = `${headerName}: ${policyString}`;
+      document.getElementById('metaOutput').textContent = `<meta http-equiv="Content-Security-Policy" content="${policyString}">`;
+      document.getElementById('expressOutput').textContent = `app.use((req, res, next) => { res.setHeader('${headerName}', "${policyString}"); next(); });`;
+
+      updateScore();
+      updateViolationTest();
+    }
+
+    function updateScore() {
+      let score = 50;
+
+      if (policy.directives['default-src']) score += 10;
+      if (policy.directives['script-src']) {
+        const hasUnsafeInline = (policy.sources['script-src'] || []).includes("'unsafe-inline'");
+        score += hasUnsafeInline ? 5 : 15;
+      }
+      if (policy.directives['style-src']) score += 8;
+      if (policy.directives['img-src']) score += 5;
+      if (policy.directives['object-src']) score += 5;
+      if (policy.directives['frame-ancestors']) score += 5;
+      if (policy.directives['upgrade-insecure-requests']) score += 10;
+      if (policy.directives['block-all-mixed-content']) score += 5;
+
+      score = Math.min(100, score);
+
+      const scoreDisplay = document.getElementById('scoreDisplay');
+      scoreDisplay.style.width = score + '%';
+      scoreDisplay.textContent = score + '/100';
+    }
+
+    function updateViolationTest() {
+      const hasScriptSrc = policy.directives['script-src'];
+      const hasSelf = hasScriptSrc && (policy.sources['script-src'] || []).includes("'self'");
+      const hasUnsafeInline = hasScriptSrc && (policy.sources['script-src'] || []).includes("'unsafe-inline'");
+
+      let html = '';
+      html += `<span class="${hasUnsafeInline ? 'allowed' : 'blocked'}">
+        Inline script &lt;script&gt;alert('test')&lt;/script&gt;: ${hasUnsafeInline ? '✓ Allowed' : '✗ Blocked'}
+      </span><br>`;
+      html += `<span class="${hasSelf ? 'allowed' : 'blocked'}">
+        External script from same origin: ${hasSelf ? '✓ Allowed' : '✗ Blocked'}
+      </span><br>`;
+      html += `<span class="${hasScriptSrc ? 'blocked' : 'allowed'}">
+        External script from random domain: ${hasScriptSrc ? '✗ Blocked' : '✓ Allowed'}
+      </span>`;
+
+      document.getElementById('violationTest').innerHTML = html;
+    }
+
+    function applyPreset(type) {
+      policy.directives = {};
+      policy.sources = {};
+
+      directives.forEach(dir => {
+        const toggle = document.getElementById(`toggle-${dir}`);
+        toggle.dataset.enabled = 'false';
+        toggle.classList.remove('active');
+        document.getElementById(`sources-${dir}`).style.display = 'none';
+      });
+
+      if (type === 'strict') {
+        policy.directives['default-src'] = true;
+        policy.sources['default-src'] = ["'self'"];
+        policy.directives['script-src'] = true;
+        policy.sources['script-src'] = ["'self'", "'strict-dynamic'"];
+        policy.directives['style-src'] = true;
+        policy.sources['style-src'] = ["'self'"];
+        policy.directives['img-src'] = true;
+        policy.sources['img-src'] = ["'self'"];
+        policy.directives['font-src'] = true;
+        policy.sources['font-src'] = ["'self'"];
+        policy.directives['upgrade-insecure-requests'] = true;
+        policy.directives['block-all-mixed-content'] = true;
+      } else if (type === 'moderate') {
+        policy.directives['default-src'] = true;
+        policy.sources['default-src'] = ["'self'"];
+        policy.directives['script-src'] = true;
+        policy.sources['script-src'] = ["'self'", "https:"];
+        policy.directives['style-src'] = true;
+        policy.sources['style-src'] = ["'self'", "'unsafe-inline'"];
+        policy.directives['img-src'] = true;
+        policy.sources['img-src'] = ["'self'", "https:"];
+      } else if (type === 'permissive') {
+        policy.directives['default-src'] = true;
+        policy.sources['default-src'] = ["'self'", "https:"];
+      }
+
+      Object.keys(policy.directives).forEach(dir => {
+        const toggle = document.getElementById(`toggle-${dir}`);
+        toggle.dataset.enabled = 'true';
+        toggle.classList.add('active');
+        document.getElementById(`sources-${dir}`).style.display = 'block';
+        updateSourceTags(dir);
+      });
+
+      updatePolicy();
+    }
+
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const button = event.target;
+        const original = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => { button.textContent = original; }, 2000);
+      });
+    }
+
+    initDirectives();
+  </script>
+</body>
+</html>

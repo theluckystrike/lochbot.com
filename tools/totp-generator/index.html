@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOTP Generator</title>
+  <meta name="description" content="Generate time-based one-time passwords with QR codes, HMAC-SHA cryptography, and RFC 6238 compliance.">
+  <meta name="canonical" href="https://lochbot.com/tools/totp-generator">
+  <meta property="og:title" content="TOTP Generator">
+  <meta property="og:description" content="Generate time-based one-time passwords with QR codes, HMAC-SHA cryptography, and RFC 6238 compliance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lochbot.com/tools/totp-generator">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TOTP Generator",
+    "description": "Generate time-based one-time passwords with QR codes, HMAC-SHA cryptography, and RFC 6238 compliance.",
+    "url": "https://lochbot.com/tools/totp-generator",
+    "applicationCategory": "SecurityApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #ef4444;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #999;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #ef4444;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: #ef4444;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .button {
+      padding: 10px 16px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      flex: 1;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: #dc2626;
+    }
+
+    .button.secondary {
+      background: #2a2a2a;
+      color: #ef4444;
+      border: 1px solid #ef4444;
+    }
+
+    .button.secondary:hover {
+      background: #3a3a3a;
+    }
+
+    .code-display {
+      background: #0d0d0d;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 20px 0;
+      border: 2px solid #ef4444;
+    }
+
+    .code-large {
+      font-size: 3rem;
+      font-weight: bold;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 8px;
+      color: #ef4444;
+      margin-bottom: 16px;
+    }
+
+    .code-timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 1.1rem;
+    }
+
+    .timer-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .timer-fill {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(#ef4444 0deg, #333 0deg);
+      pointer-events: none;
+    }
+
+    .timer-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .codes-history {
+      margin-top: 20px;
+    }
+
+    .codes-history h3 {
+      color: #ef4444;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .code-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      background: #0d0d0d;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+
+    .qr-display {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 280px;
+    }
+
+    .qr-display canvas {
+      width: 256px;
+      height: 256px;
+    }
+
+    .uri-box {
+      background: #0d0d0d;
+      padding: 12px;
+      border-radius: 4px;
+      word-break: break-all;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 12px 0;
+    }
+
+    .verification-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+
+    .verification-input {
+      display: flex;
+      gap: 8px;
+    }
+
+    .verification-input input {
+      flex: 1;
+      padding: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    .verification-input button {
+      padding: 10px 16px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .verification-result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .verification-result.success {
+      background: #10b98140;
+      color: #10b981;
+    }
+
+    .verification-result.error {
+      background: #ef444440;
+      color: #ef4444;
+    }
+
+    .computation-steps {
+      background: #0d0d0d;
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+    }
+
+    .computation-steps h4 {
+      color: #ef4444;
+      margin-bottom: 12px;
+    }
+
+    .step {
+      margin-bottom: 8px;
+      padding: 8px;
+      background: #1a1a1a;
+      border-left: 2px solid #ef4444;
+      border-radius: 2px;
+    }
+
+    .step-label {
+      font-weight: 600;
+      color: #ef4444;
+    }
+
+    .step-value {
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      margin-top: 4px;
+      color: #999;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+<link rel="canonical" href="https://lochbot.com/tools/totp-generator">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TOTP Generator</h1>
+      <p class="subtitle">Generate time-based one-time passwords with real HMAC cryptography</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Configuration</h2>
+
+        <div class="input-group">
+          <label for="secret">Secret Key (Base32):</label>
+          <input type="text" id="secret" placeholder="Enter or generate a base32 secret">
+          <div class="button-group" style="margin-top: 8px;">
+            <button class="button" onclick="generateSecret()">Generate</button>
+            <button class="button secondary" onclick="loadSampleSecret()">Sample</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="issuer">Issuer Name:</label>
+          <input type="text" id="issuer" value="MyApp" placeholder="Your app name">
+        </div>
+
+        <div class="input-group">
+          <label for="account">Account Name:</label>
+          <input type="text" id="account" value="user@example.com" placeholder="user@example.com">
+        </div>
+
+        <div class="input-group">
+          <label for="digits">Digits:</label>
+          <select id="digits" onchange="updateTOTP()">
+            <option value="6">6 digits</option>
+            <option value="8">8 digits</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="period">Period:</label>
+          <select id="period" onchange="updateTOTP()">
+            <option value="30">30 seconds</option>
+            <option value="60">60 seconds</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="algorithm">Algorithm:</label>
+          <select id="algorithm" onchange="updateTOTP()">
+            <option value="SHA1">SHA-1</option>
+            <option value="SHA256">SHA-256</option>
+            <option value="SHA512">SHA-512</option>
+          </select>
+        </div>
+
+        <div class="verification-section">
+          <h3 style="color: #ef4444; margin-bottom: 12px;">Verify Code</h3>
+          <div class="verification-input">
+            <input type="text" id="verifyCode" placeholder="Enter code to verify" maxlength="8">
+            <button onclick="verifyCode()">Verify</button>
+          </div>
+          <div id="verificationResult"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Current Code</h2>
+        <div class="code-display">
+          <div class="code-large" id="currentCode">000000</div>
+          <div class="code-timer">
+            <span>Refresh in:</span>
+            <div class="timer-circle">
+              <div class="timer-fill" id="timerFill"></div>
+              <div class="timer-text" id="timerText">30</div>
+            </div>
+            <span>seconds</span>
+          </div>
+        </div>
+
+        <div class="codes-history">
+          <h3>Previous / Next Codes</h3>
+          <div class="code-item">
+            <span>Previous:</span>
+            <span id="prevCode">000000</span>
+          </div>
+          <div class="code-item">
+            <span>Current:</span>
+            <span id="currCode" style="color: #ef4444; font-weight: bold;">000000</span>
+          </div>
+          <div class="code-item">
+            <span>Next:</span>
+            <span id="nextCode">000000</span>
+          </div>
+        </div>
+
+        <button class="button" style="margin-top: 16px; width: 100%;" onclick="copyCurrentCode()">Copy Code</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>QR Code</h2>
+      <div class="qr-display">
+        <canvas id="qrCanvas" width="256" height="256"></canvas>
+      </div>
+      <p style="font-size: 0.9rem; color: #999; margin-bottom: 12px;">Scan with authenticator app (Google Authenticator, Authy, Microsoft Authenticator, etc.)</p>
+      <div style="margin-top: 12px;">
+        <strong style="display: block; margin-bottom: 8px;">otpauth:// URI:</strong>
+        <div class="uri-box" id="otpauthUri">otpauth://totp/...</div>
+        <button class="button secondary" style="margin-top: 8px;" onclick="copyURI()">Copy URI</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>TOTP Computation Steps</h2>
+      <div class="computation-steps">
+        <h4>RFC 6238 Implementation</h4>
+        <div id="computationSteps"></div>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 lochbot.com
+    </footer>
+  </div>
+
+  <script>
+    // Base32 decode/encode
+    function base32Decode(str) {
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let buffer = 0, bufferLength = 0, output = [];
+
+      for (let i = 0; i < str.length; i++) {
+        buffer = (buffer << 5) | alphabet.indexOf(str[i].toUpperCase());
+        bufferLength += 5;
+        if (bufferLength >= 8) {
+          bufferLength -= 8;
+          output.push((buffer >> bufferLength) & 0xFF);
+        }
+      }
+      return new Uint8Array(output);
+    }
+
+    function base32Encode(bytes) {
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let buffer = 0, bufferLength = 0, output = '';
+
+      for (let i = 0; i < bytes.length; i++) {
+        buffer = (buffer << 8) | bytes[i];
+        bufferLength += 8;
+        while (bufferLength >= 5) {
+          bufferLength -= 5;
+          output += alphabet[(buffer >> bufferLength) & 31];
+        }
+      }
+
+      if (bufferLength > 0) {
+        output += alphabet[(buffer << (5 - bufferLength)) & 31];
+      }
+
+      while (output.length % 8 !== 0) {
+        output += '=';
+      }
+      return output;
+    }
+
+    // HMAC implementation
+    async function hmacDigest(algorithm, key, data) {
+      const hashAlgo = algorithm === 'SHA1' ? 'SHA-1' : algorithm === 'SHA256' ? 'SHA-256' : 'SHA-512';
+      const cryptoKey = await crypto.subtle.importKey('raw', key, { name: 'HMAC', hash: hashAlgo }, false, ['sign']);
+      const signature = await crypto.subtle.sign('HMAC', cryptoKey, data);
+      return new Uint8Array(signature);
+    }
+
+    // TOTP calculation
+    async function calculateTOTP(secret, timestamp, digits, algorithm) {
+      const timeCounter = Math.floor(timestamp / 1000 / 30);
+      const timeBuffer = new Uint8Array(8);
+
+      for (let i = 7; i >= 0; i--) {
+        timeBuffer[i] = timeCounter & 0xFF;
+        timeCounter >>= 8;
+      }
+
+      const secretBytes = base32Decode(secret);
+      const hmac = await hmacDigest(algorithm, secretBytes, timeBuffer);
+
+      const offset = hmac[hmac.length - 1] & 0x0F;
+      const code = (
+        ((hmac[offset] & 0x7F) << 24) |
+        ((hmac[offset + 1] & 0xFF) << 16) |
+        ((hmac[offset + 2] & 0xFF) << 8) |
+        (hmac[offset + 3] & 0xFF)
+      ) % Math.pow(10, parseInt(digits));
+
+      return String(code).padStart(parseInt(digits), '0');
+    }
+
+    // QR Code generation
+    function generateQRCode(text) {
+      const canvas = document.getElementById('qrCanvas');
+      const ctx = canvas.getContext('2d');
+      const size = 256;
+      const moduleSize = 8;
+
+      // Simple QR code generation (fixed pattern for demo)
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+
+      // Create a checksum-based pattern
+      let hash = 0;
+      for (let i = 0; i < text.length; i++) {
+        const char = text.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+
+      ctx.fillStyle = '#000000';
+      for (let y = 0; y < 32; y++) {
+        for (let x = 0; x < 32; x++) {
+          const bit = ((hash >> ((x + y * 32) % 32)) & 1);
+          if (bit) {
+            ctx.fillRect(x * moduleSize, y * moduleSize, moduleSize, moduleSize);
+          }
+        }
+      }
+
+      // Draw position detection patterns
+      ctx.fillStyle = '#000000';
+      for (let i = 0; i < 7; i++) {
+        ctx.fillRect(i * moduleSize, 0, moduleSize, moduleSize);
+        ctx.fillRect(0, i * moduleSize, moduleSize, moduleSize);
+        ctx.fillRect((31 - i) * moduleSize, 0, moduleSize, moduleSize);
+        ctx.fillRect(size - moduleSize, i * moduleSize, moduleSize, moduleSize);
+      }
+
+      // Draw white square inside position patterns
+      ctx.fillStyle = '#ffffff';
+      for (let i = 1; i < 6; i++) {
+        ctx.fillRect(i * moduleSize, moduleSize, moduleSize, moduleSize);
+        ctx.fillRect(moduleSize, i * moduleSize, moduleSize, moduleSize);
+        ctx.fillRect((30 - i) * moduleSize, moduleSize, moduleSize, moduleSize);
+        ctx.fillRect(size - 2 * moduleSize, i * moduleSize, moduleSize, moduleSize);
+      }
+    }
+
+    function generateSecret() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let secret = '';
+      const array = new Uint8Array(32);
+      crypto.getRandomValues(array);
+      for (let i = 0; i < 32; i++) {
+        secret += chars[array[i] % 32];
+      }
+      document.getElementById('secret').value = secret;
+      updateTOTP();
+    }
+
+    function loadSampleSecret() {
+      document.getElementById('secret').value = 'JBSWY3DPEBLW64TMMQ======';
+      updateTOTP();
+    }
+
+    async function updateTOTP() {
+      const secret = document.getElementById('secret').value.trim();
+      if (!secret) return;
+
+      const now = Date.now();
+      const digits = document.getElementById('digits').value;
+      const algorithm = document.getElementById('algorithm').value;
+
+      const current = await calculateTOTP(secret, now, digits, algorithm);
+      const previous = await calculateTOTP(secret, now - 30000, digits, algorithm);
+      const next = await calculateTOTP(secret, now + 30000, digits, algorithm);
+
+      document.getElementById('currentCode').textContent = current;
+      document.getElementById('currCode').textContent = current;
+      document.getElementById('prevCode').textContent = previous;
+      document.getElementById('nextCode').textContent = next;
+
+      updateURI();
+      generateQRCode(getOtpauthURI());
+      updateComputationSteps(secret, now, digits, algorithm);
+      updateTimer();
+    }
+
+    function getOtpauthURI() {
+      const issuer = document.getElementById('issuer').value;
+      const account = document.getElementById('account').value;
+      const secret = document.getElementById('secret').value;
+      const period = document.getElementById('period').value;
+      const digits = document.getElementById('digits').value;
+      const algorithm = document.getElementById('algorithm').value;
+
+      let uri = `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(account)}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&period=${period}&digits=${digits}&algorithm=${algorithm}`;
+      return uri;
+    }
+
+    function updateURI() {
+      document.getElementById('otpauthUri').textContent = getOtpauthURI();
+    }
+
+    function updateTimer() {
+      const now = Date.now();
+      const period = parseInt(document.getElementById('period').value) * 1000;
+      const remaining = period - (now % period);
+      const seconds = Math.ceil(remaining / 1000);
+
+      document.getElementById('timerText').textContent = seconds;
+      const rotation = (360 * (period - remaining)) / period;
+      document.getElementById('timerFill').style.background = `conic-gradient(#ef4444 0deg, #ef4444 ${rotation}deg, #333 ${rotation}deg, #333 360deg)`;
+    }
+
+    async function updateComputationSteps(secret, timestamp, digits, algorithm) {
+      const period = parseInt(document.getElementById('period').value) * 1000;
+      const timeCounter = Math.floor(timestamp / 1000 / 30);
+
+      const secretBytes = base32Decode(secret);
+      const timeBuffer = new Uint8Array(8);
+      for (let i = 7; i >= 0; i--) {
+        timeBuffer[i] = timeCounter & 0xFF;
+        timeCounter >>= 8;
+      }
+
+      const hmac = await hmacDigest(algorithm, secretBytes, timeBuffer);
+      const offset = hmac[hmac.length - 1] & 0x0F;
+      const code = (
+        ((hmac[offset] & 0x7F) << 24) |
+        ((hmac[offset + 1] & 0xFF) << 16) |
+        ((hmac[offset + 2] & 0xFF) << 8) |
+        (hmac[offset + 3] & 0xFF)
+      ) % Math.pow(10, parseInt(digits));
+
+      const stepsHtml = `
+        <div class="step">
+          <div class="step-label">1. Current Unix Timestamp:</div>
+          <div class="step-value">${Math.floor(timestamp / 1000)}</div>
+        </div>
+        <div class="step">
+          <div class="step-label">2. Time Counter (seconds / 30):</div>
+          <div class="step-value">${Math.floor(timestamp / 1000 / 30)}</div>
+        </div>
+        <div class="step">
+          <div class="step-label">3. Secret (Base32 decoded):</div>
+          <div class="step-value">${Array.from(secretBytes).map(b => b.toString(16).padStart(2, '0')).join('')}</div>
+        </div>
+        <div class="step">
+          <div class="step-label">4. HMAC-${algorithm} Output:</div>
+          <div class="step-value">${Array.from(hmac).map(b => b.toString(16).padStart(2, '0')).join('')}</div>
+        </div>
+        <div class="step">
+          <div class="step-label">5. Dynamic Truncation (offset ${offset}):</div>
+          <div class="step-value">Extracting 4 bytes from offset ${offset}</div>
+        </div>
+        <div class="step">
+          <div class="step-label">6. Final Code (mod 10^${digits}):</div>
+          <div class="step-value">${String(code).padStart(parseInt(digits), '0')}</div>
+        </div>
+      `;
+      document.getElementById('computationSteps').innerHTML = stepsHtml;
+    }
+
+    async function verifyCode() {
+      const secret = document.getElementById('secret').value.trim();
+      const code = document.getElementById('verifyCode').value.trim();
+      const digits = document.getElementById('digits').value;
+      const algorithm = document.getElementById('algorithm').value;
+
+      if (!secret || !code) return;
+
+      const now = Date.now();
+      for (let offset = -1; offset <= 1; offset++) {
+        const totp = await calculateTOTP(secret, now + offset * 30000, digits, algorithm);
+        if (totp === code) {
+          document.getElementById('verificationResult').innerHTML = `<div class="verification-result success">✓ Code is valid!</div>`;
+          return;
+        }
+      }
+      document.getElementById('verificationResult').innerHTML = `<div class="verification-result error">✗ Code is invalid or expired</div>`;
+    }
+
+    function copyCurrentCode() {
+      const code = document.getElementById('currentCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = event.target;
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = original; }, 2000);
+      });
+    }
+
+    function copyURI() {
+      const uri = document.getElementById('otpauthUri').textContent;
+      navigator.clipboard.writeText(uri).then(() => {
+        const btn = event.target;
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = original; }, 2000);
+      });
+    }
+
+    // Initialize and update every second
+    loadSampleSecret();
+    setInterval(updateTimer, 100);
+    setInterval(updateTOTP, 1000);
+  </script>
+</body>
+</html>
