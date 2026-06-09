@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoding Converter - Multi-Format Text Encoder</title>
+    <meta name="description" content="Convert text between ASCII, UTF-8, URL, HTML, Base64, Hex, and Binary. All formats shown simultaneously.">
+    <meta name="theme-color" content="#f97316">
+    <meta property="og:title" content="Encoding Converter - Multi-Format Text Encoder">
+    <meta property="og:description" content="Convert text between ASCII, UTF-8, URL, HTML, Base64, Hex, and Binary. All formats shown simultaneously.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/tools/encoding-converter">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Encoding Converter">
+    <meta name="twitter:description" content="Multi-format text encoding conversion tool">
+    <link rel="canonical" href="https://lochbot.com/tools/encoding-converter">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Encoding Converter",
+        "url": "https://lochbot.com/tools/encoding-converter",
+        "description": "Convert text between multiple encoding formats",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .input-section {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #404040;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f97316;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            min-height: 120px;
+            resize: vertical;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ea580c;
+        }
+        .secondary-btn {
+            background: #404040;
+            color: #e0e0e0;
+        }
+        .secondary-btn:hover {
+            background: #505050;
+        }
+        .encoding-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .encoding-card {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #f97316;
+        }
+        .encoding-label {
+            font-size: 12px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .encoding-output {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #10b981;
+            word-break: break-all;
+            min-height: 60px;
+            max-height: 200px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 6px 10px;
+            font-size: 11px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #ea580c;
+        }
+        .copy-btn.copied {
+            background: #10b981;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #404040;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: transparent;
+            color: #a0a0a0;
+            padding: 10px 15px;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: #f97316;
+            border-bottom-color: #f97316;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: grid;
+        }
+        .char-info {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #a0a0a0;
+        }
+        .char-info strong {
+            color: #f97316;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #404040;
+            color: #a0a0a0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Encoding Converter</h1>
+            <p>Convert between ASCII, UTF-8, URL, HTML, Base64, Hex, and Binary formats</p>
+        </header>
+
+        <div class="input-section">
+            <div class="tabs">
+                <button class="tab-btn active" data-mode="text">Text Input</button>
+                <button class="tab-btn" data-mode="hex">Hex Input</button>
+            </div>
+
+            <div class="input-group">
+                <label>Input Text</label>
+                <textarea id="inputText" placeholder="Enter text to encode...">Hello, World!</textarea>
+            </div>
+
+            <div class="button-group">
+                <button onclick="convertEncodings()">Convert All Formats</button>
+                <button class="secondary-btn" onclick="clearAll()">Clear</button>
+            </div>
+
+            <div class="char-info" id="charInfo"></div>
+        </div>
+
+        <div class="encoding-grid" id="encodingGrid"></div>
+    </div>
+
+    <footer>
+        © 2026 lochbot.com — Cybersecurity Tools
+    </footer>
+
+    <script>
+        const encodings = [
+            { name: 'ASCII', encode: textToAscii },
+            { name: 'UTF-8', encode: textToUtf8 },
+            { name: 'URL Encoded', encode: textToUrlEncoded },
+            { name: 'HTML Entities', encode: textToHtmlEntities },
+            { name: 'Base64', encode: textToBase64 },
+            { name: 'Hexadecimal', encode: textToHex },
+            { name: 'Binary', encode: textToBinary }
+        ];
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const inputText = document.getElementById('inputText');
+                if (this.dataset.mode === 'hex') {
+                    inputText.placeholder = 'Enter hexadecimal (space-separated or continuous)...';
+                } else {
+                    inputText.placeholder = 'Enter text to encode...';
+                }
+            });
+        });
+
+        function textToAscii(text) {
+            return Array.from(text).map(c => c.charCodeAt(0)).join(' ');
+        }
+
+        function textToUtf8(text) {
+            const encoder = new TextEncoder();
+            const bytes = encoder.encode(text);
+            return Array.from(bytes).map(b => b.toString(10)).join(' ');
+        }
+
+        function textToUrlEncoded(text) {
+            return encodeURIComponent(text);
+        }
+
+        function textToHtmlEntities(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            let html = div.innerHTML;
+            return html.replace(/[\u00A0-\u9999]/g, (i) => {
+                return '&#' + i.charCodeAt(0) + ';';
+            });
+        }
+
+        function textToBase64(text) {
+            return btoa(unescape(encodeURIComponent(text)));
+        }
+
+        function textToHex(text) {
+            return Array.from(text).map(c => {
+                const hex = c.charCodeAt(0).toString(16).toUpperCase();
+                return hex.padStart(2, '0');
+            }).join(' ');
+        }
+
+        function textToBinary(text) {
+            return Array.from(text).map(c => {
+                return c.charCodeAt(0).toString(2).padStart(8, '0');
+            }).join(' ');
+        }
+
+        function hexToText(hexStr) {
+            try {
+                const hex = hexStr.replace(/\s/g, '');
+                let text = '';
+                for (let i = 0; i < hex.length; i += 2) {
+                    text += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+                }
+                return text;
+            } catch (e) {
+                return 'Invalid hex input';
+            }
+        }
+
+        function base64ToText(b64) {
+            try {
+                return decodeURIComponent(atob(b64).split('').map(c => {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            } catch (e) {
+                return 'Invalid base64';
+            }
+        }
+
+        function convertEncodings() {
+            const inputText = document.getElementById('inputText').value;
+            const isHexMode = document.querySelector('.tab-btn.active').dataset.mode === 'hex';
+
+            let textToConvert = inputText;
+            if (isHexMode) {
+                textToConvert = hexToText(inputText);
+            }
+
+            if (!textToConvert) {
+                document.getElementById('encodingGrid').innerHTML = '';
+                document.getElementById('charInfo').innerHTML = '';
+                return;
+            }
+
+            let grid = '';
+            for (const enc of encodings) {
+                try {
+                    const result = enc.encode(textToConvert);
+                    const uniqueId = 'enc_' + enc.name.replace(/\s/g, '_');
+                    grid += `
+                        <div class="encoding-card">
+                            <div class="encoding-label">${enc.name}</div>
+                            <div class="encoding-output" id="${uniqueId}">
+                                ${escapeHtml(result)}
+                                <button class="copy-btn" onclick="copyToClipboard('${uniqueId}', this)">Copy</button>
+                            </div>
+                        </div>
+                    `;
+                } catch (e) {
+                    grid += `
+                        <div class="encoding-card">
+                            <div class="encoding-label">${enc.name}</div>
+                            <div class="encoding-output" style="color: #ef4444;">Error encoding</div>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById('encodingGrid').innerHTML = grid;
+
+            // Show character info
+            const charInfo = `
+                <strong>Length:</strong> ${textToConvert.length} characters |
+                <strong>Bytes (UTF-8):</strong> ${new TextEncoder().encode(textToConvert).length} |
+                <strong>Lines:</strong> ${textToConvert.split('\n').length}
+            `;
+            document.getElementById('charInfo').innerHTML = charInfo;
+        }
+
+        function copyToClipboard(elementId, btn) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent.replace('Copy', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('encodingGrid').innerHTML = '';
+            document.getElementById('charInfo').innerHTML = '';
+        }
+
+        // Auto-convert on input
+        document.getElementById('inputText').addEventListener('input', convertEncodings);
+
+        // Initial conversion
+        convertEncodings();
+    </script>
+</body>
+</html>

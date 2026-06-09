@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Header Analyzer - Security Header Checker</title>
+    <meta name="description" content="Analyze HTTP security headers with grade ratings. Check HSTS, CSP, X-Frame-Options & more. Get actionable recommendations.">
+    <meta name="theme-color" content="#f97316">
+    <meta property="og:title" content="HTTP Header Analyzer - Security Header Checker">
+    <meta property="og:description" content="Analyze HTTP security headers with grade ratings. Check HSTS, CSP, X-Frame-Options & more. Get actionable recommendations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/tools/http-header-analyzer">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HTTP Header Analyzer">
+    <meta name="twitter:description" content="Security header analysis and recommendations">
+    <link rel="canonical" href="https://lochbot.com/tools/http-header-analyzer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HTTP Header Analyzer",
+        "url": "https://lochbot.com/tools/http-header-analyzer",
+        "description": "Analyze HTTP security headers with grade ratings and recommendations",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .input-section {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #404040;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f97316;
+        }
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ea580c;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .secondary-btn {
+            background: #404040;
+            color: #e0e0e0;
+        }
+        .secondary-btn:hover {
+            background: #505050;
+        }
+        .results-section {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #404040;
+            display: none;
+        }
+        .results-section.active {
+            display: block;
+        }
+        .header-item {
+            background: #1a1a1a;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #404040;
+        }
+        .header-item.present {
+            border-left-color: #10b981;
+        }
+        .header-item.missing {
+            border-left-color: #ef4444;
+        }
+        .header-item.warning {
+            border-left-color: #f59e0b;
+        }
+        .header-name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f97316;
+        }
+        .grade {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #10b981;
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .grade.warning {
+            background: #f59e0b;
+        }
+        .grade.critical {
+            background: #ef4444;
+        }
+        .header-value {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .recommendation {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 2px solid #f97316;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #404040;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f97316;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #a0a0a0;
+        }
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #404040;
+            color: #a0a0a0;
+            font-size: 13px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #404040;
+        }
+        .tab-btn {
+            background: transparent;
+            color: #a0a0a0;
+            padding: 10px 15px;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: #f97316;
+            border-bottom-color: #f97316;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HTTP Header Analyzer</h1>
+            <p>Check security headers and get recommendations for improvement</p>
+        </header>
+
+        <div class="input-section">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="url-tab">From URL</button>
+                <button class="tab-btn" data-tab="manual-tab">Manual Input</button>
+            </div>
+
+            <div id="url-tab" class="tab-content active">
+                <div class="input-group">
+                    <label for="urlInput">Website URL</label>
+                    <input type="url" id="urlInput" placeholder="https://example.com" value="">
+                </div>
+                <div class="button-group">
+                    <button onclick="analyzeFromUrl()">Analyze Headers</button>
+                    <button class="secondary-btn" onclick="clearResults()">Clear</button>
+                </div>
+            </div>
+
+            <div id="manual-tab" class="tab-content">
+                <div class="input-group">
+                    <label for="headersInput">Paste HTTP Headers</label>
+                    <textarea id="headersInput" placeholder="Content-Security-Policy: default-src 'self'&#10;X-Frame-Options: DENY&#10;Strict-Transport-Security: max-age=31536000&#10;..."></textarea>
+                </div>
+                <div class="button-group">
+                    <button onclick="analyzeManualHeaders()">Analyze Headers</button>
+                    <button class="secondary-btn" onclick="clearResults()">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div class="summary-stats" id="summaryStats"></div>
+            <div id="headersList"></div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 lochbot.com — Cybersecurity Tools
+    </footer>
+
+    <script>
+        const securityHeaders = {
+            'strict-transport-security': {
+                name: 'Strict-Transport-Security',
+                critical: true,
+                recommendations: 'Enable HSTS to force HTTPS connections. Recommended: max-age=31536000; includeSubDomains; preload'
+            },
+            'content-security-policy': {
+                name: 'Content-Security-Policy',
+                critical: true,
+                recommendations: 'Define CSP policy to prevent XSS attacks. Use restrictive directives like default-src \'self\''
+            },
+            'x-frame-options': {
+                name: 'X-Frame-Options',
+                critical: true,
+                recommendations: 'Prevent clickjacking. Use DENY or SAMEORIGIN to control framing permissions'
+            },
+            'x-content-type-options': {
+                name: 'X-Content-Type-Options',
+                critical: true,
+                recommendations: 'Set to nosniff to prevent MIME type sniffing attacks'
+            },
+            'referrer-policy': {
+                name: 'Referrer-Policy',
+                critical: false,
+                recommendations: 'Control referrer information. Recommended: strict-no-referrer or no-referrer-when-downgrade'
+            },
+            'permissions-policy': {
+                name: 'Permissions-Policy',
+                critical: false,
+                recommendations: 'Control browser features like geolocation, microphone, camera access'
+            },
+            'x-xss-protection': {
+                name: 'X-XSS-Protection',
+                critical: false,
+                recommendations: 'Legacy XSS protection. Modern browsers use CSP instead'
+            }
+        };
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        function parseHeaders(headerText) {
+            const headers = {};
+            const lines = headerText.split('\n');
+            for (const line of lines) {
+                if (line.trim()) {
+                    const match = line.match(/^([^:]+):\s*(.+)$/);
+                    if (match) {
+                        headers[match[1].toLowerCase().trim()] = match[2].trim();
+                    }
+                }
+            }
+            return headers;
+        }
+
+        async function analyzeFromUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.innerHTML = '<div class="loading">Analyzing headers...</div>';
+            resultsSection.classList.add('active');
+
+            try {
+                const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+                const headers = {};
+                response.headers.forEach((value, key) => {
+                    headers[key.toLowerCase()] = value;
+                });
+                displayResults(headers);
+            } catch (err) {
+                resultsSection.innerHTML = `<div class="error-message">Note: CORS restrictions may prevent full header retrieval. Use "Manual Input" tab to paste headers directly.</div>`;
+                resultsSection.classList.add('active');
+            }
+        }
+
+        function analyzeManualHeaders() {
+            const headersText = document.getElementById('headersInput').value.trim();
+            if (!headersText) {
+                alert('Please paste HTTP headers');
+                return;
+            }
+            const headers = parseHeaders(headersText);
+            displayResults(headers);
+        }
+
+        function displayResults(headers) {
+            let presentCount = 0;
+            let missingCount = 0;
+            let criticalMissing = 0;
+            let html = '';
+
+            const headerItems = [];
+
+            for (const [key, config] of Object.entries(securityHeaders)) {
+                const headerValue = headers[key];
+                const isPresent = headerValue !== undefined;
+
+                if (isPresent) {
+                    presentCount++;
+                } else {
+                    missingCount++;
+                    if (config.critical) criticalMissing++;
+                }
+
+                let grade = 'A';
+                let gradeClass = '';
+                if (!isPresent) {
+                    grade = config.critical ? 'F' : 'C';
+                    gradeClass = config.critical ? 'critical' : 'warning';
+                }
+
+                const statusClass = isPresent ? 'present' : (config.critical ? 'missing' : 'warning');
+
+                headerItems.push({
+                    name: config.name,
+                    value: headerValue,
+                    present: isPresent,
+                    grade,
+                    gradeClass,
+                    statusClass,
+                    recommendation: config.recommendations,
+                    critical: config.critical
+                });
+            }
+
+            // Sort: present first, then critical missing
+            headerItems.sort((a, b) => {
+                if (a.present !== b.present) return b.present - a.present;
+                if (a.critical !== b.critical) return b.critical - a.critical;
+                return 0;
+            });
+
+            for (const item of headerItems) {
+                html += `
+                    <div class="header-item ${item.statusClass}">
+                        <div class="header-name">
+                            <span>${item.name}</span>
+                            <span class="grade ${item.gradeClass}">${item.grade}</span>
+                        </div>
+                        ${item.present ? `<div class="header-value">${escapeHtml(item.value)}</div>` : ''}
+                        <div class="recommendation">${item.recommendation}</div>
+                    </div>
+                `;
+            }
+
+            let overallGrade = 'A';
+            if (criticalMissing >= 3) overallGrade = 'F';
+            else if (criticalMissing === 2) overallGrade = 'D';
+            else if (criticalMissing === 1) overallGrade = 'C';
+            else if (missingCount > 2) overallGrade = 'B';
+
+            const stats = `
+                <div class="stat-box">
+                    <div class="stat-number">${overallGrade}</div>
+                    <div class="stat-label">Overall Grade</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${presentCount}</div>
+                    <div class="stat-label">Headers Present</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${missingCount}</div>
+                    <div class="stat-label">Missing Headers</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${criticalMissing}</div>
+                    <div class="stat-label">Critical Missing</div>
+                </div>
+            `;
+
+            document.getElementById('summaryStats').innerHTML = stats;
+            document.getElementById('headersList').innerHTML = html;
+            document.getElementById('resultsSection').classList.add('active');
+        }
+
+        function clearResults() {
+            document.getElementById('urlInput').value = '';
+            document.getElementById('headersInput').value = '';
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('resultsSection').innerHTML = '';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>

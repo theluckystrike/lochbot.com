@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Headers Generator - Config Builder</title>
+    <meta name="description" content="Generate recommended security headers for Express, Nginx, Apache, Cloudflare. Configure strictness levels and copy ready-to-paste configs.">
+    <meta name="theme-color" content="#f97316">
+    <meta property="og:title" content="Security Headers Generator - Config Builder">
+    <meta property="og:description" content="Generate recommended security headers for Express, Nginx, Apache, Cloudflare. Configure strictness levels and copy ready-to-paste configs.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lochbot.com/tools/security-headers-generator">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Security Headers Generator">
+    <meta name="twitter:description" content="Security headers configuration generator for multiple frameworks">
+    <link rel="canonical" href="https://lochbot.com/tools/security-headers-generator">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Security Headers Generator",
+        "url": "https://lochbot.com/tools/security-headers-generator",
+        "description": "Generate security headers configuration for popular frameworks",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .controls-section {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #404040;
+        }
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f97316;
+            font-size: 14px;
+        }
+        select {
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        select:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+        }
+        .strictness-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .strictness-btn {
+            flex: 1;
+            padding: 10px;
+            background: #404040;
+            color: #a0a0a0;
+            border: 1px solid #505050;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        .strictness-btn.active {
+            background: #f97316;
+            color: white;
+            border-color: #f97316;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ea580c;
+        }
+        .secondary-btn {
+            background: #404040;
+            color: #e0e0e0;
+        }
+        .secondary-btn:hover {
+            background: #505050;
+        }
+        .results-section {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #404040;
+            display: none;
+        }
+        .results-section.active {
+            display: block;
+        }
+        .config-block {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f97316;
+        }
+        .config-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f97316;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .config-code {
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #10b981;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .copy-section {
+            display: flex;
+            gap: 10px;
+        }
+        .copy-btn {
+            padding: 8px 16px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #ea580c;
+        }
+        .copy-btn.copied {
+            background: #10b981;
+        }
+        .headers-list {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #404040;
+        }
+        .headers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .header-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #2a2a2a;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #404040;
+            transition: all 0.3s;
+        }
+        .header-checkbox:hover {
+            border-color: #f97316;
+            background: #333333;
+        }
+        .header-checkbox input {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+        .header-label-text {
+            flex: 1;
+        }
+        .header-name {
+            color: #f97316;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .header-desc {
+            color: #a0a0a0;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+        .info-box {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 2px solid #f97316;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #404040;
+            color: #a0a0a0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Security Headers Generator</h1>
+            <p>Generate recommended security headers for your framework</p>
+        </header>
+
+        <div class="controls-section">
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="frameworkSelect">Framework/Server</label>
+                    <select id="frameworkSelect" onchange="updatePreview()">
+                        <option value="express">Express.js (Node.js)</option>
+                        <option value="nginx">Nginx</option>
+                        <option value="apache">Apache</option>
+                        <option value="cloudflare">Cloudflare Workers</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Security Level</label>
+                    <div class="strictness-group">
+                        <button class="strictness-btn active" data-strictness="balanced" onclick="setStrictness('balanced', this)">Balanced</button>
+                        <button class="strictness-btn" data-strictness="strict" onclick="setStrictness('strict', this)">Strict</button>
+                        <button class="strictness-btn" data-strictness="paranoid" onclick="setStrictness('paranoid', this)">Paranoid</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="generateConfig()">Generate Config</button>
+                <button class="secondary-btn" onclick="clearAll()">Clear</button>
+            </div>
+
+            <div class="info-box">
+                Select your framework and security level, then choose which headers to include. Click "Generate Config" to create ready-to-use code with explanations.
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div class="headers-list">
+                <h3 style="color: #f97316; margin-bottom: 15px; font-size: 16px;">Select Headers to Include</h3>
+                <div class="headers-grid" id="headersGrid"></div>
+            </div>
+
+            <div id="configOutput"></div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 lochbot.com — Cybersecurity Tools
+    </footer>
+
+    <script>
+        const headers = {
+            'strict-transport-security': {
+                name: 'Strict-Transport-Security',
+                desc: 'Force HTTPS connections',
+                balanced: 'max-age=31536000; includeSubDomains',
+                strict: 'max-age=31536000; includeSubDomains; preload',
+                paranoid: 'max-age=63072000; includeSubDomains; preload'
+            },
+            'content-security-policy': {
+                name: 'Content-Security-Policy',
+                desc: 'Prevent XSS attacks',
+                balanced: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+                strict: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; font-src 'self'",
+                paranoid: "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'"
+            },
+            'x-frame-options': {
+                name: 'X-Frame-Options',
+                desc: 'Prevent clickjacking',
+                balanced: 'SAMEORIGIN',
+                strict: 'DENY',
+                paranoid: 'DENY'
+            },
+            'x-content-type-options': {
+                name: 'X-Content-Type-Options',
+                desc: 'Prevent MIME sniffing',
+                balanced: 'nosniff',
+                strict: 'nosniff',
+                paranoid: 'nosniff'
+            },
+            'referrer-policy': {
+                name: 'Referrer-Policy',
+                desc: 'Control referrer info',
+                balanced: 'strict-no-referrer-when-downgrade',
+                strict: 'strict-no-referrer',
+                paranoid: 'strict-no-referrer'
+            },
+            'permissions-policy': {
+                name: 'Permissions-Policy',
+                desc: 'Control browser features',
+                balanced: 'geolocation=(), microphone=(), camera=()',
+                strict: 'geolocation=(), microphone=(), camera=(), payment=(), usb=()',
+                paranoid: 'geolocation=(), microphone=(), camera=(), payment=(), usb=(), accelerometer=(), ambient-light-sensor=(), gyroscope=(), magnetometer=()'
+            },
+            'x-xss-protection': {
+                name: 'X-XSS-Protection',
+                desc: 'Legacy XSS protection',
+                balanced: '1; mode=block',
+                strict: '1; mode=block',
+                paranoid: '1; mode=block'
+            }
+        };
+
+        let currentStrictness = 'balanced';
+        let selectedHeaders = Object.keys(headers);
+
+        function setStrictness(level, btn) {
+            currentStrictness = level;
+            document.querySelectorAll('.strictness-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updatePreview();
+        }
+
+        function generateConfig() {
+            const framework = document.getElementById('frameworkSelect').value;
+            const strictness = currentStrictness;
+
+            // Build header checkbox grid
+            let headerGrid = '';
+            for (const [key, config] of Object.entries(headers)) {
+                const isSelected = selectedHeaders.includes(key);
+                headerGrid += `
+                    <label class="header-checkbox">
+                        <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleHeader('${key}', this)">
+                        <div class="header-label-text">
+                            <div class="header-name">${config.name}</div>
+                            <div class="header-desc">${config.desc}</div>
+                        </div>
+                    </label>
+                `;
+            }
+            document.getElementById('headersGrid').innerHTML = headerGrid;
+
+            updatePreview();
+            document.getElementById('resultsSection').classList.add('active');
+        }
+
+        function toggleHeader(key, checkbox) {
+            if (checkbox.checked) {
+                if (!selectedHeaders.includes(key)) selectedHeaders.push(key);
+            } else {
+                selectedHeaders = selectedHeaders.filter(h => h !== key);
+            }
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const framework = document.getElementById('frameworkSelect').value;
+            const strictness = currentStrictness;
+
+            let config = '';
+            let headerConfigs = [];
+
+            for (const headerKey of selectedHeaders) {
+                const header = headers[headerKey];
+                const value = header[strictness];
+                headerConfigs.push({ name: header.name, value: value });
+            }
+
+            if (framework === 'express') {
+                config = generateExpressConfig(headerConfigs, strictness);
+            } else if (framework === 'nginx') {
+                config = generateNginxConfig(headerConfigs, strictness);
+            } else if (framework === 'apache') {
+                config = generateApacheConfig(headerConfigs, strictness);
+            } else if (framework === 'cloudflare') {
+                config = generateCloudflareConfig(headerConfigs, strictness);
+            }
+
+            displayConfig(config, framework);
+        }
+
+        function generateExpressConfig(headers, strictness) {
+            let code = `// Security Headers for Express.js
+app.use((req, res, next) => {
+`;
+            for (const header of headers) {
+                code += `  res.set('${header.name}', '${header.value}');\n`;
+            }
+            code += `  next();
+});
+
+// Or use helmet middleware
+const helmet = require('helmet');
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"]
+    }
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+}));`;
+            return code;
+        }
+
+        function generateNginxConfig(headers, strictness) {
+            let code = `# Security Headers for Nginx
+server {
+    listen 80;
+    server_name example.com;
+
+`;
+            for (const header of headers) {
+                code += `    add_header ${header.name} "${header.value}" always;\n`;
+            }
+            code += `
+    location / {
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+    }
+}`;
+            return code;
+        }
+
+        function generateApacheConfig(headers, strictness) {
+            let code = `# Security Headers for Apache
+<VirtualHost *:80>
+    ServerName example.com
+
+`;
+            for (const header of headers) {
+                code += `    Header always set ${header.name} "${header.value}"\n`;
+            }
+            code += `
+    <Directory /var/www/html>
+        Require all granted
+    </Directory>
+</VirtualHost>`;
+            return code;
+        }
+
+        function generateCloudflareConfig(headers, strictness) {
+            let code = `// Security Headers for Cloudflare Workers
+export default {
+  async fetch(request) {
+    const response = await fetch(request);
+
+    const headers = new Headers(response.headers);
+`;
+            for (const header of headers) {
+                code += `    headers.set('${header.name}', '${header.value}');\n`;
+            }
+            code += `
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: headers
+    });
+  }
+};`;
+            return code;
+        }
+
+        function displayConfig(code, framework) {
+            const configOutput = document.getElementById('configOutput');
+            configOutput.innerHTML = `
+                <div class="config-block">
+                    <div class="config-title">
+                        <span>${framework.toUpperCase()} Configuration (${currentStrictness})</span>
+                    </div>
+                    <div class="config-code" id="configCode">${escapeHtml(code)}</div>
+                    <div class="copy-section">
+                        <button class="copy-btn" onclick="copyConfig()">Copy to Clipboard</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function copyConfig() {
+            const codeElement = document.getElementById('configCode');
+            const text = codeElement.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => console.error('Failed to copy:', err));
+        }
+
+        function clearAll() {
+            document.getElementById('frameworkSelect').value = 'express';
+            document.querySelectorAll('.strictness-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-strictness="balanced"]').classList.add('active');
+            currentStrictness = 'balanced';
+            selectedHeaders = Object.keys(headers);
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('configOutput').innerHTML = '';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Initialize
+        document.querySelectorAll('[data-strictness="balanced"]')[0].classList.add('active');
+    </script>
+</body>
+</html>
