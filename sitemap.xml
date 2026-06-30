@@ -346,4 +346,9 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+<url><loc>https://lochbot.com/tools/basic-auth-header-generator</loc><lastmod>2026-06-30</lastmod></url>
+<url><loc>https://lochbot.com/tools/csp-policy-analyzer</loc><lastmod>2026-06-30</lastmod></url>
+<url><loc>https://lochbot.com/tools/hmac-generator</loc><lastmod>2026-06-30</lastmod></url>
+<url><loc>https://lochbot.com/tools/htpasswd-generator</loc><lastmod>2026-06-30</lastmod></url>
+<url><loc>https://lochbot.com/tools/set-cookie-flag-checker</loc><lastmod>2026-06-30</lastmod></url>
 </urlset>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basic Auth Header Generator — Authorization Base64</title>
+<meta name="description" content="Build an Authorization: Basic header by Base64-encoding a username and password. Free client-side HTTP basic auth generator.">
+<link rel="canonical" href="https://lochbot.com/tools/basic-auth-header-generator">
+<meta property="og:title" content="Basic Auth Header Generator — Authorization Base64">
+<meta property="og:description" content="Build an Authorization: Basic header by Base64-encoding a username and password. Free client-side HTTP basic auth generator.">
+<meta property="og:url" content="https://lochbot.com/tools/basic-auth-header-generator">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Basic Auth Header Generator — Authorization Base64",
+      "url": "https://lochbot.com/tools/basic-auth-header-generator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Basic Auth Header Generator — Authorization Base64", "item": "https://lochbot.com/tools/basic-auth-header-generator" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--bd:#2d3banything;--bd:#2d343f;--fg:#e6edf3;--mut:#9aa7b4;--acc:#58a6ff;--ok:#3fb950;--warn:#d29922}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.6}
+nav{display:flex;gap:1.2rem;padding:1rem 1.2rem;background:#0a0d12;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+nav a,footer a{color:var(--acc);text-decoration:none}
+nav a:hover,footer a:hover{text-decoration:underline}
+main{max-width:820px;margin:0 auto;padding:1.4rem 1.2rem 3rem}
+h1{font-size:1.7rem;line-height:1.25;margin:.6rem 0}
+h2{font-size:1.25rem;margin-top:2rem;border-bottom:1px solid var(--bd);padding-bottom:.3rem}
+.intro{color:var(--mut)}
+section#tool{background:var(--panel);border:1px solid var(--bd);border-radius:12px;padding:1.2rem;margin-top:1.2rem}
+label{display:block;font-weight:600;margin:.9rem 0 .35rem;font-size:.92rem}
+input[type=text],input[type=password]{width:100%;padding:.65rem .75rem;background:var(--panel2);border:1px solid var(--bd);border-radius:8px;color:var(--fg);font-size:1rem;font-family:inherit}
+input:focus{outline:none;border-color:var(--acc)}
+.row{display:flex;gap:1rem;flex-wrap:wrap}
+.row>div{flex:1;min-width:200px}
+.opts{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.8rem;font-size:.9rem;color:var(--mut)}
+.opts label{display:inline-flex;align-items:center;gap:.4rem;font-weight:400;margin:0}
+.out{margin-top:1rem}
+.out h3{margin:.4rem 0 .3rem;font-size:.85rem;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+pre{background:#0a0d12;border:1px solid var(--bd);border-radius:8px;padding:.8rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9rem;color:var(--ok);white-space:pre-wrap;word-break:break-all;margin:0}
+button.copy{margin-top:.5rem;padding:.45rem .9rem;background:var(--acc);color:#06121f;border:none;border-radius:7px;font-weight:600;cursor:pointer;font-size:.85rem}
+button.copy:hover{filter:brightness(1.1)}
+.note{font-size:.82rem;color:var(--warn);margin-top:.6rem}
+table{border-collapse:collapse;width:100%;margin-top:.6rem;font-size:.9rem}
+th,td{border:1px solid var(--bd);padding:.45rem .6rem;text-align:left}
+th{background:var(--panel2)}
+code{background:var(--panel2);padding:.1rem .35rem;border-radius:4px;font-family:ui-monospace,monospace;font-size:.88em}
+footer{border-top:1px solid var(--bd);padding:1.4rem 1.2rem;text-align:center;color:var(--mut);display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.rel a{display:inline-block;margin:.3rem .6rem .3rem 0}
+</style>
+</head>
+<body>
+<nav>
+<a href="/">lochbot.com</a>
+<a href="/tools/">All Tools</a>
+</nav>
+<main>
+<h1>Encode HTTP Basic Auth Credentials Into an Authorization Header</h1>
+<p class="intro">Type a username and password and instantly get the Base64-encoded <code>Authorization: Basic</code> header your client needs. Everything runs in your browser — no credentials ever leave this page.</p>
+
+<section id="tool">
+  <div class="row">
+    <div>
+      <label for="user">Username</label>
+      <input type="text" id="user" value="aladdin" autocomplete="off" spellcheck="false">
+    </div>
+    <div>
+      <label for="pass">Password</label>
+      <input type="text" id="pass" value="opensesame" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+
+  <div class="opts">
+    <label><input type="checkbox" id="utf8" checked> UTF-8 encode (RFC 7617)</label>
+    <label><input type="checkbox" id="wrap"> Show full curl command</label>
+  </div>
+
+  <div class="out">
+    <h3>Authorization Header</h3>
+    <pre id="outHeader"></pre>
+    <button class="copy" id="copyHeader">Copy header</button>
+
+    <h3>Base64 token only</h3>
+    <pre id="outToken"></pre>
+
+    <div id="curlBox" style="display:none">
+      <h3>curl example</h3>
+      <pre id="outCurl"></pre>
+    </div>
+  </div>
+  <p class="note" id="warn"></p>
+</section>
+
+<h2>How the Authorization: Basic header is built</h2>
+<p>HTTP Basic Authentication is defined by <strong>RFC 7617</strong>. The scheme is deliberately simple, which is exactly why it is so widely used for internal APIs, registry logins, and quick scripts. This generator reproduces the algorithm step by step:</p>
+<ol>
+  <li>Join the username and password with a single colon: <code>username + ":" + password</code>. The username itself must not contain a colon — the first colon is the delimiter, and any later colons belong to the password.</li>
+  <li>Convert that string to bytes. RFC 7617 recommends UTF-8, so multi-byte characters (accents, emoji, CJK) are encoded before Base64. The tool does this by URI-encoding then mapping each percent-escape back to a raw byte, which produces correct UTF-8 octets in pure JavaScript.</li>
+  <li>Base64-encode the byte sequence with the standard 64-character alphabet (<code>A–Z a–z 0–9 + /</code>) and <code>=</code> padding. Every 3 bytes become 4 characters, so the token length is <code>4 × ceil(n / 3)</code> characters for <em>n</em> input bytes.</li>
+  <li>Prefix the literal scheme name: <code>Authorization: Basic &lt;token&gt;</code>.</li>
+</ol>
+<p>For example <code>aladdin:opensesame</code> is 18 ASCII bytes, so the token is <code>4 × ceil(18/3) = 24</code> characters with no padding: <code>YWxhZGRpbjpvcGVuc2VzYW1l</code>. Because Base64 is reversible, <strong>this header is encoding, not encryption</strong> — anyone who intercepts it can decode the password in one step. That is the single most important fact about Basic auth: it provides identification, not confidentiality, so it must only ever travel over HTTPS where TLS supplies the secrecy. The note below this tool flags weak inputs and reminds you when the credentials look guessable. Use it for testing, local services, and CI scripts — never paste production secrets into a header you log or commit.</p>
+
+<h2>Quick reference</h2>
+<table>
+  <tr><th>Item</th><th>Value</th></tr>
+  <tr><td>Scheme</td><td><code>Basic</code> (RFC 7617)</td></tr>
+  <tr><td>Encoding</td><td>Base64 of <code>user:pass</code> bytes</td></tr>
+  <tr><td>Reversible?</td><td>Yes — decode-safe, not secure</td></tr>
+  <tr><td>Token length</td><td>4 × ceil(bytes / 3)</td></tr>
+  <tr><td>Transport</td><td>HTTPS only</td></tr>
+</table>
+
+<section class="rel">
+  <h2>Related Tools</h2>
+  <a href="/tools/base64-encoder">Base64 Encoder / Decoder</a>
+  <a href="/tools/http-header-analyzer">HTTP Header Analyzer</a>
+</section>
+
+</main>
+<footer>
+<a href="/">Home</a>
+<a href="/tools/">All Tools</a>
+<span>© 2026 lochbot.com</span>
+</footer>
+
+<script>
+(function(){
+  var user=document.getElementById('user'),
+      pass=document.getElementById('pass'),
+      utf8=document.getElementById('utf8'),
+      wrap=document.getElementById('wrap'),
+      outHeader=document.getElementById('outHeader'),
+      outToken=document.getElementById('outToken'),
+      outCurl=document.getElementById('outCurl'),
+      curlBox=document.getElementById('curlBox'),
+      warn=document.getElementById('warn'),
+      copyBtn=document.getElementById('copyHeader');
+
+  // UTF-8 safe base64 (handles multi-byte chars)
+  function toBytesUtf8(str){
+    return unescape(encodeURIComponent(str));
+  }
+  function b64(str, useUtf8){
+    var bytes = useUtf8 ? toBytesUtf8(str) : str;
+    try { return btoa(bytes); }
+    catch(e){
+      // fallback: force latin1-safe
+      return btoa(toBytesUtf8(str));
+    }
+  }
+
+  function weakness(u,p){
+    var msgs=[];
+    if(!p){ msgs.push('Password is empty.'); }
+    else if(p.length < 8){ msgs.push('Password is short (' + p.length + ' chars).'); }
+    var common=['password','123456','admin','opensesame','letmein','qwerty','root'];
+    if(common.indexOf(p.toLowerCase())>-1){ msgs.push('Password is on the common-guess list.'); }
+    if(u && u.indexOf(':')>-1){ msgs.push('Username contains a colon — it will be parsed as part of the delimiter.'); }
+    return msgs;
+  }
+
+  function render(){
+    var u=user.value, p=pass.value, useUtf8=utf8.checked;
+    var raw = u + ':' + p;
+    var token = b64(raw, useUtf8);
+    var header = 'Authorization: Basic ' + token;
+
+    outHeader.textContent = header;
+    outToken.textContent = token;
+
+    if(wrap.checked){
+      curlBox.style.display='block';
+      outCurl.textContent = 'curl -H "' + header + '" \\\n     https://api.example.com/resource';
+    } else {
+      curlBox.style.display='none';
+    }
+
+    // length cross-check vs formula
+    var nbytes = (useUtf8 ? toBytesUtf8(raw) : raw).length;
+    var expected = 4 * Math.ceil(nbytes / 3);
+    var msgs = weakness(u,p);
+    msgs.push('Encoded ' + nbytes + ' bytes → ' + token.length + '-char token (formula: ' + expected + ').');
+    msgs.push('Reminder: Base64 is reversible — send only over HTTPS.');
+    warn.textContent = msgs.join('  ');
+  }
+
+  copyBtn.addEventListener('click', function(){
+    var t=outHeader.textContent;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){
+        copyBtn.textContent='Copied!';
+        setTimeout(function(){copyBtn.textContent='Copy header';},1400);
+      });
+    } else {
+      var ta=document.createElement('textarea');
+      ta.value=t; document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');copyBtn.textContent='Copied!';
+        setTimeout(function(){copyBtn.textContent='Copy header';},1400);}catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+
+  ['input','change'].forEach(function(ev){
+    user.addEventListener(ev,render);
+    pass.addEventListener(ev,render);
+    utf8.addEventListener(ev,render);
+    wrap.addEventListener(ev,render);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

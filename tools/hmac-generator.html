@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HMAC Generator — SHA-256, SHA-1, SHA-512 Online</title>
+<meta name="description" content="Generate HMAC signatures with SHA-256, SHA-1, or SHA-512 from any message and secret key. Free, client-side, nothing leaves your browser.">
+<link rel="canonical" href="https://lochbot.com/tools/hmac-generator">
+<meta property="og:title" content="HMAC Generator — SHA-256, SHA-1, SHA-512 Online">
+<meta property="og:description" content="Generate HMAC signatures with SHA-256, SHA-1, or SHA-512 from any message and secret key. Free, client-side, nothing leaves your browser.">
+<meta property="og:url" content="https://lochbot.com/tools/hmac-generator">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "HMAC Generator — SHA-256, SHA-1, SHA-512 Online",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "url": "https://lochbot.com/tools/hmac-generator",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Michael Lip",
+        "url": "https://zovo.one"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "HMAC Generator — SHA-256, SHA-1, SHA-512 Online", "item": "https://lochbot.com/tools/hmac-generator" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#0c1018;
+  --panel:#141b27;
+  --panel2:#1b2433;
+  --border:#26344a;
+  --txt:#e6edf6;
+  --muted:#93a3b8;
+  --accent:#37d39a;
+  --accent2:#4aa3ff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  line-height:1.6;
+}
+nav{
+  display:flex;
+  gap:1.2rem;
+  padding:1rem 1.4rem;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+nav a{color:var(--accent2);text-decoration:none;font-weight:600;font-size:.95rem}
+nav a:hover{text-decoration:underline}
+.wrap{max-width:860px;margin:0 auto;padding:1.6rem 1.2rem 3rem}
+h1{font-size:1.7rem;line-height:1.25;margin:.4rem 0 .6rem}
+h2{font-size:1.25rem;margin:2rem 0 .6rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+.intro{color:var(--muted);font-size:1.02rem}
+section#tool{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.3rem;
+  margin-top:1.4rem;
+}
+label{display:block;font-weight:600;margin:.9rem 0 .35rem;font-size:.92rem}
+.hint{font-weight:400;color:var(--muted);font-size:.82rem}
+textarea,input[type=text],select{
+  width:100%;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:var(--txt);
+  padding:.7rem .8rem;
+  font-size:.95rem;
+  font-family:inherit;
+}
+textarea{resize:vertical;min-height:84px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.row{display:flex;gap:1rem;flex-wrap:wrap}
+.row>div{flex:1;min-width:160px}
+.outbox{
+  margin-top:1.1rem;
+  background:#0a0f17;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.9rem 1rem;
+}
+.outlabel{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.3rem}
+#hmacOut{
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:.95rem;
+  word-break:break-all;
+  color:var(--accent);
+  min-height:1.4em;
+}
+.meta{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:.7rem;font-size:.82rem;color:var(--muted)}
+.meta b{color:var(--txt)}
+button{
+  margin-top:1rem;
+  background:var(--accent);
+  color:#06281c;
+  border:0;
+  border-radius:9px;
+  padding:.6rem 1.1rem;
+  font-weight:700;
+  font-size:.9rem;
+  cursor:pointer;
+}
+button:hover{filter:brightness(1.08)}
+p{margin:.7rem 0}
+.related a{
+  display:inline-block;
+  margin:.3rem .5rem .3rem 0;
+  padding:.55rem .9rem;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:var(--accent2);
+  text-decoration:none;
+  font-weight:600;
+  font-size:.9rem;
+}
+.related a:hover{border-color:var(--accent2)}
+code{background:var(--panel2);padding:.12rem .4rem;border-radius:5px;font-size:.88em}
+pre{background:#0a0f17;border:1px solid var(--border);border-radius:9px;padding:.9rem;overflow:auto;font-size:.85rem}
+footer{
+  border-top:1px solid var(--border);
+  padding:1.5rem 1.2rem;
+  text-align:center;
+  color:var(--muted);
+  font-size:.88rem;
+}
+footer a{color:var(--accent2);text-decoration:none;margin:0 .6rem}
+footer a:hover{text-decoration:underline}
+@media(max-width:480px){h1{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">lochbot.com</a>
+  <a href="/tools/">All Tools</a>
+</nav>
+<div class="wrap">
+  <h1>Compute HMAC Signatures in Your Browser</h1>
+  <p class="intro">Paste a message and a secret key to generate a keyed-hash authentication code using SHA-256, SHA-1, or SHA-512. All hashing runs locally with the Web Crypto API — your key and message never leave the page.</p>
+
+  <section id="tool">
+    <label for="msg">Message <span class="hint">— the data to authenticate</span></label>
+    <textarea id="msg" spellcheck="false">The quick brown fox jumps over the lazy dog</textarea>
+
+    <div class="row">
+      <div>
+        <label for="key">Secret Key</label>
+        <input type="text" id="key" value="my-shared-secret" spellcheck="false">
+      </div>
+      <div>
+        <label for="algo">Hash Algorithm</label>
+        <select id="algo">
+          <option value="SHA-256" selected>HMAC-SHA-256</option>
+          <option value="SHA-1">HMAC-SHA-1</option>
+          <option value="SHA-512">HMAC-SHA-512</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="enc">Output Encoding</label>
+    <select id="enc">
+      <option value="hex" selected>Hexadecimal</option>
+      <option value="base64">Base64</option>
+    </select>
+
+    <div class="outbox">
+      <div class="outlabel">HMAC Signature</div>
+      <div id="hmacOut">…</div>
+    </div>
+
+    <div class="meta">
+      <span>Algorithm: <b id="mAlgo">HMAC-SHA-256</b></span>
+      <span>Digest size: <b id="mBits">256</b> bits</span>
+      <span>Output length: <b id="mLen">0</b> chars</span>
+    </div>
+
+    <button id="copyBtn" type="button">Copy signature</button>
+  </section>
+
+  <h2>What an HMAC actually computes</h2>
+  <p>HMAC (Hash-based Message Authentication Code) binds a secret key to a message so a recipient who shares the same key can verify both integrity and authenticity. Unlike a plain hash, an attacker who cannot guess the key cannot forge a valid tag, even if they can see many message/tag pairs.</p>
+  <p>The construction defined in RFC 2104 is:</p>
+  <pre>HMAC(K, m) = H( (K' XOR opad) || H( (K' XOR ipad) || m ) )</pre>
+  <p>Here <code>H</code> is the underlying hash (SHA-256, SHA-1, or SHA-512). The key <code>K</code> is first normalized to <code>K'</code>: if it is longer than the hash's block size it is hashed down, otherwise it is right-padded with zero bytes to the full block. The two pad constants are <code>ipad</code> = the byte <code>0x36</code> repeated and <code>opad</code> = the byte <code>0x5c</code> repeated, each the length of one block. The inner hash digests the message under the ipad-masked key; the outer hash wraps that digest under the opad-masked key. Two hash passes is what makes HMAC resistant to length-extension attacks that affect a naive <code>H(key || message)</code> scheme.</p>
+  <p>Block sizes differ by algorithm and that changes the math: SHA-1 and SHA-256 use a 64-byte (512-bit) block, while SHA-512 uses a 128-byte (1024-bit) block, so its key padding and pad constants are twice as wide. The digest this tool emits is 160 bits for SHA-1, 256 bits for SHA-256, and 512 bits for SHA-512 — shown above as the digest size. Hex encoding renders each output byte as two characters, so a SHA-256 tag is exactly 64 hex characters; Base64 packs three bytes into four characters instead.</p>
+  <p>This page calls the browser's native <code>crypto.subtle.importKey</code> and <code>crypto.subtle.sign("HMAC", …)</code>, the same audited primitives used for signing JWTs, validating webhook payloads (Stripe, GitHub), and deriving API request signatures. Because the work is local, you can paste production keys to debug a signature mismatch without sending secrets to any server.</p>
+
+  <section class="related">
+    <h2>Related Tools</h2>
+    <a href="/tools/hash-generator">Hash Generator</a>
+    <a href="/tools/jwt-decoder">JWT Decoder</a>
+  </section>
+</div>
+
+<footer>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <div style="margin-top:.6rem">© 2026 lochbot.com — client-side web security tools</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var msg = document.getElementById("msg");
+  var key = document.getElementById("key");
+  var algo = document.getElementById("algo");
+  var enc = document.getElementById("enc");
+  var out = document.getElementById("hmacOut");
+  var mAlgo = document.getElementById("mAlgo");
+  var mBits = document.getElementById("mBits");
+  var mLen = document.getElementById("mLen");
+  var copyBtn = document.getElementById("copyBtn");
+  var BITS = { "SHA-1": 160, "SHA-256": 256, "SHA-512": 512 };
+  var enc8 = new TextEncoder();
+  var token = 0;
+
+  function toHex(buf){
+    var b = new Uint8Array(buf), s = "";
+    for (var i = 0; i < b.length; i++){
+      s += b[i].toString(16).padStart(2, "0");
+    }
+    return s;
+  }
+
+  function toB64(buf){
+    var b = new Uint8Array(buf), bin = "";
+    for (var i = 0; i < b.length; i++){
+      bin += String.fromCharCode(b[i]);
+    }
+    return btoa(bin);
+  }
+
+  async function compute(){
+    var myToken = ++token;
+    var a = algo.value;
+    mAlgo.textContent = "HMAC-" + a;
+    mBits.textContent = BITS[a];
+
+    var keyData = enc8.encode(key.value);
+    var msgData = enc8.encode(msg.value);
+
+    if (!window.crypto || !window.crypto.subtle){
+      out.textContent = "Web Crypto unavailable in this browser.";
+      return;
+    }
+
+    try {
+      var ck = await crypto.subtle.importKey(
+        "raw", keyData,
+        { name: "HMAC", hash: { name: a } },
+        false, ["sign"]
+      );
+      var sig = await crypto.subtle.sign("HMAC", ck, msgData);
+      if (myToken !== token) return; // a newer keystroke superseded this one
+      var text = (enc.value === "base64") ? toB64(sig) : toHex(sig);
+      out.textContent = text;
+      mLen.textContent = text.length;
+    } catch (e) {
+      out.textContent = "Error: " + e.message;
+    }
+  }
+
+  [msg, key].forEach(function(el){ el.addEventListener("input", compute); });
+  [algo, enc].forEach(function(el){ el.addEventListener("change", compute); });
+
+  copyBtn.addEventListener("click", function(){
+    var t = out.textContent;
+    if (!t) return;
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){
+        var old = copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(function(){ copyBtn.textContent = old; }, 1200);
+      });
+    }
+  });
+
+  compute();
+})();
+</script>
+</body>
+</html>

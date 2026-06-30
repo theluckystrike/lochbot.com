@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSP Analyzer — Check Content-Security-Policy Headers</title>
+<meta name="description" content="Paste a Content-Security-Policy header to spot unsafe-inline, wildcard sources, and missing directives. Free client-side CSP checker.">
+<link rel="canonical" href="https://lochbot.com/tools/csp-policy-analyzer">
+<meta property="og:title" content="CSP Analyzer — Check Content-Security-Policy Headers">
+<meta property="og:description" content="Paste a Content-Security-Policy header to spot unsafe-inline, wildcard sources, and missing directives. Free client-side CSP checker.">
+<meta property="og:url" content="https://lochbot.com/tools/csp-policy-analyzer">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "CSP Analyzer — Check Content-Security-Policy Headers",
+      "url": "https://lochbot.com/tools/csp-policy-analyzer",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "CSP Analyzer — Check Content-Security-Policy Headers", "item": "https://lochbot.com/tools/csp-policy-analyzer" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--bd:#2a313c;--fg:#e6edf3;--mut:#8b949e;--acc:#58a6ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.6}
+nav,main,footer{max-width:920px;margin:0 auto;padding:0 18px}
+nav{display:flex;gap:18px;padding:16px 18px;border-bottom:1px solid var(--bd)}
+nav a{color:var(--acc);text-decoration:none;font-weight:600}
+nav a:hover{text-decoration:underline}
+h1{font-size:1.7rem;margin:24px 0 8px}
+h2{font-size:1.25rem;margin:28px 0 10px;border-bottom:1px solid var(--bd);padding-bottom:6px}
+.intro{color:var(--mut);font-size:1.02rem}
+section{margin:18px 0}
+label{display:block;font-weight:600;margin:14px 0 6px}
+textarea{width:100%;min-height:130px;background:var(--panel);color:var(--fg);border:1px solid var(--bd);border-radius:8px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92rem;resize:vertical}
+textarea:focus{outline:none;border-color:var(--acc)}
+.row{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px}
+.row label{display:flex;align-items:center;gap:8px;font-weight:500;margin:0}
+.scorebox{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:18px;margin-top:16px}
+.grade{font-size:2.4rem;font-weight:800;line-height:1}
+.bar{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden;margin:10px 0}
+.bar>span{display:block;height:100%;transition:width .25s}
+.findings{list-style:none;padding:0;margin:14px 0 0}
+.findings li{background:var(--panel);border:1px solid var(--bd);border-left-width:4px;border-radius:6px;padding:10px 12px;margin:8px 0;font-size:.94rem}
+.f-bad{border-left-color:var(--bad)}
+.f-warn{border-left-color:var(--warn)}
+.f-ok{border-left-color:var(--ok)}
+.tag{font-family:ui-monospace,monospace;background:var(--panel2);padding:1px 6px;border-radius:4px;font-size:.85rem}
+.muted{color:var(--mut)}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem}
+th,td{border:1px solid var(--bd);padding:7px 10px;text-align:left}
+th{background:var(--panel2)}
+a.tool{color:var(--acc)}
+footer{border-top:1px solid var(--bd);margin-top:34px;padding:20px 18px;color:var(--mut);display:flex;gap:18px;flex-wrap:wrap}
+footer a{color:var(--acc);text-decoration:none}
+code{font-family:ui-monospace,monospace;background:var(--panel2);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">lochbot.com</a>
+  <a href="/tools/">All Tools</a>
+</nav>
+<main>
+<h1>Content-Security-Policy header checker</h1>
+<p class="intro">Paste a raw <code>Content-Security-Policy</code> value below. The analyzer parses every directive locally in your browser and flags unsafe-inline, wildcard hosts, and high-risk gaps — nothing is uploaded.</p>
+
+<section id="tool">
+  <label for="csp">CSP header value</label>
+  <textarea id="csp" spellcheck="false">default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.example.com *; style-src 'self' 'unsafe-inline'; img-src *; object-src 'none'; base-uri 'self'</textarea>
+  <div class="row">
+    <label><input type="checkbox" id="strict"> Strict mode (penalize missing <span class="tag">frame-ancestors</span> &amp; reporting)</label>
+  </div>
+
+  <div class="scorebox">
+    <div><span class="grade" id="grade">A</span> <span class="muted" id="scoreTxt"></span></div>
+    <div class="bar"><span id="barFill"></span></div>
+    <div id="summary" class="muted"></div>
+    <ul class="findings" id="findings"></ul>
+  </div>
+
+  <h2>Parsed directives</h2>
+  <table id="dirTable"><thead><tr><th>Directive</th><th>Sources</th></tr></thead><tbody></tbody></table>
+</section>
+
+<section>
+<h2>How this CSP analyzer scores your policy</h2>
+<p>A Content-Security-Policy is a whitelist of where a page may load scripts, styles, images, frames and other resources. The browser refuses anything that does not match, which is the single strongest defense against cross-site scripting (XSS) and data-injection attacks. But a policy is only as good as its weakest directive, and a few common shortcuts silently disable that protection.</p>
+<p>This tool tokenizes the header on semicolons, splits each directive into a name and its source list, then applies a weighted deduction model. The score starts at 100 and subtracts penalties:</p>
+<ul>
+<li><strong>'unsafe-inline' in script-src</strong> — minus 35. It re-enables inline event handlers and <code>&lt;script&gt;</code> blocks, the exact vector CSP exists to block.</li>
+<li><strong>'unsafe-eval'</strong> — minus 20, since it permits <code>eval()</code> and string-to-code execution.</li>
+<li><strong>Wildcard <code>*</code> as a script or default source</strong> — minus 25; any host can serve code.</li>
+<li><strong>Missing <code>default-src</code></strong> — minus 20, because un-listed resource types fall back to "allow all".</li>
+<li><strong>Missing <code>object-src 'none'</code></strong> — minus 10 (plugins remain an injection path).</li>
+<li><strong>Missing <code>base-uri</code></strong> — minus 8 (base-tag hijacking).</li>
+<li><strong>'unsafe-inline' in style-src</strong> — minus 6, a lower-severity styling risk.</li>
+</ul>
+<p>Strict mode adds deductions for a missing <code>frame-ancestors</code> (clickjacking) and a missing <code>report-uri</code>/<code>report-to</code> so violations go unmonitored. The final number maps to a letter grade — A (90+), B (75+), C (60+), D (40+), F below — giving you a fast read on whether the policy is genuinely hardened or just present. A <code>nonce-</code> or <code>sha256-</code> source alongside scripts cancels the inline penalty, mirroring how real browsers treat a nonce as an explicit allow.</p>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<p><a class="tool" href="/tools/csp-generator">CSP Generator</a> — build a hardened policy from a checklist.<br>
+<a class="tool" href="/tools/security-headers-generator">Security Headers Generator</a> — produce HSTS, X-Frame-Options and CSP together.</p>
+</section>
+</main>
+
+<footer>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <span>© 2026 lochbot.com</span>
+</footer>
+
+<script>
+(function(){
+  var ta=document.getElementById('csp'),strict=document.getElementById('strict');
+  var grade=document.getElementById('grade'),scoreTxt=document.getElementById('scoreTxt');
+  var barFill=document.getElementById('barFill'),summary=document.getElementById('summary');
+  var findings=document.getElementById('findings'),tbody=document.querySelector('#dirTable tbody');
+
+  function parse(raw){
+    var map={};
+    raw.split(';').forEach(function(part){
+      var t=part.trim(); if(!t) return;
+      var bits=t.split(/\s+/);
+      var name=bits.shift().toLowerCase();
+      map[name]=bits;
+    });
+    return map;
+  }
+
+  function has(arr,v){ return arr && arr.indexOf(v)>-1; }
+  function hasNonce(arr){ return (arr||[]).some(function(s){return /^'(nonce|sha(256|384|512))-/i.test(s);}); }
+
+  function analyze(){
+    var raw=ta.value;
+    var d=parse(raw);
+    var score=100, f=[];
+    function add(cls,msg){ f.push({c:cls,m:msg}); }
+
+    var script=d['script-src']||d['default-src'];
+    // script-src checks
+    if(d['script-src']||d['default-src']){
+      if(has(script,"'unsafe-inline'") && !hasNonce(script)){ score-=35; add('f-bad',"<b>script-src allows 'unsafe-inline'</b> — inline scripts execute; this defeats XSS protection. (−35)"); }
+      else if(has(script,"'unsafe-inline'") && hasNonce(script)){ add('f-ok',"'unsafe-inline' present but a nonce/hash is set — modern browsers ignore unsafe-inline here. (0)"); }
+      if(has(script,"'unsafe-eval'")){ score-=20; add('f-bad',"<b>'unsafe-eval' enabled</b> — eval() and Function() can run injected strings. (−20)"); }
+      if(has(script,'*') || has(script,'http:') || has(script,'https:')){ score-=25; add('f-bad',"<b>Wildcard script source</b> — any host may serve code. (−25)"); }
+    } else {
+      add('f-warn',"No script-src or default-src — scripts are unrestricted unless covered elsewhere.");
+    }
+
+    if(!d['default-src']){ score-=20; add('f-warn',"<b>Missing default-src</b> — unlisted resource types fall back to allow-all. (−20)"); }
+    else if(has(d['default-src'],'*')){ score-=25; add('f-bad',"<b>default-src *</b> — global wildcard fallback. (−25)"); }
+
+    if(!(d['object-src'] && has(d['object-src'],"'none'"))){ score-=10; add('f-warn',"<b>object-src not 'none'</b> — plugin/embed injection path open. (−10)"); }
+    else add('f-ok',"object-src 'none' set. (0)");
+
+    if(!d['base-uri']){ score-=8; add('f-warn',"<b>Missing base-uri</b> — &lt;base&gt; tag can be hijacked to rewrite relative URLs. (−8)"); }
+    else add('f-ok',"base-uri restricted. (0)");
+
+    var style=d['style-src']||d['default-src'];
+    if(has(style,"'unsafe-inline'") && !hasNonce(style)){ score-=6; add('f-warn',"style-src allows 'unsafe-inline' — lower risk, but enables style injection. (−6)"); }
+
+    if(strict.checked){
+      if(!d['frame-ancestors']){ score-=12; add('f-warn',"<b>Strict: no frame-ancestors</b> — page can be framed (clickjacking). (−12)"); }
+      else add('f-ok',"frame-ancestors set. (0)");
+      if(!d['report-uri'] && !d['report-to']){ score-=8; add('f-warn',"<b>Strict: no reporting</b> — violations are not logged. (−8)"); }
+    }
+
+    if(f.filter(function(x){return x.c!=='f-ok';}).length===0){ add('f-ok',"No high-risk issues detected — solid policy."); }
+
+    if(score<0) score=0;
+    var g = score>=90?'A':score>=75?'B':score>=60?'C':score>=40?'D':'F';
+    var col = score>=75?'var(--ok)':score>=40?'var(--warn)':'var(--bad)';
+    grade.textContent=g; grade.style.color=col;
+    scoreTxt.textContent=' — '+score+'/100';
+    barFill.style.width=score+'%'; barFill.style.background=col;
+    var dirCount=Object.keys(d).length;
+    summary.textContent=dirCount+' directive'+(dirCount===1?'':'s')+' parsed · '+f.filter(function(x){return x.c==='f-bad';}).length+' critical · '+f.filter(function(x){return x.c==='f-warn';}).length+' warnings';
+
+    findings.innerHTML='';
+    f.forEach(function(x){ var li=document.createElement('li'); li.className=x.c; li.innerHTML=x.m; findings.appendChild(li); });
+
+    tbody.innerHTML='';
+    Object.keys(d).forEach(function(k){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><span class="tag">'+k+'</span></td><td>'+(d[k].length?d[k].map(function(s){return s.replace(/</g,'&lt;');}).join(' '):'<span class="muted">(empty)</span>')+'</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  ta.addEventListener('input',analyze);
+  strict.addEventListener('change',analyze);
+  analyze();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookie Flag Checker — Secure, HttpOnly, SameSite</title>
+<meta name="description" content="Paste a Set-Cookie header to audit Secure, HttpOnly, and SameSite flags for security weaknesses. Free client-side cookie analyzer.">
+<link rel="canonical" href="https://lochbot.com/tools/set-cookie-flag-checker">
+<meta property="og:title" content="Cookie Flag Checker — Secure, HttpOnly, SameSite">
+<meta property="og:description" content="Paste a Set-Cookie header to audit Secure, HttpOnly, and SameSite flags for security weaknesses. Free client-side cookie analyzer.">
+<meta property="og:url" content="https://lochbot.com/tools/set-cookie-flag-checker">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Cookie Flag Checker — Secure, HttpOnly, SameSite",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "url": "https://lochbot.com/tools/set-cookie-flag-checker",
+      "description": "Paste a Set-Cookie header to audit Secure, HttpOnly, and SameSite flags for security weaknesses.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Cookie Flag Checker — Secure, HttpOnly, SameSite", "item": "https://lochbot.com/tools/set-cookie-flag-checker" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#0c1018;--panel:#141b29;--panel2:#1b2433;--bd:#28344a;--tx:#e6ecf6;--mut:#93a1b8;--ac:#4f9cff;--ok:#34d399;--warn:#fbbf24;--bad:#f87171}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+nav,footer{background:var(--panel);padding:14px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--bd)}
+footer{border-top:1px solid var(--bd);border-bottom:none;margin-top:40px;color:var(--mut)}
+nav a,footer a{color:var(--ac);text-decoration:none;font-weight:600}
+nav a:hover,footer a:hover{text-decoration:underline}
+main{max-width:860px;margin:0 auto;padding:24px 20px}
+h1{font-size:1.9rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.3rem;margin-top:1.8em;border-bottom:1px solid var(--bd);padding-bottom:.3em}
+.intro{color:var(--mut);font-size:1.05rem}
+#tool{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:22px;margin:22px 0}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.95rem}
+textarea,input{width:100%;background:var(--panel2);border:1px solid var(--bd);color:var(--tx);border-radius:9px;padding:11px;font-size:.95rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+textarea{min-height:84px;resize:vertical}
+.score{display:flex;align-items:center;gap:16px;margin:18px 0;flex-wrap:wrap}
+.gauge{font-size:2.4rem;font-weight:800;min-width:90px}
+.grade{font-size:1rem;padding:4px 12px;border-radius:20px;font-weight:700}
+.checks{display:grid;gap:8px;margin-top:8px}
+.row{display:flex;gap:10px;align-items:flex-start;background:var(--panel2);border:1px solid var(--bd);border-radius:9px;padding:10px 12px}
+.ico{font-weight:800;min-width:20px}
+.rt{font-weight:700}
+.rd{color:var(--mut);font-size:.88rem}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.parsed{font-size:.85rem;color:var(--mut);margin-top:14px;background:var(--panel2);border-radius:8px;padding:10px;border:1px solid var(--bd)}
+.parsed code{color:var(--ac)}
+.rel{display:flex;gap:14px;flex-wrap:wrap}
+.rel a{display:inline-block;background:var(--panel2);border:1px solid var(--bd);padding:10px 16px;border-radius:9px;color:var(--ac);text-decoration:none;font-weight:600}
+.rel a:hover{border-color:var(--ac)}
+code{background:var(--panel2);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<nav>
+<a href="/">lochbot.com</a>
+<a href="/tools/">All Tools</a>
+</nav>
+<main>
+<h1>Audit Set-Cookie Security Flags Instantly</h1>
+<p class="intro">Paste a raw <code>Set-Cookie</code> response header below. This client-side cookie flag checker grades the Secure, HttpOnly, SameSite, Path, and expiry attributes and explains every weakness it finds — nothing leaves your browser.</p>
+
+<section id="tool">
+<label for="in">Set-Cookie header</label>
+<textarea id="in" spellcheck="false">session=abc123; Path=/; Max-Age=86400; SameSite=Lax</textarea>
+<label for="ctx">Context (affects scoring)</label>
+<input id="ctx" list="ctxlist" value="Session / auth cookie (strict)">
+<datalist id="ctxlist">
+<option>Session / auth cookie (strict)</option>
+<option>General / non-sensitive cookie</option>
+</datalist>
+
+<div class="score">
+<div class="gauge" id="gauge">--</div>
+<div class="grade" id="grade">—</div>
+<div class="rd" id="sub"></div>
+</div>
+<div class="checks" id="checks"></div>
+<div class="parsed" id="parsed"></div>
+</section>
+
+<h2>How the cookie flag checker scores your header</h2>
+<p>The tool parses the header into a name=value pair plus its attribute list, then runs a weighted deduction model. Every cookie starts at a perfect <strong>100 points</strong> and loses points for each missing or misconfigured protection. The weights reflect real-world attack surface:</p>
+<ul>
+<li><strong>Secure (−30):</strong> without it the cookie travels over plain HTTP, exposing it to network sniffing and SSL-strip downgrades.</li>
+<li><strong>HttpOnly (−25):</strong> without it any injected JavaScript can read the cookie via <code>document.cookie</code>, turning an XSS into full session theft.</li>
+<li><strong>SameSite (−20 if absent, −12 if <code>None</code> without Secure, −5 if <code>None</code>):</strong> guards against cross-site request forgery; <code>Lax</code> or <code>Strict</code> is preferred for auth.</li>
+<li><strong>Scope hygiene (−8):</strong> a missing <code>Path</code>, an overly broad host-spanning <code>Domain</code>, or no <code>Expires</code>/<code>Max-Age</code> on a long-lived cookie.</li>
+<li><strong>Prefix bonus:</strong> a <code>__Host-</code> or <code>__Secure-</code> name that does not satisfy its required attributes is flagged as an outright invalid cookie the browser will reject.</li>
+</ul>
+<p>The remaining score maps to a letter grade: <strong>A (90–100)</strong>, B (75–89), C (60–74), D (40–59), and <strong>F below 40</strong>. In strict auth context the SameSite and HttpOnly penalties are amplified, because a leaked credential cookie is far costlier than a leaked analytics cookie. The grade updates on every keystroke, so you can paste a header, toggle the context, and see precisely which one flag flip moves you from a B to an A. Because all parsing and scoring run locally in vanilla JavaScript, you can safely test production session cookies without sending them to any server.</p>
+
+<section>
+<h2>Related Tools</h2>
+<div class="rel">
+<a href="/tools/http-header-analyzer">HTTP Header Analyzer</a>
+<a href="/tools/security-headers-generator">Security Headers Generator</a>
+</div>
+</section>
+</main>
+<footer>
+<a href="/">Home</a>
+<a href="/tools/">All Tools</a>
+<span>© 2026 lochbot.com</span>
+</footer>
+
+<script>
+(function(){
+  var inEl=document.getElementById('in'),ctxEl=document.getElementById('ctx');
+  var gauge=document.getElementById('gauge'),grade=document.getElementById('grade'),sub=document.getElementById('sub');
+  var checks=document.getElementById('checks'),parsed=document.getElementById('parsed');
+
+  function parse(h){
+    h=(h||'').trim().replace(/^set-cookie:\s*/i,'');
+    var parts=h.split(';').map(function(p){return p.trim();}).filter(Boolean);
+    var nv=parts.shift()||'';
+    var eq=nv.indexOf('=');
+    var name=eq>=0?nv.slice(0,eq).trim():nv;
+    var val=eq>=0?nv.slice(eq+1).trim():'';
+    var attrs={};
+    parts.forEach(function(p){
+      var i=p.indexOf('=');
+      if(i>=0)attrs[p.slice(0,i).trim().toLowerCase()]=p.slice(i+1).trim();
+      else attrs[p.toLowerCase()]=true;
+    });
+    return {name:name,val:val,attrs:attrs};
+  }
+
+  function audit(){
+    var c=parse(inEl.value);
+    var a=c.attrs;
+    var strict=/strict/i.test(ctxEl.value);
+    var score=100,rows=[];
+    function add(state,pts,title,desc){rows.push({state:state,title:title,desc:desc});score+=pts;}
+
+    // Secure
+    if(a.secure) add('ok',0,'Secure flag set','Cookie is only sent over HTTPS.');
+    else add('bad',-30,'Missing Secure','Cookie can be sent over plain HTTP and intercepted.');
+
+    // HttpOnly
+    if(a.httponly) add('ok',0,'HttpOnly flag set','JavaScript cannot read this cookie.');
+    else add(strict?'bad':'warn',strict?-25:-18,'Missing HttpOnly','Exposed to theft via XSS / document.cookie.');
+
+    // SameSite
+    var ss=(a.samesite||'').toLowerCase();
+    if(ss==='strict'||ss==='lax') add('ok',0,'SameSite='+a.samesite,'Mitigates CSRF on cross-site requests.');
+    else if(ss==='none'&&a.secure) add('warn',-5,'SameSite=None','Cross-site allowed; OK only if intentional.');
+    else if(ss==='none') add('bad',-12,'SameSite=None without Secure','Invalid — browsers reject this combination.');
+    else add(strict?'bad':'warn',strict?-22:-15,'SameSite not set','Defaults vary; set Lax or Strict for auth.');
+
+    // Scope: Path
+    if(a.path) add('ok',0,'Path='+a.path,'Cookie scope is limited by path.');
+    else add('warn',-4,'No Path attribute','Defaults to current directory; set Path explicitly.');
+
+    // Expiry
+    if(a['max-age']||a.expires) add('ok',0,'Expiry set','Lifetime is bounded.');
+    else add('warn',-4,'No Expires/Max-Age','Session cookie — clears on browser close.');
+
+    // Domain breadth
+    if(a.domain&&/^\./.test(a.domain)) add('warn',-4,'Broad Domain '+a.domain,'Leading dot shares cookie across subdomains.');
+
+    // Prefix rules
+    if(/^__Host-/i.test(c.name)){
+      var hostOk=a.secure&&a.path==='/'&&!a.domain;
+      add(hostOk?'ok':'bad',hostOk?2:-15,'__Host- prefix','Requires Secure, Path=/, and no Domain.');
+    } else if(/^__Secure-/i.test(c.name)){
+      add(a.secure?'ok':'bad',a.secure?1:-15,'__Secure- prefix','Requires the Secure attribute.');
+    }
+
+    if(score>100)score=100; if(score<0)score=0;
+    var g,col;
+    if(score>=90){g='A';col='ok';} else if(score>=75){g='B';col='ok';}
+    else if(score>=60){g='C';col='warn';} else if(score>=40){g='D';col='warn';} else {g='F';col='bad';}
+
+    gauge.textContent=score; gauge.className='gauge '+col;
+    grade.textContent='Grade '+g; grade.className='grade '+col;
+    grade.style.background='var(--panel2)';
+    sub.textContent=strict?'Strict auth scoring':'General scoring';
+
+    checks.innerHTML=rows.map(function(r){
+      var ic=r.state==='ok'?'✓':r.state==='warn'?'!':'✕';
+      return '<div class="row"><span class="ico '+r.state+'">'+ic+'</span><div><div class="rt">'+esc(r.title)+'</div><div class="rd">'+esc(r.desc)+'</div></div></div>';
+    }).join('');
+
+    parsed.innerHTML='Parsed name: <code>'+esc(c.name||'(none)')+'</code> · attributes detected: <code>'+esc(Object.keys(a).join(', ')||'none')+'</code>';
+  }
+  function esc(s){return String(s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];});}
+
+  inEl.addEventListener('input',audit);
+  ctxEl.addEventListener('input',audit);
+  ctxEl.addEventListener('change',audit);
+  audit();
+})();
+</script>
+</body>
+</html>
