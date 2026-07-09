@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UUID &amp; ULID Generator - v4, v7 and ULID Identifiers</title>
+<meta name="description" content="Generate cryptographically random UUID v4, time-sortable UUID v7, and ULIDs in the browser. Bulk-generate, copy, and inspect the embedded timestamp of">
+<link rel="canonical" href="https://lochbot.com/tools/uuid-ulid-generator">
+<meta property="og:title" content="UUID &amp; ULID Generator - v4, v7 and ULID Identifiers">
+<meta property="og:description" content="Generate cryptographically random UUID v4, time-sortable UUID v7, and ULIDs in the browser. Bulk-generate, copy, and inspect the embedded timestamp of">
+<meta property="og:url" content="https://lochbot.com/tools/uuid-ulid-generator">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "UUID & ULID Generator - v4, v7 and ULID Identifiers",
+      "url": "https://lochbot.com/tools/uuid-ulid-generator",
+      "description": "Generate cryptographically random UUID v4, time-sortable UUID v7, and ULIDs in the browser. Bulk-generate, copy, and inspect the embedded timestamp of each ID.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "UUID & ULID Generator - v4, v7 and ULID Identifiers", "item": "https://lochbot.com/tools/uuid-ulid-generator" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --panel2:#1c2430; --border:#2b3442;
+  --text:#e6edf3; --muted:#8b98a9; --accent:#58a6ff; --accent2:#3fb950;
+  --warn:#f0883e; --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;font-size:16px;
+}
+nav{
+  display:flex;gap:1.25rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+  background:var(--panel);font-size:.95rem;
+}
+nav a{color:var(--accent);text-decoration:none}
+nav a:hover{text-decoration:underline}
+main{max-width:900px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+h1{font-size:1.9rem;line-height:1.25;margin:1.2rem 0 .5rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+.lede{color:var(--muted);font-size:1.05rem;margin:0 0 1rem}
+section#tool{
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:1.25rem;margin:1.25rem 0;
+}
+.controls{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+select,input[type=number],input[type=text]{
+  background:var(--panel2);color:var(--text);border:1px solid var(--border);
+  border-radius:8px;padding:.55rem .7rem;font-size:.95rem;font-family:inherit;
+}
+input[type=number]{width:110px}
+button{
+  background:var(--accent);color:#06101f;border:none;border-radius:8px;
+  padding:.6rem 1rem;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;
+}
+button:hover{filter:brightness(1.08)}
+button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.out{
+  margin-top:1rem;background:#0a0e14;border:1px solid var(--border);border-radius:8px;
+  padding:.85rem;font-family:var(--mono);font-size:.9rem;overflow-x:auto;
+}
+.idrow{display:flex;align-items:center;gap:.6rem;padding:.28rem 0;border-bottom:1px solid #1a2230}
+.idrow:last-child{border-bottom:none}
+.idval{color:var(--accent2);word-break:break-all;flex:1;user-select:all}
+.idmeta{color:var(--muted);font-size:.78rem;white-space:nowrap}
+.copybtn{background:var(--panel2);color:var(--text);border:1px solid var(--border);
+  padding:.2rem .55rem;font-size:.75rem;font-weight:500;border-radius:6px}
+.decoder{margin-top:1.5rem}
+.decoder .out{color:var(--text)}
+.tag{display:inline-block;background:var(--panel2);border:1px solid var(--border);
+  border-radius:6px;padding:.05rem .45rem;font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+.hint{color:var(--muted);font-size:.82rem;margin-top:.5rem}
+.err{color:var(--warn)}
+.prose p{margin:.75rem 0}
+code{background:var(--panel2);border:1px solid var(--border);border-radius:5px;
+  padding:.08rem .35rem;font-family:var(--mono);font-size:.85em}
+.related a{color:var(--accent);text-decoration:none}
+.related a:hover{text-decoration:underline}
+.related li{margin:.3rem 0}
+footer{border-top:1px solid var(--border);background:var(--panel);
+  padding:1.5rem 1.25rem;color:var(--muted);font-size:.9rem}
+footer a{color:var(--accent);text-decoration:none;margin-right:1.1rem}
+footer a:hover{text-decoration:underline}
+.copied{color:var(--accent2)!important}
+@media(max-width:560px){.controls{gap:.75rem}h1{font-size:1.55rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+</nav>
+<main>
+  <h1>Generate &amp; Decode UUID v4, UUID v7 and ULID Identifiers</h1>
+  <p class="lede">Cryptographically strong identifiers created entirely in your browser with WebCrypto. Bulk-generate, copy, and reverse the embedded timestamp out of any time-ordered ID. Nothing is sent to a server.</p>
+
+  <section id="tool">
+    <div class="controls">
+      <div class="field">
+        <label for="type">Identifier type</label>
+        <select id="type">
+          <option value="v4">UUID v4 (random)</option>
+          <option value="v7" selected>UUID v7 (time-sortable)</option>
+          <option value="ulid">ULID (Crockford Base32)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="count">How many</label>
+        <input type="number" id="count" value="8" min="1" max="1000">
+      </div>
+      <div class="field">
+        <label for="case">Case</label>
+        <select id="case">
+          <option value="lower" selected>lowercase</option>
+          <option value="upper">UPPERCASE</option>
+        </select>
+      </div>
+      <button id="gen">Generate</button>
+      <button id="copyall" class="ghost">Copy all</button>
+    </div>
+    <div class="hint" id="hint"></div>
+    <div class="out" id="output" aria-live="polite"></div>
+
+    <div class="decoder">
+      <div class="field" style="max-width:520px">
+        <label for="decode">Decode a UUID v7 or ULID &rarr; embedded UTC timestamp</label>
+        <input type="text" id="decode" placeholder="Paste a v7 UUID or 26-char ULID here" oninput="">
+      </div>
+      <div class="out" id="decodeOut">Paste a time-ordered ID above to read its creation time.</div>
+    </div>
+  </section>
+
+  <div class="prose">
+    <h2>How each identifier is built</h2>
+    <p>Every ID here starts from <code>crypto.getRandomValues()</code>, the browser's CSPRNG, so the random bits are suitable for security-sensitive keys, tokens, and database primary keys. The three formats differ only in how those bytes are arranged.</p>
+    <p><strong>UUID v4</strong> is the simplest: fill a 16-byte buffer with randomness, then overwrite two nibble fields. The 4 high bits of byte&nbsp;6 are set to <code>0100</code> (version&nbsp;4) and the 2 high bits of byte&nbsp;8 are set to <code>10</code> (the RFC&nbsp;4122 variant). Concretely: <code>b[6] = (b[6] &amp; 0x0f) | 0x40</code> and <code>b[8] = (b[8] &amp; 0x3f) | 0x80</code>. That leaves 122 random bits, which is why v4 collisions are astronomically unlikely.</p>
+    <p><strong>UUID v7</strong> makes IDs sort by creation time. The first 48 bits are the current Unix time in milliseconds (<code>Date.now()</code>), written big-endian into bytes 0-5. The version nibble in byte&nbsp;6 becomes <code>0111</code> (7) and the variant bits in byte&nbsp;8 stay <code>10</code>; the remaining 74 bits are random. Because the timestamp lives in the most significant bytes, lexicographic order equals chronological order — ideal for index locality in Postgres or MySQL.</p>
+    <p><strong>ULID</strong> packs the same 48-bit millisecond timestamp plus 80 random bits into a 128-bit value, then renders all 26 characters in Crockford Base32 (alphabet <code>0123456789ABCDEFGHJKMNPQRSTVWXYZ</code>, which drops I, L, O and U to avoid ambiguity). The first 10 characters encode the time; the last 16 encode the entropy. Decoding is just the inverse: read those first characters back as a base-32 number of milliseconds and convert to a UTC date, which the decoder above does live as you type.</p>
+    <p>All generation is client-side and offline. Increase the count to stress-test bulk creation, switch case for systems that expect uppercase, and paste any v7 or ULID into the decoder to confirm the timestamp round-trips.</p>
+
+    <h2>Related Tools</h2>
+    <ul class="related">
+      <li><a href="/tools/random-string-generator">Random String &amp; Token Generator</a></li>
+      <li><a href="/tools/hash-generator">SHA &amp; MD5 Hash Generator</a></li>
+      <li><a href="/tools/base64-encoder">Base64 Encoder / Decoder</a></li>
+    </ul>
+  </div>
+</main>
+<footer>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <div style="margin-top:.6rem">&copy; 2026 lochbot.com — client-side developer utilities.</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+  var DECODE_MAP = (function(){
+    var m = {};
+    for (var i=0;i<CROCKFORD.length;i++){ m[CROCKFORD[i]] = i; }
+    // Crockford lenient aliases
+    m['I']=1; m['L']=1; m['O']=0;
+    return m;
+  })();
+
+  function randBytes(n){
+    var a = new Uint8Array(n);
+    crypto.getRandomValues(a);
+    return a;
+  }
+  function hex(b){
+    var s = "";
+    for (var i=0;i<b.length;i++){ s += b[i].toString(16).padStart(2,'0'); }
+    return s;
+  }
+  function fmtUuid(b){
+    var h = hex(b);
+    return h.slice(0,8)+"-"+h.slice(8,12)+"-"+h.slice(12,16)+"-"+h.slice(16,20)+"-"+h.slice(20,32);
+  }
+
+  function uuidV4(){
+    var b = randBytes(16);
+    b[6] = (b[6] & 0x0f) | 0x40; // version 4
+    b[8] = (b[8] & 0x3f) | 0x80; // variant 10xx
+    return fmtUuid(b);
+  }
+
+  function uuidV7(ts){
+    var b = randBytes(16);
+    var t = (typeof ts === "number") ? ts : Date.now();
+    // 48-bit timestamp, big-endian into bytes 0..5
+    b[0] = (Math.floor(t / 0x10000000000)) & 0xff;
+    b[1] = (Math.floor(t / 0x100000000)) & 0xff;
+    b[2] = (Math.floor(t / 0x1000000)) & 0xff;
+    b[3] = (Math.floor(t / 0x10000)) & 0xff;
+    b[4] = (Math.floor(t / 0x100)) & 0xff;
+    b[5] = t & 0xff;
+    b[6] = (b[6] & 0x0f) | 0x70; // version 7
+    b[8] = (b[8] & 0x3f) | 0x80; // variant 10xx
+    return fmtUuid(b);
+  }
+
+  function ulid(ts){
+    var t = (typeof ts === "number") ? ts : Date.now();
+    // 10 chars of time (48 bits)
+    var timeChars = new Array(10);
+    var rem = t;
+    for (var i=9;i>=0;i--){
+      timeChars[i] = CROCKFORD[rem % 32];
+      rem = Math.floor(rem / 32);
+    }
+    // 16 chars of randomness (80 bits) via 10 random bytes -> base32
+    var rb = randBytes(10);
+    // build an 80-bit value across chars, 5 bits at a time
+    var bits = "";
+    for (var j=0;j<rb.length;j++){ bits += rb[j].toString(2).padStart(8,'0'); }
+    var randChars = "";
+    for (var k=0;k<80;k+=5){ randChars += CROCKFORD[parseInt(bits.slice(k,k+5),2)]; }
+    return timeChars.join("") + randChars;
+  }
+
+  // ---- Decoders ----
+  function decodeV7(u){
+    var h = u.replace(/-/g,"").toLowerCase();
+    if (!/^[0-9a-f]{32}$/.test(h)) return null;
+    var ver = h[12]; // version nibble position in unhyphenated form
+    if (ver !== "7") return { err:"Not a v7 UUID (version nibble = "+ver+")" };
+    var tsHex = h.slice(0,12); // 48 bits
+    var ms = parseInt(tsHex, 16);
+    return { ms: ms };
+  }
+  function decodeUlid(s){
+    var u = s.toUpperCase();
+    if (!/^[0-9A-HJKMNP-TV-Z]{26}$/.test(u)) return null;
+    var timePart = u.slice(0,10);
+    var ms = 0;
+    for (var i=0;i<10;i++){
+      var v = DECODE_MAP[timePart[i]];
+      if (v === undefined) return { err:"Invalid Base32 character" };
+      ms = ms * 32 + v;
+    }
+    return { ms: ms };
+  }
+
+  // ---- UI ----
+  var typeEl = document.getElementById("type");
+  var countEl = document.getElementById("count");
+  var caseEl = document.getElementById("case");
+  var outEl = document.getElementById("output");
+  var hintEl = document.getElementById("hint");
+  var decodeEl = document.getElementById("decode");
+  var decodeOutEl = document.getElementById("decodeOut");
+  var lastList = [];
+
+  var HINTS = {
+    v4: "122 random bits. No embedded time. Best for opaque tokens and generic IDs.",
+    v7: "48-bit millisecond time in the high bytes = lexicographically sortable. Great DB primary keys.",
+    ulid: "26-char Crockford Base32: 10 time + 16 random. URL-safe, case-insensitive, sortable."
+  };
+
+  function makeOne(type){
+    if (type === "v4") return uuidV4();
+    if (type === "v7") return uuidV7();
+    return ulid();
+  }
+
+  function applyCase(s){
+    return caseEl.value === "upper" ? s.toUpperCase() : s.toLowerCase();
+  }
+
+  function embeddedTime(type, id){
+    if (type === "v4") return "";
+    var r = (type === "ulid") ? decodeUlid(id) : decodeV7(id);
+    if (r && typeof r.ms === "number"){
+      try { return new Date(r.ms).toISOString().replace("T"," ").replace("Z"," UTC"); }
+      catch(e){ return ""; }
+    }
+    return "";
+  }
+
+  function render(){
+    var type = typeEl.value;
+    var n = parseInt(countEl.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 1000){ n = 1000; countEl.value = 1000; }
+    hintEl.textContent = HINTS[type] || "";
+    lastList = [];
+    var frag = document.createDocumentFragment();
+    for (var i=0;i<n;i++){
+      var raw = makeOne(type);
+      // ULID alphabet is uppercase natively; only lowercase if requested
+      var shown = applyCase(raw);
+      lastList.push(shown);
+      var t = embeddedTime(type, raw);
+
+      var row = document.createElement("div");
+      row.className = "idrow";
+      var val = document.createElement("span");
+      val.className = "idval";
+      val.textContent = shown;
+      var meta = document.createElement("span");
+      meta.className = "idmeta";
+      meta.textContent = t ? ("@ " + t) : "";
+      var btn = document.createElement("button");
+      btn.className = "copybtn";
+      btn.type = "button";
+      btn.textContent = "copy";
+      (function(text, b){
+        b.addEventListener("click", function(){
+          copyText(text);
+          b.textContent = "copied";
+          b.classList.add("copied");
+          setTimeout(function(){ b.textContent="copy"; b.classList.remove("copied"); }, 1200);
+        });
+      })(shown, btn);
+
+      row.appendChild(val);
+      if (t){ row.appendChild(meta); }
+      row.appendChild(btn);
+      frag.appendChild(row);
+    }
+    outEl.innerHTML = "";
+    outEl.appendChild(frag);
+  }
+
+  function copyText(text){
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).catch(function(){ legacyCopy(text); });
+    } else { legacyCopy(text); }
+  }
+  function legacyCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  function decodeInput(){
+    var v = decodeEl.value.trim();
+    if (!v){ decodeOutEl.innerHTML = "Paste a time-ordered ID above to read its creation time."; return; }
+    var res = null, kind = "";
+    if (/^[0-9A-Fa-f]{8}-?[0-9A-Fa-f]{4}-?[0-9A-Fa-f]{4}-?[0-9A-Fa-f]{4}-?[0-9A-Fa-f]{12}$/.test(v)){
+      res = decodeV7(v); kind = "UUID v7";
+    } else if (v.length === 26){
+      res = decodeUlid(v); kind = "ULID";
+    }
+    if (!res){
+      decodeOutEl.innerHTML = '<span class="err">Not a recognized v7 UUID or 26-char ULID.</span>';
+      return;
+    }
+    if (res.err){
+      decodeOutEl.innerHTML = '<span class="err">'+res.err+'</span>';
+      return;
+    }
+    var iso, human;
+    try {
+      var d = new Date(res.ms);
+      iso = d.toISOString();
+      human = d.toUTCString();
+    } catch(e){
+      decodeOutEl.innerHTML = '<span class="err">Timestamp out of range.</span>';
+      return;
+    }
+    decodeOutEl.innerHTML =
+      '<span class="tag">'+kind+'</span> ' +
+      'Unix ms: <strong>'+res.ms+'</strong><br>' +
+      'ISO 8601: <strong>'+iso+'</strong><br>' +
+      'UTC: '+human;
+  }
+
+  document.getElementById("gen").addEventListener("click", render);
+  document.getElementById("copyall").addEventListener("click", function(){
+    if (lastList.length){ copyText(lastList.join("\n")); }
+  });
+  typeEl.addEventListener("change", render);
+  countEl.addEventListener("input", render);
+  caseEl.addEventListener("change", render);
+  decodeEl.addEventListener("input", decodeInput);
+
+  // defaults prefilled
+  render();
+})();
+</script>
+</body>
+</html>

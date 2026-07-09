@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RSA &amp; EC Key Pair Generator - Export to PEM &amp; JWK</title>
+<meta name="description" content="Generate RSA (2048/4096) or elliptic-curve (P-256/384/521) key pairs in-browser with WebCrypto. Export public and private keys as PEM or JWK for JWT, TLS">
+<link rel="canonical" href="https://lochbot.com/tools/rsa-ec-keypair-generator">
+<meta property="og:title" content="RSA &amp; EC Key Pair Generator - Export to PEM &amp; JWK">
+<meta property="og:description" content="Generate RSA (2048/4096) or elliptic-curve (P-256/384/521) key pairs in-browser with WebCrypto. Export public and private keys as PEM or JWK for JWT, TLS">
+<meta property="og:url" content="https://lochbot.com/tools/rsa-ec-keypair-generator">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "RSA & EC Key Pair Generator - Export to PEM & JWK",
+      "url": "https://lochbot.com/tools/rsa-ec-keypair-generator",
+      "description": "Generate RSA (2048/4096) or elliptic-curve (P-256/384/521) key pairs in-browser with WebCrypto. Export public and private keys as PEM or JWK.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "RSA & EC Key Pair Generator - Export to PEM & JWK", "item": "https://lochbot.com/tools/rsa-ec-keypair-generator" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--border:#2b3444;
+  --fg:#e6edf3;--muted:#9aa7b6;--accent:#58a6ff;--accent2:#3fb950;
+  --warn:#f0883e;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;
+}
+nav{background:var(--panel);border-bottom:1px solid var(--border);padding:.7rem 1rem}
+nav a{color:var(--accent);text-decoration:none;margin-right:1.2rem;font-size:.92rem}
+nav a:hover{text-decoration:underline}
+.wrap{max-width:940px;margin:0 auto;padding:1.4rem 1rem 3rem}
+h1{font-size:1.7rem;line-height:1.25;margin:.6rem 0 .3rem}
+h2{font-size:1.25rem;margin:2rem 0 .6rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}
+.lead{color:var(--muted);margin:.2rem 0 1.2rem}
+#tool{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
+label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.35rem;font-weight:600;letter-spacing:.02em}
+select,button{
+  width:100%;padding:.6rem .7rem;background:var(--panel2);color:var(--fg);
+  border:1px solid var(--border);border-radius:8px;font-size:.95rem;font-family:inherit;
+}
+button{cursor:pointer;font-weight:600}
+.row-btns{display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end}
+.row-btns>div{flex:1;min-width:150px}
+#gen{background:linear-gradient(180deg,#238636,#1a6f2c);border-color:#2ea043;color:#fff}
+#gen:hover{filter:brightness(1.1)}
+#gen:disabled{opacity:.6;cursor:wait}
+.tabs{display:flex;gap:.4rem;margin:1.2rem 0 .5rem;flex-wrap:wrap}
+.tab{padding:.4rem .8rem;border:1px solid var(--border);border-radius:20px;background:var(--panel2);
+  cursor:pointer;font-size:.85rem;color:var(--muted)}
+.tab.active{background:var(--accent);color:#04121f;border-color:var(--accent);font-weight:600}
+.out-head{display:flex;justify-content:space-between;align-items:center;margin:.6rem 0 .3rem}
+.out-head span{font-size:.85rem;color:var(--muted);font-weight:600}
+.copy{width:auto;padding:.3rem .7rem;font-size:.78rem;background:var(--panel2)}
+.copy.ok{color:var(--accent2);border-color:var(--accent2)}
+textarea{
+  width:100%;min-height:170px;background:#0a0e14;color:#c9d6e2;border:1px solid var(--border);
+  border-radius:8px;padding:.7rem;font-family:var(--mono);font-size:.78rem;line-height:1.45;
+  resize:vertical;white-space:pre;overflow:auto;
+}
+.meta{font-size:.8rem;color:var(--muted);margin-top:.9rem;display:flex;gap:1.2rem;flex-wrap:wrap}
+.meta b{color:var(--fg)}
+.pill{display:inline-block;background:var(--panel2);border:1px solid var(--border);border-radius:6px;
+  padding:.05rem .45rem;font-family:var(--mono);font-size:.78rem}
+.note{background:var(--panel2);border-left:3px solid var(--accent2);border-radius:6px;
+  padding:.6rem .8rem;font-size:.85rem;color:var(--muted);margin-top:1rem}
+.status{font-size:.85rem;min-height:1.2em;margin-top:.5rem;color:var(--warn)}
+code{font-family:var(--mono);background:var(--panel2);padding:.05rem .35rem;border-radius:5px;font-size:.85em}
+p{margin:.6rem 0}
+a.inl{color:var(--accent)}
+.related a{display:inline-block;background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:.5rem .9rem;margin:.3rem .4rem .3rem 0;color:var(--accent);text-decoration:none;font-size:.9rem}
+.related a:hover{border-color:var(--accent)}
+footer{border-top:1px solid var(--border);margin-top:2.5rem;padding:1.4rem 1rem;text-align:center;color:var(--muted);font-size:.85rem}
+footer a{color:var(--accent);text-decoration:none;margin:0 .6rem}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+</nav>
+<div class="wrap">
+<h1>Generate RSA &amp; Elliptic-Curve Key Pairs in Your Browser</h1>
+<p class="lead">Create real asymmetric key pairs with the WebCrypto API and export them as PEM or JWK. Everything runs client-side &mdash; your private key never leaves this tab.</p>
+
+<section id="tool">
+  <div class="grid">
+    <div>
+      <label for="algo">Algorithm</label>
+      <select id="algo">
+        <option value="RSASSA-PKCS1-v1_5">RSA &mdash; RSASSA-PKCS1-v1_5 (signing)</option>
+        <option value="RSA-PSS">RSA &mdash; RSA-PSS (signing)</option>
+        <option value="RSA-OAEP">RSA &mdash; RSA-OAEP (encryption)</option>
+        <option value="ECDSA">EC &mdash; ECDSA (signing)</option>
+        <option value="ECDH">EC &mdash; ECDH (key agreement)</option>
+      </select>
+    </div>
+    <div id="rsaWrap">
+      <label for="rsaBits">RSA modulus length</label>
+      <select id="rsaBits">
+        <option value="2048">2048 bits (recommended)</option>
+        <option value="3072">3072 bits</option>
+        <option value="4096">4096 bits (strong)</option>
+      </select>
+    </div>
+    <div id="ecWrap" class="hidden">
+      <label for="curve">Elliptic curve</label>
+      <select id="curve">
+        <option value="P-256">P-256 / secp256r1</option>
+        <option value="P-384">P-384 / secp384r1</option>
+        <option value="P-521">P-521 / secp521r1</option>
+      </select>
+    </div>
+    <div id="hashWrap">
+      <label for="hash">Hash</label>
+      <select id="hash">
+        <option value="SHA-256">SHA-256</option>
+        <option value="SHA-384">SHA-384</option>
+        <option value="SHA-512">SHA-512</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row-btns">
+    <div>
+      <label>&nbsp;</label>
+      <button id="gen">Generate Key Pair</button>
+    </div>
+  </div>
+  <div class="status" id="status"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-fmt="pem">PEM</div>
+    <div class="tab" data-fmt="jwk">JWK</div>
+  </div>
+
+  <div class="out-head">
+    <span id="pubLabel">Public key (SPKI &rarr; PEM)</span>
+    <button class="copy" data-target="pub">Copy</button>
+  </div>
+  <textarea id="pub" readonly spellcheck="false" placeholder="Click Generate to create a key pair…"></textarea>
+
+  <div class="out-head">
+    <span id="privLabel">Private key (PKCS#8 &rarr; PEM)</span>
+    <button class="copy" data-target="priv">Copy</button>
+  </div>
+  <textarea id="priv" readonly spellcheck="false" placeholder="The private key will appear here — keep it secret."></textarea>
+
+  <div class="meta">
+    <span>Type: <b id="mType">&mdash;</b></span>
+    <span>Params: <b id="mParams">&mdash;</b></span>
+    <span>Public DER: <b id="mPub">&mdash;</b></span>
+    <span>Private DER: <b id="mPriv">&mdash;</b></span>
+  </div>
+
+  <div class="note">
+    All key material is generated with <span class="pill">crypto.subtle.generateKey</span> and exported locally.
+    There is no server round-trip and no network request &mdash; verify it yourself in DevTools &rarr; Network.
+  </div>
+</section>
+
+<h2>How the generator works</h2>
+<p>This tool is a thin, transparent wrapper over the browser&rsquo;s native <a class="inl" href="/tools/">WebCrypto</a> implementation. When you click <em>Generate</em>, it calls <code>crypto.subtle.generateKey(algorithm, true, keyUsages)</code>. For RSA algorithms the parameters are <code>{name, modulusLength, publicExponent: 65537, hash}</code>; the public exponent is fixed at the standard value <code>0x010001</code>. For elliptic-curve algorithms the parameter is simply <code>{name, namedCurve}</code> over P-256, P-384 or P-521.</p>
+
+<p>Export happens in two shapes. Calling <code>exportKey("spki", publicKey)</code> and <code>exportKey("pkcs8", privateKey)</code> returns raw DER-encoded <code>ArrayBuffer</code>s: SubjectPublicKeyInfo for the public half and PKCS#8 PrivateKeyInfo for the private half. To produce PEM the tool Base64-encodes those DER bytes, folds the text at 64 characters per line, and wraps it in the correct armor &mdash; <code>-----BEGIN PUBLIC KEY-----</code> and <code>-----BEGIN PRIVATE KEY-----</code>. Choosing the JWK tab instead calls <code>exportKey("jwk", …)</code>, giving you the JSON Web Key form used directly by JWT libraries, with fields like <code>n</code>/<code>e</code> for RSA or <code>crv</code>/<code>x</code>/<code>y</code>/<code>d</code> for EC.</p>
+
+<p>Security-wise, P-256 delivers roughly 128-bit security, comparable to RSA-3072, while P-521 approaches 256-bit strength &mdash; which is why EC keys are dramatically smaller than an equivalent RSA modulus. Use RSA-2048 or P-256 for general JWT and TLS work, and step up to 4096 or P-384/521 only when a policy or long-lived root demands it. Because the private key is marked extractable and never transmitted, you remain the only party who ever sees it. Paste the PEM into OpenSSH, an X.509 signing request, or a JWT signer with confidence.</p>
+
+<h2>Related Tools</h2>
+<div class="related">
+  <a href="/tools/jwt-decoder">JWT Decoder &amp; Verifier</a>
+  <a href="/tools/base64-encoder">Base64 Encoder / Decoder</a>
+  <a href="/tools/uuid-generator">UUID Generator</a>
+</div>
+
+</div>
+<footer>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/tools/jwt-decoder">JWT Decoder</a>
+  <div style="margin-top:.6rem">&copy; 2026 lochbot.com &mdash; runs entirely in your browser.</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var algoEl=$("algo"), rsaWrap=$("rsaWrap"), ecWrap=$("ecWrap"), hashWrap=$("hashWrap");
+  var rsaBits=$("rsaBits"), curve=$("curve"), hash=$("hash");
+  var genBtn=$("gen"), statusEl=$("status");
+  var pub=$("pub"), priv=$("priv"), pubLabel=$("pubLabel"), privLabel=$("privLabel");
+  var mType=$("mType"), mParams=$("mParams"), mPub=$("mPub"), mPriv=$("mPriv");
+  var tabs=document.querySelectorAll(".tab");
+
+  var fmt="pem";            // active output format
+  var last=null;            // last generated { pubKey, privKey, pemPub, pemPriv, jwkPub, jwkPriv, meta }
+
+  function isRSA(a){ return a.indexOf("RSA")===0; }
+
+  function refreshFields(){
+    var rsa=isRSA(algoEl.value);
+    rsaWrap.classList.toggle("hidden", !rsa);
+    ecWrap.classList.toggle("hidden", rsa);
+    // ECDH doesn't take a hash; RSA-OAEP uses hash for encryption, sign algos use it for signature.
+    hashWrap.classList.toggle("hidden", algoEl.value==="ECDH");
+  }
+
+  // ---- encoders (pure, no deps) ----
+  function abToB64(buf){
+    var bytes=new Uint8Array(buf), bin="", CH=0x8000;
+    for(var i=0;i<bytes.length;i+=CH){
+      bin+=String.fromCharCode.apply(null, bytes.subarray(i, i+CH));
+    }
+    return btoa(bin);
+  }
+  function fold(b64){
+    var out=[];
+    for(var i=0;i<b64.length;i+=64){ out.push(b64.slice(i,i+64)); }
+    return out.join("\n");
+  }
+  function toPem(buf,label){
+    return "-----BEGIN "+label+"-----\n"+fold(abToB64(buf))+"\n-----END "+label+"-----";
+  }
+
+  function buildAlgorithm(){
+    var name=algoEl.value;
+    if(isRSA(name)){
+      return { name:name, modulusLength:parseInt(rsaBits.value,10),
+               publicExponent:new Uint8Array([1,0,1]), hash:hash.value };
+    }
+    return { name:name, namedCurve:curve.value };
+  }
+  function keyUsages(){
+    var n=algoEl.value;
+    if(n==="RSA-OAEP") return ["encrypt","decrypt"];
+    if(n==="ECDH")     return ["deriveKey","deriveBits"];
+    return ["sign","verify"]; // RSASSA / RSA-PSS / ECDSA
+  }
+
+  function paramSummary(){
+    if(isRSA(algoEl.value)) return rsaBits.value+"-bit, e=65537, "+hash.value;
+    return curve.value+(algoEl.value==="ECDH"?"":", "+hash.value);
+  }
+
+  function render(){
+    if(!last){ return; }
+    if(fmt==="pem"){
+      pubLabel.innerHTML="Public key (SPKI &rarr; PEM)";
+      privLabel.innerHTML="Private key (PKCS#8 &rarr; PEM)";
+      pub.value=last.pemPub;
+      priv.value=last.pemPriv;
+    } else {
+      pubLabel.innerHTML="Public key (JWK)";
+      privLabel.innerHTML="Private key (JWK)";
+      pub.value=JSON.stringify(last.jwkPub,null,2);
+      priv.value=JSON.stringify(last.jwkPriv,null,2);
+    }
+  }
+
+  function generate(){
+    if(!(window.crypto && crypto.subtle)){
+      statusEl.textContent="WebCrypto is unavailable — use a modern browser over HTTPS.";
+      return;
+    }
+    var algorithm, usages;
+    try{ algorithm=buildAlgorithm(); usages=keyUsages(); }
+    catch(e){ statusEl.textContent="Invalid parameters: "+e.message; return; }
+
+    genBtn.disabled=true;
+    statusEl.style.color="var(--muted)";
+    statusEl.textContent="Generating "+algoEl.value+" key pair… (RSA-4096 can take a few seconds)";
+
+    crypto.subtle.generateKey(algorithm, true /*extractable*/, usages)
+      .then(function(pair){
+        return Promise.all([
+          crypto.subtle.exportKey("spki", pair.publicKey),
+          crypto.subtle.exportKey("pkcs8", pair.privateKey),
+          crypto.subtle.exportKey("jwk", pair.publicKey),
+          crypto.subtle.exportKey("jwk", pair.privateKey)
+        ]).then(function(r){
+          var spki=r[0], pkcs8=r[1];
+          last={
+            pemPub: toPem(spki,"PUBLIC KEY"),
+            pemPriv: toPem(pkcs8,"PRIVATE KEY"),
+            jwkPub: r[2],
+            jwkPriv: r[3],
+            pubBytes: spki.byteLength,
+            privBytes: pkcs8.byteLength
+          };
+          mType.textContent = isRSA(algoEl.value) ? "RSA" : "Elliptic Curve";
+          mParams.textContent = paramSummary();
+          mPub.textContent = last.pubBytes+" B DER";
+          mPriv.textContent = last.privBytes+" B DER";
+          render();
+          statusEl.style.color="var(--accent2)";
+          statusEl.textContent="Key pair generated locally. Nothing was sent over the network.";
+        });
+      })
+      .catch(function(err){
+        statusEl.style.color="var(--warn)";
+        statusEl.textContent="Generation failed: "+(err && err.message ? err.message : err)+
+          " (this algorithm/parameter combination may not be supported by your browser).";
+      })
+      .then(function(){ genBtn.disabled=false; });
+  }
+
+  // ---- events ----
+  algoEl.addEventListener("change", function(){
+    refreshFields();
+    // keep hash valid for algo; ECDH ignores it
+  });
+  rsaBits.addEventListener("change", function(){ if(last){ mParams.textContent=paramSummary(); } });
+  curve.addEventListener("change", function(){ if(last){ mParams.textContent=paramSummary(); } });
+  hash.addEventListener("change", function(){ if(last){ mParams.textContent=paramSummary(); } });
+  genBtn.addEventListener("click", generate);
+
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){
+      tabs.forEach(function(x){ x.classList.remove("active"); });
+      t.classList.add("active");
+      fmt=t.getAttribute("data-fmt");
+      render();
+    });
+  });
+
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var ta=$(btn.getAttribute("data-target"));
+      if(!ta.value){ return; }
+      var done=function(){
+        var old=btn.textContent; btn.textContent="Copied ✓"; btn.classList.add("ok");
+        setTimeout(function(){ btn.textContent=old; btn.classList.remove("ok"); },1400);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(ta.value).then(done, function(){ ta.select(); done(); });
+      } else { ta.select(); try{document.execCommand("copy");}catch(e){} done(); }
+    });
+  });
+
+  // ---- init ----
+  refreshFields();
+  // Auto-generate a default P-256 / RSA-2048 pair so the output is live on load.
+  algoEl.value="ECDSA"; curve.value="P-256"; refreshFields();
+  generate();
+})();
+</script>
+</body>
+</html>

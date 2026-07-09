@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JWT Signature Verifier - Validate HS256 & RS256 Tokens</title>
+<meta name="description" content="Verify a JWT's signature client-side with WebCrypto. Paste a token and secret or public key to check HS256, HS384, RS256 and ES256 validity and expiry.">
+<link rel="canonical" href="https://lochbot.com/tools/jwt-signature-verifier">
+<meta property="og:title" content="JWT Signature Verifier - Validate HS256 & RS256 Tokens">
+<meta property="og:description" content="Verify a JWT's signature client-side with WebCrypto. Paste a token and secret or public key to check HS256, HS384, RS256 and ES256 validity and expiry.">
+<meta property="og:url" content="https://lochbot.com/tools/jwt-signature-verifier">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "JWT Signature Verifier - Validate HS256 & RS256 Tokens",
+      "description": "Verify a JWT's signature client-side with WebCrypto. Paste a token and secret or public key to check HS256, HS384, RS256 and ES256 validity and expiry.",
+      "url": "https://lochbot.com/tools/jwt-signature-verifier",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lochbot.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://lochbot.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "JWT Signature Verifier - Validate HS256 & RS256 Tokens", "item": "https://lochbot.com/tools/jwt-signature-verifier" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2a3241;
+    --fg:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --ok:#3fb950;
+    --bad:#f85149; --warn:#d29922; --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; font-size:16px;
+  }
+  nav{
+    display:flex; gap:20px; padding:14px 20px; border-bottom:1px solid var(--border);
+    background:var(--panel); font-size:15px;
+  }
+  nav a{color:var(--accent); text-decoration:none}
+  nav a:hover{text-decoration:underline}
+  main{max-width:920px; margin:0 auto; padding:24px 20px 60px}
+  h1{font-size:28px; line-height:1.25; margin:18px 0 8px}
+  h2{font-size:21px; margin:34px 0 12px; border-bottom:1px solid var(--border); padding-bottom:6px}
+  .intro{color:var(--muted); font-size:17px; margin-bottom:8px}
+  section#tool{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding:20px; margin-top:20px;
+  }
+  label{display:block; font-weight:600; margin:16px 0 6px; font-size:14px}
+  label .hint{font-weight:400; color:var(--muted); font-size:12px}
+  textarea,input[type=text]{
+    width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--border);
+    border-radius:8px; padding:11px 12px; font-family:var(--mono); font-size:13px; resize:vertical;
+  }
+  textarea:focus,input:focus{outline:none; border-color:var(--accent)}
+  textarea#token{min-height:120px}
+  textarea#key{min-height:100px}
+  .row{display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end}
+  .row>div{flex:1; min-width:180px}
+  select{
+    background:var(--bg); color:var(--fg); border:1px solid var(--border);
+    border-radius:8px; padding:11px 12px; font-size:14px; width:100%;
+  }
+  .verdict{
+    margin-top:20px; padding:16px 18px; border-radius:10px; font-weight:700; font-size:18px;
+    display:flex; align-items:center; gap:10px; border:1px solid var(--border); background:var(--panel2);
+  }
+  .verdict.ok{border-color:var(--ok); color:var(--ok)}
+  .verdict.bad{border-color:var(--bad); color:var(--bad)}
+  .verdict.wait{border-color:var(--warn); color:var(--warn)}
+  .verdict .dot{width:12px; height:12px; border-radius:50%; background:currentColor; flex:none}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:14px}
+  .card h3{margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  pre.json{
+    margin:0; font-family:var(--mono); font-size:12.5px; white-space:pre-wrap; word-break:break-word;
+    color:#cdd9e5; max-height:260px; overflow:auto;
+  }
+  .k{color:var(--accent)} .s{color:#7ee787} .n{color:#f0883e} .b{color:#d2a8ff}
+  ul.checks{list-style:none; padding:0; margin:0; font-size:14px}
+  ul.checks li{padding:4px 0; display:flex; gap:8px; align-items:baseline}
+  ul.checks li .tag{font-family:var(--mono); font-size:12px; min-width:64px; text-align:center; border-radius:5px; padding:1px 6px; flex:none}
+  .tag.pass{background:rgba(63,185,80,.15); color:var(--ok)}
+  .tag.fail{background:rgba(248,81,73,.15); color:var(--bad)}
+  .tag.na{background:rgba(139,148,158,.15); color:var(--muted)}
+  .msg{font-size:13px; color:var(--muted); margin-top:8px; font-family:var(--mono)}
+  .parts{font-family:var(--mono); font-size:12px; word-break:break-all; margin-top:10px; line-height:2}
+  .p-h{color:#f85149} .p-p{color:#d2a8ff} .p-s{color:#3fb950}
+  code{font-family:var(--mono); background:var(--panel2); padding:2px 6px; border-radius:5px; font-size:13.5px}
+  .prose p{margin:12px 0}
+  .related a{color:var(--accent); text-decoration:none}
+  .related a:hover{text-decoration:underline}
+  .related li{margin:6px 0}
+  footer{border-top:1px solid var(--border); margin-top:50px; padding:24px 20px; text-align:center; color:var(--muted); font-size:14px}
+  footer a{color:var(--accent); text-decoration:none; margin:0 8px}
+  .note{font-size:12.5px; color:var(--muted); margin-top:6px}
+  .badge{display:inline-block; background:rgba(63,185,80,.12); color:var(--ok); border:1px solid rgba(63,185,80,.3); border-radius:20px; padding:3px 12px; font-size:12px; font-weight:600}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+</nav>
+<main>
+  <span class="badge">100% client-side · WebCrypto · no key leaves your browser</span>
+  <h1>Verify JWT Signatures in Your Browser</h1>
+  <p class="intro">Paste a JSON Web Token plus its HMAC secret or public key. This tool recomputes the signature with the browser's native WebCrypto API and tells you whether the token is authentic, expired, or not yet valid — with nothing ever sent to a server.</p>
+
+  <section id="tool">
+    <label for="token">JWT <span class="hint">— header.payload.signature</span></label>
+    <textarea id="token" spellcheck="false"></textarea>
+
+    <div class="row">
+      <div>
+        <label for="alg">Algorithm <span class="hint">(auto from header)</span></label>
+        <select id="alg">
+          <option value="auto">Auto-detect from header</option>
+          <option value="HS256">HS256 (HMAC-SHA256)</option>
+          <option value="HS384">HS384 (HMAC-SHA384)</option>
+          <option value="HS512">HS512 (HMAC-SHA512)</option>
+          <option value="RS256">RS256 (RSA-SHA256)</option>
+          <option value="ES256">ES256 (ECDSA P-256)</option>
+        </select>
+      </div>
+      <div>
+        <label for="keyfmt">Key input <span class="hint" id="keyfmtHint"></span></label>
+        <select id="keyfmt">
+          <option value="secret">HMAC shared secret (text)</option>
+          <option value="pem">Public key (PEM / SPKI)</option>
+          <option value="jwk">Public key (JWK JSON)</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="key" id="keyLabel">HMAC secret</label>
+    <textarea id="key" spellcheck="false"></textarea>
+    <p class="note" id="keyNote">Enter the shared secret used to sign the token. Signature verification runs live as you type.</p>
+
+    <div class="verdict" id="verdict"><span class="dot"></span><span id="verdictText">Waiting for input…</span></div>
+    <p class="msg" id="msg"></p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Decoded Header</h3>
+        <pre class="json" id="hdrOut">—</pre>
+      </div>
+      <div class="card">
+        <h3>Decoded Payload</h3>
+        <pre class="json" id="payOut">—</pre>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Checks</h3>
+      <ul class="checks" id="checks"><li><span class="tag na">…</span>Paste a token to begin.</li></ul>
+      <div class="parts" id="parts"></div>
+    </div>
+  </section>
+
+  <h2>How the verification works</h2>
+  <div class="prose">
+    <p>A JWT is three Base64URL segments joined by dots: <code>header.payload.signature</code>. The first two segments together form the <strong>signing input</strong>. The signature is a MAC or digital signature computed over exactly that byte string: <code>ASCII(base64url(header) + "." + base64url(payload))</code>.</p>
+    <p>For HMAC algorithms (HS256/384/512) the signature is <code>HMAC-SHA(secret, signingInput)</code>. This tool imports your secret as a raw <code>CryptoKey</code>, recomputes the HMAC, and compares it byte-for-byte against the decoded signature. HMAC is symmetric, so the same secret both signs and verifies — anyone holding it can forge tokens, which is why you never verify a bare Base64 blob without checking the MAC first.</p>
+    <p>For RS256 (RSASSA-PKCS1-v1_5 over SHA-256) and ES256 (ECDSA on P-256 over SHA-256), verification is asymmetric. You supply only the <strong>public</strong> key — as PEM/SPKI or a JWK — and <code>crypto.subtle.verify()</code> checks the signature mathematically without ever needing the private key. ES256 signatures in JWTs use the raw <code>r‖s</code> IEEE-P1363 layout that WebCrypto expects directly.</p>
+    <p>Beyond the signature the tool Base64URL-decodes the registered claims and validates timing: <code>exp</code> (expiry) and <code>nbf</code> (not-before) are compared against the current Unix time, and <code>iat</code> is surfaced. A token can carry a perfectly valid signature and still be <em>unusable</em> because it expired or is not yet active — so a green signature and a green clock are separate checks. Everything runs locally; the comparison uses a length-safe constant-time loop to avoid leaking timing information about the expected MAC.</p>
+  </div>
+
+  <h2>Related Tools</h2>
+  <ul class="related">
+    <li><a href="/tools/base64-encoder-decoder">Base64 Encoder / Decoder</a> — inspect the raw JWT segments by hand.</li>
+    <li><a href="/tools/hmac-generator">HMAC Generator</a> — compute HS256 signatures to sign your own tokens.</li>
+    <li><a href="/tools/rsa-key-generator">RSA Key Pair Generator</a> — create RS256 keys for testing.</li>
+  </ul>
+
+  <footer>
+    <div>
+      <a href="/">Home</a>
+      <a href="/tools/">All Tools</a>
+      <a href="/tools/jwt-signature-verifier">JWT Verifier</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+    <p>© 2026 lochbot.com · Built by <a href="https://zovo.one">Michael Lip</a> · Runs entirely in your browser.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var tokenEl=$("token"), algEl=$("alg"), keyfmtEl=$("keyfmt"), keyEl=$("key"),
+      keyLabel=$("keyLabel"), keyNote=$("keyNote"),
+      verdict=$("verdict"), verdictText=$("verdictText"), msg=$("msg"),
+      hdrOut=$("hdrOut"), payOut=$("payOut"), checks=$("checks"), parts=$("parts");
+
+  // ---- base64url helpers ----
+  function b64urlToBytes(str){
+    str = String(str).replace(/-/g,"+").replace(/_/g,"/");
+    while(str.length % 4) str += "=";
+    var bin = atob(str);
+    var out = new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) out[i]=bin.charCodeAt(i);
+    return out;
+  }
+  function bytesToStr(bytes){ return new TextDecoder().decode(bytes); }
+  function strToBytes(s){ return new TextEncoder().encode(s); }
+
+  // constant-time byte compare
+  function ctEqual(a,b){
+    if(a.length !== b.length) return false;
+    var diff = 0;
+    for(var i=0;i<a.length;i++) diff |= (a[i] ^ b[i]);
+    return diff === 0;
+  }
+
+  function pretty(obj){
+    var json = JSON.stringify(obj, null, 2);
+    return json.replace(/&/g,"&amp;").replace(/</g,"&lt;")
+      .replace(/("(\\.|[^"\\])*")(\s*:)?|(\b(true|false|null)\b)|(-?\d+(\.\d+)?([eE][+-]?\d+)?)/g,
+      function(m,str,_a,colon,bool,_c,num){
+        if(str!==undefined && colon) return '<span class="k">'+str+'</span>'+colon;
+        if(str!==undefined) return '<span class="s">'+str+'</span>';
+        if(bool!==undefined) return '<span class="b">'+m+'</span>';
+        return '<span class="n">'+m+'</span>';
+      });
+  }
+
+  // PEM -> ArrayBuffer (SPKI DER)
+  function pemToBuf(pem){
+    var b64 = pem.replace(/-----BEGIN [^-]+-----/,"")
+                 .replace(/-----END [^-]+-----/,"")
+                 .replace(/\s+/g,"");
+    var bin = atob(b64);
+    var buf = new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) buf[i]=bin.charCodeAt(i);
+    return buf.buffer;
+  }
+
+  function setVerdict(kind, text){
+    verdict.className = "verdict " + kind;
+    verdictText.textContent = text;
+  }
+  function row(state,label){
+    var t = state==="pass"?"PASS":state==="fail"?"FAIL":"—";
+    return '<li><span class="tag '+state+'">'+t+'</span>'+label+'</li>';
+  }
+
+  var HMAC = { HS256:"SHA-256", HS384:"SHA-384", HS512:"SHA-512" };
+
+  async function verify(){
+    var raw = tokenEl.value.trim();
+    hdrOut.innerHTML="—"; payOut.innerHTML="—"; parts.innerHTML=""; msg.textContent="";
+    if(!raw){
+      setVerdict("wait","Waiting for input…");
+      checks.innerHTML = row("na","Paste a token to begin.");
+      return;
+    }
+
+    var seg = raw.split(".");
+    if(seg.length !== 3){
+      setVerdict("bad","Malformed token — expected 3 dot-separated parts");
+      checks.innerHTML = row("fail","Structure: found "+seg.length+" segment(s), need 3");
+      return;
+    }
+    parts.innerHTML = '<span class="p-h">'+seg[0]+'</span>.<span class="p-p">'+seg[1]+'</span>.<span class="p-s">'+seg[2]+'</span>';
+
+    var header, payload;
+    try{ header = JSON.parse(bytesToStr(b64urlToBytes(seg[0]))); }
+    catch(e){ setVerdict("bad","Header is not valid Base64URL JSON"); checks.innerHTML=row("fail","Header decode failed"); return; }
+    try{ payload = JSON.parse(bytesToStr(b64urlToBytes(seg[1]))); }
+    catch(e){ setVerdict("bad","Payload is not valid Base64URL JSON"); checks.innerHTML=row("fail","Payload decode failed"); return; }
+
+    hdrOut.innerHTML = pretty(header);
+    payOut.innerHTML = pretty(payload);
+
+    var alg = algEl.value==="auto" ? (header.alg||"") : algEl.value;
+    var sigBytes = b64urlToBytes(seg[2]);
+    var signingInput = strToBytes(seg[0]+"."+seg[1]);
+
+    // ---- timing claims ----
+    var now = Math.floor(Date.now()/1000);
+    var checkRows = [];
+    checkRows.push(row("pass","Structure: 3 segments · alg = <b>"+(alg||"?")+"</b>"));
+
+    var timingBad=false, timingWait=false;
+    if(typeof payload.exp==="number"){
+      if(now > payload.exp){ checkRows.push(row("fail","Expired (exp): "+fmt(payload.exp)+" — "+ago(now-payload.exp)+" ago")); timingBad=true; }
+      else checkRows.push(row("pass","Not expired (exp): "+fmt(payload.exp)));
+    } else checkRows.push(row("na","No exp claim"));
+    if(typeof payload.nbf==="number"){
+      if(now < payload.nbf){ checkRows.push(row("fail","Not yet valid (nbf): "+fmt(payload.nbf))); timingWait=true; }
+      else checkRows.push(row("pass","Active (nbf): "+fmt(payload.nbf)));
+    }
+    if(typeof payload.iat==="number") checkRows.push(row("na","Issued (iat): "+fmt(payload.iat)));
+
+    // ---- signature ----
+    var sigValid=null, sigMsg="";
+    var keytxt = keyEl.value;
+    try{
+      if(HMAC[alg]){
+        if(!keytxt){ sigMsg="Enter the HMAC secret to check the signature."; }
+        else{
+          var mk = await crypto.subtle.importKey("raw", strToBytes(keytxt),
+                    {name:"HMAC", hash:HMAC[alg]}, false, ["sign"]);
+          var computed = new Uint8Array(await crypto.subtle.sign("HMAC", mk, signingInput));
+          sigValid = ctEqual(computed, sigBytes);
+          sigMsg = sigValid ? "HMAC recomputed and matched." : "Recomputed HMAC does NOT match the token signature.";
+        }
+      } else if(alg==="RS256" || alg==="ES256"){
+        if(!keytxt){ sigMsg="Provide the public key (PEM or JWK) to verify."; }
+        else{
+          var pubKey, algParams, verifyParams;
+          if(alg==="RS256"){
+            algParams = {name:"RSASSA-PKCS1-v1_5", hash:"SHA-256"};
+            verifyParams = {name:"RSASSA-PKCS1-v1_5"};
+          } else {
+            algParams = {name:"ECDSA", namedCurve:"P-256"};
+            verifyParams = {name:"ECDSA", hash:"SHA-256"};
+          }
+          var fmt2 = keyfmtEl.value;
+          if(fmt2==="jwk"){
+            pubKey = await crypto.subtle.importKey("jwk", JSON.parse(keytxt), algParams, false, ["verify"]);
+          } else {
+            pubKey = await crypto.subtle.importKey("spki", pemToBuf(keytxt), algParams, false, ["verify"]);
+          }
+          sigValid = await crypto.subtle.verify(verifyParams, pubKey, sigBytes, signingInput);
+          sigMsg = sigValid ? "Public-key signature verified." : "Signature is INVALID for this public key.";
+        }
+      } else {
+        sigMsg = "Unsupported or missing alg ("+ (alg||"none") +"). Supported: HS256/384/512, RS256, ES256.";
+      }
+    } catch(err){
+      sigMsg = "Verification error: " + (err && err.message ? err.message : err);
+      sigValid = false;
+    }
+
+    if(sigValid===true) checkRows.splice(1,0, row("pass","Signature: cryptographically valid"));
+    else if(sigValid===false) checkRows.splice(1,0, row("fail","Signature: INVALID"));
+    else checkRows.splice(1,0, row("na","Signature: awaiting key"));
+
+    checks.innerHTML = checkRows.join("");
+    msg.textContent = sigMsg;
+
+    // ---- overall verdict ----
+    if(sigValid===false) setVerdict("bad","✗ Invalid signature — token is NOT authentic");
+    else if(sigValid===null) setVerdict("wait","Signature not checked yet — add the key");
+    else if(timingBad) setVerdict("bad","✗ Signature OK but token has EXPIRED");
+    else if(timingWait) setVerdict("wait","Signature OK but token is not yet valid (nbf)");
+    else setVerdict("ok","✓ Valid — signature verified and token is within its time window");
+  }
+
+  function fmt(unix){
+    try{ return new Date(unix*1000).toISOString().replace("T"," ").replace(".000Z"," UTC"); }
+    catch(e){ return String(unix); }
+  }
+  function ago(sec){
+    if(sec<60) return sec+"s";
+    if(sec<3600) return Math.round(sec/60)+"m";
+    if(sec<86400) return Math.round(sec/3600)+"h";
+    return Math.round(sec/86400)+"d";
+  }
+
+  function updateKeyUI(){
+    var f = keyfmtEl.value;
+    if(f==="secret"){ keyLabel.textContent="HMAC secret"; keyNote.textContent="Enter the shared secret used to sign the token. Verification runs live as you type."; }
+    else if(f==="pem"){ keyLabel.textContent="Public key (PEM / SPKI)"; keyNote.textContent="Paste a -----BEGIN PUBLIC KEY----- SPKI block for RS256 or ES256."; }
+    else { keyLabel.textContent="Public key (JWK JSON)"; keyNote.textContent="Paste the public JWK object, e.g. {\"kty\":\"EC\",\"crv\":\"P-256\",...}."; }
+    verify();
+  }
+
+  tokenEl.addEventListener("input", verify);
+  keyEl.addEventListener("input", verify);
+  algEl.addEventListener("change", verify);
+  keyfmtEl.addEventListener("change", updateKeyUI);
+
+  // ---- prefilled demo: HS256 token signed with secret "your-256-bit-secret" ----
+  tokenEl.value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFkYSBMb3ZlbGFjZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6NDEwMjQ0NDgwMH0.XbjUWdM-XmGtjdNiwdnopGX095dUkxH9du72RTiSRho";
+  keyEl.value = "your-256-bit-secret";
+  updateKeyUI();
+})();
+</script>
+</body>
+</html>

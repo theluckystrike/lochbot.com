@@ -351,4 +351,7 @@
 <url><loc>https://lochbot.com/tools/hmac-generator</loc><lastmod>2026-06-30</lastmod></url>
 <url><loc>https://lochbot.com/tools/htpasswd-generator</loc><lastmod>2026-06-30</lastmod></url>
 <url><loc>https://lochbot.com/tools/set-cookie-flag-checker</loc><lastmod>2026-06-30</lastmod></url>
+<url><loc>https://lochbot.com/tools/jwt-signature-verifier</loc><lastmod>2026-07-09</lastmod></url>
+<url><loc>https://lochbot.com/tools/rsa-ec-keypair-generator</loc><lastmod>2026-07-09</lastmod></url>
+<url><loc>https://lochbot.com/tools/uuid-ulid-generator</loc><lastmod>2026-07-09</lastmod></url>
 </urlset>
