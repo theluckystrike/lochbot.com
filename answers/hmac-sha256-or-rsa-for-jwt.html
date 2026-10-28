@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>HMAC-SHA256 or RSA for JWT Signatures? — LochBot</title>
+  <meta name="description" content="HS256 needs one shared secret and produces a 32-byte signature. RS256 and ES256 use a private key to sign and a public key to verify. Pick HS256 for a single service and RS256 or ES256 when another party must verify your tokens.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lochbot.com/answers/hmac-sha256-or-rsa-for-jwt.html">
+  <link rel="alternate" type="application/atom+xml" title="LochBot Blog Feed" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:title" content="HMAC-SHA256 or RSA for JWT Signatures? — LochBot">
+  <meta property="og:description" content="HS256 needs one shared secret and produces a 32-byte signature. RS256 and ES256 use a private key to sign and a public key to verify. Pick HS256 for a single service and RS256 or ES256 when another party must verify your tokens.">
+  <meta property="og:url" content="https://lochbot.com/answers/hmac-sha256-or-rsa-for-jwt.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://lochbot.com/assets/og-image.png">
+  <meta property="og:site_name" content="Zovo Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HMAC-SHA256 or RSA for JWT Signatures? — LochBot">
+  <meta name="twitter:description" content="HS256 needs one shared secret and produces a 32-byte signature. RS256 and ES256 use a private key to sign and a public key to verify. Pick HS256 for a single service and RS256 or ES256 when another party must verify your tokens.">
+  <meta name="twitter:image" content="https://lochbot.com/assets/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "HMAC-SHA256 or RSA for JWT Signatures?",
+    "description": "Use HS256 when one service signs and verifies its own tokens, because a single shared secret and a 32-byte signature are enough. Use RS256 or ES256 when a separate service must verify tokens it does not issue, because only the holder of the private key can sign. Always fix the algorithm in the verifier.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://lochbot.com/answers/hmac-sha256-or-rsa-for-jwt.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Michael Lip",
+      "url": "https://zovo.one"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "LochBot",
+      "url": "https://lochbot.com/"
+    },
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28"
+  }
+  </script>
+  <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lochbot.com/"},{"@type":"ListItem","position":2,"name":"Answers","item":"https://lochbot.com/answers/"},{"@type":"ListItem","position":3,"name":"HMAC-SHA256 or RSA for JWT Signatures?","item":"https://lochbot.com/answers/hmac-sha256-or-rsa-for-jwt.html"}]}</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can HS256 tokens be verified by a service that cannot create them?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. HS256 uses one shared secret for signing and verification, so any service that can verify a token can also mint one. Use RS256 or ES256 when a verifier must not be able to sign."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is an RS256 token longer than an HS256 token?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The signature segment follows the key size. HS256 produces a 32-byte digest, RS256 over a 2048-bit key produces 256 bytes, and ES256 produces 64 bytes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if a verifier trusts the alg header?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An attacker can switch an RS256 token to HS256 and use the public key as the HMAC secret, which the verifier will accept. Fix the allowed algorithms in the verifier and reject none."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">Loch<span>Bot</span></a>
+      <button class="mobile-toggle" aria-label="Menu">&#9776;</button>
+      <nav>
+        <a href="/">Scanner</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/">Blog</a>
+        <div class="nav-right">
+          <a href="https://zovo.one/pricing?utm_source=lochbot&amp;utm_medium=satellite&amp;utm_campaign=nav-link" class="nav-pro" target="_blank">Go Pro ✦</a>
+          <a href="https://zovo.one/tools?utm_source=lochbot&amp;utm_medium=nav&amp;utm_campaign=answers-hmac-sha256-or-rsa-for-jwt" class="nav-zovo">Zovo Tools</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <a href="/">Home</a> &rsaquo; <a href="/answers/">Answers</a> &rsaquo; <span>HMAC-SHA256 or RSA for JWT Signatures?</span>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1>HMAC-SHA256 or RSA for JWT Signatures?</h1>
+    <p class="byline" style="font-size:.85rem;opacity:.75;margin:.25rem 0 1rem">By Michael Lip &middot; <time datetime="2026-10-28">Updated 2026-10-28</time></p>
+    <div class="direct-answer" style="border-left:3px solid #14B8A6;padding:10px 14px;margin:1rem 0"><p><strong>Use HS256 when one service signs and verifies its own tokens, because a single shared secret and a 32-byte signature are enough. Use RS256 or ES256 when a separate service must verify tokens it does not issue, because only the holder of the private key can sign. Always fix the algorithm in the verifier.</strong></p></div>
+
+    <h2>Symmetric and asymmetric signing</h2>
+    <p>HS256 is HMAC-SHA256: one secret both signs and verifies. RS256 is RSASSA-PKCS1-v1_5 with SHA-256: a private key signs and the matching public key verifies. ES256 is ECDSA over P-256 with SHA-256, and it works the same way with a much smaller key.</p>
+
+    <h2>Signature size</h2>
+    <p>The size of the third segment follows from the algorithm. An HS256 signature is the 32-byte SHA-256 digest, which is 43 base64url characters. An RS256 signature over a 2048-bit key is 256 bytes, which is 342 base64url characters. An ES256 signature is the 64-byte pair r||s, which is 86 characters. On a busy API the difference between 43 and 342 characters per request is real bandwidth, and it is one reason ES256 is popular for access tokens.</p>
+
+    <h2>Who can mint a token</h2>
+    <p>This is the decision that matters. With HS256 every party that can verify a token can also create one, because the key is the same. That is fine inside one service and dangerous across a boundary: a microservice that only needs to check tokens would receive the power to issue them. With RS256 or ES256 the verifier holds only the public key, so a compromised verifier cannot sign anything.</p>
+
+    <h2>Key distribution and rotation</h2>
+    <p>A shared HMAC secret has to reach every verifier, which is one more place it can leak, and rotating it means redeploying every service in the same window. An asymmetric setup publishes a public key, usually as a JWK set at a well-known URL, and identifies each key with a <code>kid</code> header. Rotation means publishing the new public key first and then switching the signer, with no verifier downtime.</p>
+
+    <h2>Cost</h2>
+    <p>HS256 is a single hash pass and costs almost nothing. RSA verification is cheap but RSA signing is slow and needs a big key. ECDSA signing is fast, but the implementation has sharp edges: the signature must be r||s and not DER inside a JWT, and a reused nonce leaks the private key. Use a maintained library and do not hand-roll the curve arithmetic.</p>
+
+    <h2>Choose</h2>
+    <ul>
+      <li><strong>One service signs and verifies</strong> — HS256 with a random secret of at least 32 bytes. Simple, fast, no key distribution.</li>
+      <li><strong>Several services verify, one issues</strong> — RS256 or ES256. Publish the public key as a JWK set and rotate with <code>kid</code>.</li>
+      <li><strong>Browser or mobile client verifies</strong> — an asymmetric algorithm only. A client cannot keep a shared secret, so HS256 there is a public key with extra steps.</li>
+      <li><strong>Long-lived tokens or strict compliance</strong> — RS256 with at least a 2048-bit key, or ES256 with P-256.</li>
+    </ul>
+
+    <h2>The mistake to avoid</h2>
+    <p>Do not let the token choose its own algorithm. A verifier that reads <code>alg</code> from the header and honours it can be switched from RS256 to HS256, and then the public key becomes the HMAC secret. Fix the accepted algorithms in the verifier, reject <code>none</code>, and check that the key type matches the algorithm before any crypto runs.</p>
+
+    <h2>Test it</h2>
+    <p>The <a href="/tools/jwt-signature-verifier">JWT signature verifier</a> checks HS256, HS384, HS512, RS256 and ES256 in your browser with WebCrypto. The <a href="/tools/hmac-generator">HMAC generator</a> produces a signature you can compare by hand. If a valid token is rejected, read <a href="/answers/why-jwt-signature-verification-fails.html">why JWT signature verification fails</a>.</p>
+
+        <section class="faq-section"><h2>Common questions</h2>
+      <details><summary>Can HS256 tokens be verified by a service that cannot create them?</summary><p>No. HS256 uses one shared secret for signing and verification, so any service that can verify a token can also mint one. Use RS256 or ES256 when a verifier must not be able to sign.</p></details>
+      <details><summary>Why is an RS256 token longer than an HS256 token?</summary><p>The signature segment follows the key size. HS256 produces a 32-byte digest, RS256 over a 2048-bit key produces 256 bytes, and ES256 produces 64 bytes.</p></details>
+      <details><summary>What happens if a verifier trusts the alg header?</summary><p>An attacker can switch an RS256 token to HS256 and use the public key as the HMAC secret, which the verifier will accept. Fix the allowed algorithms in the verifier and reject none.</p></details>
+    </section>
+    <section class="related-links">
+      <h2>Related Questions</h2>
+      <div class="related-grid">
+        <a href="/tools/jwt-signature-verifier" class="related-card">JWT Signature Verifier</a>
+        <a href="/answers/why-jwt-signature-verification-fails.html" class="related-card">Why JWT signature verification fails</a>
+        <a href="/tools/rsa-ec-keypair-generator" class="related-card">RSA & EC Key Pair Generator</a>
+        <a href="/tools/hmac-generator" class="related-card">HMAC Generator</a>
+        <a href="/answers/uuid-v7-vs-ulid.html" class="related-card">UUID v7 vs ULID</a>
+      </div>
+    </section>
+
+    <p style="margin-top:2rem;"><a href="/">Scan your system prompt with LochBot</a> &mdash; free, client-side, no data sent anywhere.</p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Zovo Tools</div>
+      <div class="footer-tagline">Free developer tools by a solo dev. No tracking.</div>
+      <a href="https://zovo.one/pricing?utm_source=lochbot&amp;utm_medium=satellite&amp;utm_campaign=footer-link" class="footer-cta">Zovo Lifetime — $99 once, free forever &rarr;</a>
+      <div class="footer-copy">&copy; 2026 <a href="https://zovo.one/lifetime?utm_source=lochbot&amp;utm_medium=footer&amp;utm_campaign=answers-hmac-sha256-or-rsa-for-jwt">Zovo</a> &middot; 47/500 founding spots</div>
+    </div>
+  </footer>
+
+  <nav class="zovo-network" aria-label="Zovo Tools Network">
+    <div class="zovo-network-inner">
+        <h3 class="zovo-network-title">Explore More Tools</h3>
+        <div class="zovo-network-links">
+            <a href="https://abwex.com">ABWex — A/B Testing</a>
+            <a href="https://b2berp.com">B2BERP — Business Tools</a>
+            <a href="https://bugbountyreality.com">BugBountyReality — Security</a>
+            <a href="https://claudflow.com">ClaudFlow — Workflows</a>
+            <a href="https://claudkit.com">ClaudKit — API Tools</a>
+            <a href="https://dismissticket.com">DismissTicket — Support</a>
+            <a href="https://enhio.com">Enhio — Text Tools</a>
+            <a href="https://epochpilot.com">EpochPilot — Timestamps</a>
+            <a href="https://gen8x.com">Gen8X — Color Tools</a>
+            <a href="https://gpt0x.com">GPT0X — AI Models</a>
+            <a href="https://heytensor.com">HeyTensor — ML Tools</a>
+            <a href="https://ingredientcalculator.com">IngredientCalc — Recipes</a>
+            <a href="https://invokebot.com">InvokeBot — Webhooks</a>
+            <a href="https://kappafy.com">Kappafy — JSON</a>
+            <a href="https://kappakit.com">KappaKit — Dev Toolkit</a>
+            <a href="https://kickllm.com">KickLLM — LLM Costs</a>
+            <a href="https://krzen.com">Krzen — Image Tools</a>
+            <a href="https://lockml.com">LockML — ML Security</a>
+            <a href="https://ml0x.com?utm_source=lochbot&amp;utm_medium=nav&amp;utm_campaign=answers-hmac-sha256-or-rsa-for-jwt">ML0X — ML Basics</a>
+            <a href="https://ml3x.com">ML3X — Matrix Math</a>
+            <a href="https://pictureeditor.net">PictureEditor — Image Editing</a>
+            <a href="https://recipetool.net">RecipeTool — Cooking</a>
+            <a href="https://viryd.com">Viryd — Dev Tools</a>
+            <a href="https://tg.zovo.one/">Tiny Telegram Tools — Telegram Bots</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pow-strip">
+  <div class="pow-strip-inner">
+    <span class="pow-label">By the same builder:</span>
+    <a href="https://github.com/theluckystrike" rel="nofollow">GitHub — theluckystrike</a>
+    <a href="https://www.belikenative.com" rel="nofollow">BeLikeNative — Grammar AI</a>
+    <a href="https://earlythunder.com" rel="nofollow">EarlyThunder — Dev Blog</a>
+    <a href="https://bugbountyreality.com" rel="nofollow">Bug Bounty Reality</a>
+    <a href="https://zovo.one/lifetime?utm_source=lochbot&amp;utm_medium=inline&amp;utm_campaign=answers-hmac-sha256-or-rsa-for-jwt" rel="nofollow">Zovo — AI Dev Tools</a>
+  </div>
+</div>
+</body>
+</html>

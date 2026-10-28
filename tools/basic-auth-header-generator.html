@@ -19,6 +19,7 @@
       "name": "Basic Auth Header Generator — Authorization Base64",
       "url": "https://lochbot.com/tools/basic-auth-header-generator",
       "applicationCategory": "UtilitiesApplication",
+      "dateModified": "2026-10-28",
       "operatingSystem": "Any",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
@@ -75,6 +76,10 @@ footer{border-top:1px solid var(--bd);padding:1.4rem 1.2rem;text-align:center;co
 <main>
 <h1>Encode HTTP Basic Auth Credentials Into an Authorization Header</h1>
 <p class="intro">Type a username and password and instantly get the Base64-encoded <code>Authorization: Basic</code> header your client needs. Everything runs in your browser — no credentials ever leave this page.</p>
+<div class="aeo-answer" style="border-left:3px solid var(--accent2,#14B8A6);background:var(--panel2,#1a1a1a);padding:12px 14px;border-radius:6px;margin:16px 0">
+<p style="margin:0"><strong>Short answer.</strong> An HTTP Basic Authorization header is the word Basic, one space, then Base64 of username, colon and password, joined as user:pass. This page builds that header in your browser and sends nothing to a server. Base64 is reversible encoding, not encryption, so send it only over HTTPS.</p>
+<p style="margin:6px 0 0;font-size:.8rem;opacity:.7">Updated 2026-10-28</p>
+</div>
 
 <section id="tool">
   <div class="row">
@@ -139,7 +144,7 @@ footer{border-top:1px solid var(--bd);padding:1.4rem 1.2rem;text-align:center;co
 <footer>
 <a href="/">Home</a>
 <a href="/tools/">All Tools</a>
-<span>© 2026 lochbot.com</span>
+<span>© 2026 lochbot.com &mdash; Built by <a href="https://zovo.one/lifetime?utm_source=lochbot&amp;utm_medium=footer&amp;utm_campaign=tools-basic-auth-header-generator">Michael Lip</a></span>
 </footer>
 
 <script>

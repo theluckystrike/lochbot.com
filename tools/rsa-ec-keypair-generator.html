@@ -20,6 +20,7 @@
       "url": "https://lochbot.com/tools/rsa-ec-keypair-generator",
       "description": "Generate RSA (2048/4096) or elliptic-curve (P-256/384/521) key pairs in-browser with WebCrypto. Export public and private keys as PEM or JWK.",
       "applicationCategory": "UtilitiesApplication",
+      "dateModified": "2026-10-28",
       "operatingSystem": "Any",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
@@ -106,6 +107,10 @@ footer a{color:var(--accent);text-decoration:none;margin:0 .6rem}
 <div class="wrap">
 <h1>Generate RSA &amp; Elliptic-Curve Key Pairs in Your Browser</h1>
 <p class="lead">Create real asymmetric key pairs with the WebCrypto API and export them as PEM or JWK. Everything runs client-side &mdash; your private key never leaves this tab.</p>
+<div class="aeo-answer" style="border-left:3px solid var(--accent2,#14B8A6);background:var(--panel2,#1a1a1a);padding:12px 14px;border-radius:6px;margin:16px 0">
+<p style="margin:0"><strong>Short answer.</strong> A key pair is a private key that signs or decrypts and a public key that verifies or encrypts. This generator creates RSA 2048, 3072 and 4096-bit keys, or EC keys on P-256, P-384 and P-521, with WebCrypto, then exports them as PEM or JWK. The private key never leaves the tab.</p>
+<p style="margin:6px 0 0;font-size:.8rem;opacity:.7">Updated 2026-10-28</p>
+</div>
 
 <section id="tool">
   <div class="grid">
@@ -202,7 +207,7 @@ footer a{color:var(--accent);text-decoration:none;margin:0 .6rem}
   <a href="/">Home</a>
   <a href="/tools/">All Tools</a>
   <a href="/tools/jwt-decoder">JWT Decoder</a>
-  <div style="margin-top:.6rem">&copy; 2026 lochbot.com &mdash; runs entirely in your browser.</div>
+  <div style="margin-top:.6rem">&copy; 2026 lochbot.com &mdash; Built by <a href="https://zovo.one/lifetime?utm_source=lochbot&amp;utm_medium=footer&amp;utm_campaign=tools-rsa-ec-keypair-generator">Michael Lip</a> &mdash; runs entirely in your browser.</div>
 </footer>
 
 <script>

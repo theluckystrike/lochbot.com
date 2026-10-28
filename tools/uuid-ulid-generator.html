@@ -20,6 +20,7 @@
       "url": "https://lochbot.com/tools/uuid-ulid-generator",
       "description": "Generate cryptographically random UUID v4, time-sortable UUID v7, and ULIDs in the browser. Bulk-generate, copy, and inspect the embedded timestamp of each ID.",
       "applicationCategory": "UtilitiesApplication",
+      "dateModified": "2026-10-28",
       "operatingSystem": "Any",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
@@ -113,6 +114,10 @@ footer a:hover{text-decoration:underline}
 <main>
   <h1>Generate &amp; Decode UUID v4, UUID v7 and ULID Identifiers</h1>
   <p class="lede">Cryptographically strong identifiers created entirely in your browser with WebCrypto. Bulk-generate, copy, and reverse the embedded timestamp out of any time-ordered ID. Nothing is sent to a server.</p>
+<div class="aeo-answer" style="border-left:3px solid var(--accent2,#14B8A6);background:var(--panel2,#1a1a1a);padding:12px 14px;border-radius:6px;margin:16px 0">
+<p style="margin:0"><strong>Short answer.</strong> UUID v4 is 16 random bytes with 122 random bits left after the version and variant fields, so it is unique but not sortable. UUID v7 and ULID put a 48-bit millisecond timestamp first, so they sort by creation time. Generate all three in the browser, offline.</p>
+<p style="margin:6px 0 0;font-size:.8rem;opacity:.7">Updated 2026-10-28</p>
+</div>
 
   <section id="tool">
     <div class="controls">
@@ -163,15 +168,17 @@ footer a:hover{text-decoration:underline}
       <li><a href="/tools/random-string-generator">Random String &amp; Token Generator</a></li>
       <li><a href="/tools/hash-generator">SHA &amp; MD5 Hash Generator</a></li>
       <li><a href="/tools/base64-encoder">Base64 Encoder / Decoder</a></li>
+      <li><a href="/answers/uuid-v7-vs-ulid.html">UUID v7 vs ULID — which to use</a></li>
     </ul>
   </div>
 </main>
 <footer>
   <a href="/">Home</a>
   <a href="/tools/">All Tools</a>
-  <a href="/about/">About</a>
+  <a href="/about.html">About</a>
   <a href="/privacy/">Privacy</a>
   <div style="margin-top:.6rem">&copy; 2026 lochbot.com — client-side developer utilities.</div>
+  <div style="margin-top:.6rem">&copy; 2026 lochbot.com &mdash; Built by <a href="https://zovo.one/lifetime?utm_source=lochbot&amp;utm_medium=footer&amp;utm_campaign=tools-uuid-ulid-generator">Michael Lip</a></div>
 </footer>
 
 <script>

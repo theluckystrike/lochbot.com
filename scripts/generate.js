@@ -21,6 +21,10 @@ const PROTECTED = new Set([
   'owasp-llm-top-10.html',
   'how-to-write-a-secure-system-prompt.html',
   'what-is-indirect-prompt-injection.html',
+  // aeo-sprint-20261028-1558: hand-written pages, never overwrite
+  'why-jwt-signature-verification-fails.html',
+  'uuid-v7-vs-ulid.html',
+  'hmac-sha256-or-rsa-for-jwt.html',
 ]);
 
 // ─── SEED DATA ──────────────────────────────────────────────────────────────
