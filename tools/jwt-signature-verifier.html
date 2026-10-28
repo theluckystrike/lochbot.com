@@ -21,6 +21,7 @@
       "description": "Verify a JWT's signature client-side with WebCrypto. Paste a token and secret or public key to check HS256, HS384, RS256 and ES256 validity and expiry.",
       "url": "https://lochbot.com/tools/jwt-signature-verifier",
       "applicationCategory": "UtilitiesApplication",
+      "dateModified": "2026-10-28",
       "operatingSystem": "Any",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
@@ -123,6 +124,10 @@
   <span class="badge">100% client-side · WebCrypto · no key leaves your browser</span>
   <h1>Verify JWT Signatures in Your Browser</h1>
   <p class="intro">Paste a JSON Web Token plus its HMAC secret or public key. This tool recomputes the signature with the browser's native WebCrypto API and tells you whether the token is authentic, expired, or not yet valid — with nothing ever sent to a server.</p>
+<div class="aeo-answer" style="border-left:3px solid var(--accent2,#14B8A6);background:var(--panel2,#1a1a1a);padding:12px 14px;border-radius:6px;margin:16px 0">
+<p style="margin:0"><strong>Short answer.</strong> A JWT is authentic when the HMAC of its header and payload, keyed with the shared secret, matches the third segment byte for byte. This verifier recomputes that check with the browser's WebCrypto API and reports whether the token is authentic, expired or not yet valid.</p>
+<p style="margin:6px 0 0;font-size:.8rem;opacity:.7">Updated 2026-10-28</p>
+</div>
 
   <section id="tool">
     <label for="token">JWT <span class="hint">— header.payload.signature</span></label>
@@ -185,9 +190,11 @@
 
   <h2>Related Tools</h2>
   <ul class="related">
-    <li><a href="/tools/base64-encoder-decoder">Base64 Encoder / Decoder</a> — inspect the raw JWT segments by hand.</li>
+    <li><a href="/tools/base64-encoder">Base64 Encoder / Decoder</a> — inspect the raw JWT segments by hand.</li>
     <li><a href="/tools/hmac-generator">HMAC Generator</a> — compute HS256 signatures to sign your own tokens.</li>
-    <li><a href="/tools/rsa-key-generator">RSA Key Pair Generator</a> — create RS256 keys for testing.</li>
+    <li><a href="/tools/rsa-ec-keypair-generator">RSA Key Pair Generator</a> — create RS256 keys for testing.</li>
+    <li><a href="/answers/why-jwt-signature-verification-fails.html">Why JWT signature verification fails</a> — the five causes, in diagnosis order.</li>
+    <li><a href="/answers/hmac-sha256-or-rsa-for-jwt.html">HMAC-SHA256 or RSA for JWT signatures</a> — which algorithm to pick.</li>
   </ul>
 
   <footer>

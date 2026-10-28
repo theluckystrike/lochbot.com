@@ -354,4 +354,22 @@
 <url><loc>https://lochbot.com/tools/jwt-signature-verifier</loc><lastmod>2026-07-09</lastmod></url>
 <url><loc>https://lochbot.com/tools/rsa-ec-keypair-generator</loc><lastmod>2026-07-09</lastmod></url>
 <url><loc>https://lochbot.com/tools/uuid-ulid-generator</loc><lastmod>2026-07-09</lastmod></url>
+  <url>
+    <loc>https://lochbot.com/answers/why-jwt-signature-verification-fails.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/uuid-v7-vs-ulid.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lochbot.com/answers/hmac-sha256-or-rsa-for-jwt.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
